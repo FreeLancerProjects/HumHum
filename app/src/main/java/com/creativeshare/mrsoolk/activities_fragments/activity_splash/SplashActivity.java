@@ -3,9 +3,12 @@ package com.creativeshare.mrsoolk.activities_fragments.activity_splash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,10 +23,11 @@ import com.creativeshare.mrsoolk.tags.Tags;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private FrameLayout fl;
     private Preferences preferences;
 
+    private ImageView cov;
     private String current_lang;
+    private LinearLayout lin;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -34,9 +38,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         preferences = Preferences.getInstance();
-        fl = findViewById(R.id.fl);
-        Animation animation = AnimationUtils.loadAnimation(this,R.anim.fade);
-        fl.startAnimation(animation);
+        cov=findViewById(R.id.img_cov);
+        lin=findViewById(R.id.lin);
+        lin.setVisibility(View.VISIBLE);
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.move);
+        cov.startAnimation(animation);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -45,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                lin.setVisibility(View.GONE);
 
                 String session = preferences.getSession(SplashActivity.this);
 

@@ -51,7 +51,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="62" />
+                                                <entry key="scalingPercent" value="52" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -62,8 +62,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="C:\Users\Delta\Desktop\logo_only.png" />
+                                      <entry key="backgroundColor" value="fdee00" />
+                                      <entry key="foregroundImage" value="C:\Users\Elashry\Desktop\logo.jpg" />
                                     </map>
                                   </option>
                                 </PersistentState>

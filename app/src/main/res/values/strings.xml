@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MRSOOLK</string>
+    <string name="app_name">Hum Hum</string>
     <!--AIzaSyArjmbYWTWZhDFFtPOLRLKYwjtBDkOEGrY-->
 
     <string name="map_api_key">AIzaSyCbc2Y5AIwZ8uUeHRUXiozGN3CnpjKT0oI</string>
@@ -70,7 +70,7 @@
     <string name="pers_photo_req">Personal photo required</string>
     <string name="inv_email">Invalid email</string>
     <string name="inc_img_path">incorrect image path</string>
-    <string name="allow_mrsoolk_to_access_gps">Allow MRSOOLK To Access GPS</string>
+    <string name="allow_mrsoolk_to_access_gps">Allow Hum Hum To Access GPS</string>
     <string name="allow">Allow</string>
     <string name="deny">Deny</string>
     <string name="rate">Rate</string>
@@ -207,7 +207,7 @@
     <string name="type_a_message">Type a message</string>
     <string name="new_order_sent">New order sent</string>
     <string name="offer_accepted">Offer accepted</string>
-    <string name="shipment">MRSOOLk package</string>
+    <string name="shipment">Hum Hum package</string>
     <string name="do_you_have_a_purpose_that_you_want_to_be_assigned_to_any_place_in_your_city_the_shipment_provide_this_service">Got a small package that you want to send somewhere in your city? MARSOOLK package allows you to do just that!</string>
     <string name="receiving_and_delivery_location">Dropoff &amp; Pickup</string>
     <string name="receiving_location">Pickup location</string>
