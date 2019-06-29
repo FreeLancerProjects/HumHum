@@ -104,7 +104,7 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.MyHolder> 
             if (placeModel.isOpenNow()) {
 
                 tv_state.setText(R.string.active);
-                tv_state.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                tv_state.setTextColor(ContextCompat.getColor(context, R.color.blue0));
             }else
             {
                 tv_state.setText(R.string.inactive);

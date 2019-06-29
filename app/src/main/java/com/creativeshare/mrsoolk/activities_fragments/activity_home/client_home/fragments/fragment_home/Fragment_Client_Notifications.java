@@ -98,7 +98,7 @@ public class Fragment_Client_Notifications extends Fragment {
         ll_not = view.findViewById(R.id.ll_not);
 
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         recView = view.findViewById(R.id.recView);
         adapter = new NotificationsAdapter(notificationModelList, activity, this, userModel.getData().getUser_type());
         recView.setAdapter(adapter);

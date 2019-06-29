@@ -126,6 +126,8 @@
                     android:layout_height="20dp"
                     android:clickable="false"
                     android:longClickable="false"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/custom_progress_par"
 
                     />
 

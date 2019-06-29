@@ -80,7 +80,7 @@ public class Fragment_Client_New_Orders extends Fragment {
         userModel = userSingleTone.getUserModel();
         tv_no_orders = view.findViewById(R.id.tv_no_orders);
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         recView = view.findViewById(R.id.recView);
         manager = new LinearLayoutManager(activity);
         recView.setLayoutManager(manager);

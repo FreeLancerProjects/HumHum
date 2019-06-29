@@ -112,7 +112,7 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
         edt_search = view.findViewById(R.id.edt_search);
         edt_floor = view.findViewById(R.id.edt_floor);
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         tv_address = view.findViewById(R.id.tv_address);
         fab = view.findViewById(R.id.fab);
 

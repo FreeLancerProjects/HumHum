@@ -78,7 +78,7 @@ public class Fragment_Bank_Account extends Fragment {
         ll_back = view.findViewById(R.id.ll_back);
 
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         recView = view.findViewById(R.id.recView);
         manager = new LinearLayoutManager(activity);
         recView.setLayoutManager(manager);

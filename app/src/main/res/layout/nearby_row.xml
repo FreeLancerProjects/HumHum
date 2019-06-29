@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@id/image"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_map"
-            android:tint="@color/colorPrimary"
+            android:tint="@color/blue0"
             tools:ignore="RtlCompat" />
 
         <TextView
@@ -70,7 +70,7 @@
             android:id="@+id/tv_distance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/blue0"
             android:textSize="13sp"
             app:layout_constraintTop_toBottomOf="@id/map_icon"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +104,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/blue0"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_r"

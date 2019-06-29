@@ -121,7 +121,10 @@
                     android:text="@string/terms_and_conditions"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:alpha=".8"
+
+                    />
             </LinearLayout>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

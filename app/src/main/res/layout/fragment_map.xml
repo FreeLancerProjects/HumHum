@@ -135,6 +135,8 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center"
                     android:visibility="gone"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/custom_progress_par"
                     />
             </FrameLayout>
             <TextView

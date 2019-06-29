@@ -1,5 +1,6 @@
 package com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_home;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -63,8 +64,7 @@ public class Fragment_Home extends Fragment {
         ll_container = view.findViewById(R.id.ll_container);
         ll_progress = view.findViewById(R.id.ll_progress);
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         setUpBottomNavigation();
         ah_bottom_nav.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override

@@ -146,6 +146,8 @@
                         android:layout_height="35dp"
                         android:layout_gravity="center"
                         android:visibility="visible"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/custom_progress_par"
                         />
                 </FrameLayout>
 
@@ -195,6 +197,8 @@
                         android:layout_height="35dp"
                         android:layout_gravity="top|center_horizontal"
                         android:visibility="visible"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/custom_progress_par"
                         />
 
                     <LinearLayout

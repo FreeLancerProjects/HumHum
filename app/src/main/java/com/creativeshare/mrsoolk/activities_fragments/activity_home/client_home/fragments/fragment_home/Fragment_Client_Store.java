@@ -120,10 +120,10 @@ public class Fragment_Client_Store extends Fragment {
 
         fl_slider = view.findViewById(R.id.fl_slider);
         progBarSlider = view.findViewById(R.id.progBarSlider);
-        progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
 
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         recView = view.findViewById(R.id.recView);
         manager = new LinearLayoutManager(activity);
         recView.setLayoutManager(manager);

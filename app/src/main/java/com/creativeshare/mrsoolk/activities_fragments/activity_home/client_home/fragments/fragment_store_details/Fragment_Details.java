@@ -117,7 +117,7 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
         tv_state = view.findViewById(R.id.tv_state);
         fab = view.findViewById(R.id.fab);
         progBar = view.findViewById(R.id.progBar);
-        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         expandedLayout = view.findViewById(R.id.expandedLayout);
         arrow_down = view.findViewById(R.id.arrow_down);
         ll_today = view.findViewById(R.id.ll_today);
