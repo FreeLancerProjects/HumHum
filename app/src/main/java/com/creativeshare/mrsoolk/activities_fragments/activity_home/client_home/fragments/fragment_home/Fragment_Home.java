@@ -140,7 +140,7 @@ public class Fragment_Home extends Fragment {
         ah_bottom_nav.setDefaultBackgroundColor(ContextCompat.getColor(activity,R.color.white));
         ah_bottom_nav.setTitleTextSizeInSp(14,12);
         ah_bottom_nav.setForceTint(true);
-        ah_bottom_nav.setAccentColor(ContextCompat.getColor(activity,R.color.colorPrimary));
+        ah_bottom_nav.setAccentColor(ContextCompat.getColor(activity,R.color.gradient_end_color));
         ah_bottom_nav.setInactiveColor(ContextCompat.getColor(activity,R.color.gray4));
 
         ah_bottom_nav.addItem(item1);
