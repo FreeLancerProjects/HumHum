@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/black"
                 android:background="@drawable/edt_show_bg"
                 android:gravity="center"
                 android:textSize="13sp"
