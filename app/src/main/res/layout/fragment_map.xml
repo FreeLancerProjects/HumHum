@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_left_arrow"
                 android:padding="12dp"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 android:clickable="false"
                 android:longClickable="false"
                 />
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:text="@string/delivery_location"
                 android:clickable="false"

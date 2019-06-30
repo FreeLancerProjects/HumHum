@@ -68,7 +68,7 @@
                     app:srb_starSize="25dp"
                     app:srb_starsSeparation="10dp"
                     app:srb_numberOfStars="5"
-                    app:srb_fillColor="@color/rating"
+                    app:srb_fillColor="@color/colorPrimary"
                     app:srb_borderColor="@color/white"
                     app:srb_starBorderWidth="3"
                     app:srb_drawBorderEnabled="true"
@@ -129,7 +129,7 @@
                         android:layout_marginStart="10dp"
                         android:src="@drawable/ic_setting"
                         android:padding="12dp"
-                        android:tint="@color/white"
+                        android:tint="@color/black"
                         tools:ignore="RtlCompat" />
 
                     <ImageView
@@ -141,7 +141,7 @@
                         android:layout_marginEnd="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:src="@drawable/ic_at"
-                        android:tint="@color/white"
+                        android:tint="@color/black"
                         android:padding="12dp"
                         tools:ignore="RtlCompat"
                         />
@@ -152,7 +152,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/at"
                         android:layout_marginEnd="5dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
                         tools:ignore="RtlCompat"
                         android:text="@string/profile"

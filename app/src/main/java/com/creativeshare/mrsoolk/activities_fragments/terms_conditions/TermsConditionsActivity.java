@@ -67,12 +67,12 @@ public class TermsConditionsActivity extends AppCompatActivity {
         if (current_lang.equals("ar"))
         {
             arrow.setImageResource(R.drawable.ic_right_arrow);
-            arrow.setColorFilter(ContextCompat.getColor(this,R.color.white), PorterDuff.Mode.SRC_IN);
+            arrow.setColorFilter(ContextCompat.getColor(this,R.color.black), PorterDuff.Mode.SRC_IN);
 
         }else
             {
                 arrow.setImageResource(R.drawable.ic_left_arrow);
-                arrow.setColorFilter(ContextCompat.getColor(this,R.color.white), PorterDuff.Mode.SRC_IN);
+                arrow.setColorFilter(ContextCompat.getColor(this,R.color.black), PorterDuff.Mode.SRC_IN);
 
 
             }

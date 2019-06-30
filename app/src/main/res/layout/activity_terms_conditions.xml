@@ -31,13 +31,13 @@
                 android:padding="15dp"
                 android:clickable="false"
                 android:longClickable="false"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 />
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:clickable="false"
                 android:longClickable="false"

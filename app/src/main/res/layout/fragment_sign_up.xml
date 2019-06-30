@@ -31,7 +31,7 @@
                 android:layout_gravity="center_vertical"
                 android:padding="3dp"
                 android:src="@drawable/ic_left_arrow"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 android:clickable="false"
                 android:longClickable="false"
                 />
@@ -42,7 +42,7 @@
                 android:layout_gravity="center_vertical"
                 android:paddingStart="5dp"
                 android:text="@string/back"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 tools:ignore="RtlCompat"
                 android:clickable="false"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/you_are_just_one_step_away"
-                android:textColor="@color/gray4"
+                android:textColor="@color/gray6"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -140,7 +140,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:textColor="@color/white"
+                                android:textColor="@color/black"
                                 android:text="@string/upload_personal_photo"
                                 android:layout_marginBottom="5dp"
                                 />
@@ -148,7 +148,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:textColor="@color/gray4"
+                                android:textColor="@color/gray6"
                                 android:text="@string/_500_500_pixel"
                                 android:layout_marginBottom="5dp"
                                 />
@@ -174,7 +174,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="16sp"
                             android:text="@string/personal_information"
                             />
@@ -338,7 +338,7 @@
                                 android:paddingBottom="4dp"
                                 app:sb_text="@string/male"
                                 app:sb_textColor="@color/black"
-                                app:sb_textColor_onSelection="@color/white"
+                                app:sb_textColor_onSelection="@color/black"
                                 app:sb_textFillSpace="true"
                                 app:sb_textSize="15sp" />
 
@@ -346,7 +346,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:sb_textColor="@color/black"
-                                app:sb_textColor_onSelection="@color/white"
+                                app:sb_textColor_onSelection="@color/black"
                                 app:sb_textSize="15sp"
                                 app:sb_text="@string/female"
                                 app:sb_textFillSpace="true"
