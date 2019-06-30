@@ -53,7 +53,7 @@
     <string name="never_share_phone_number">بياناتك في الحفظ والصون لدينا,</string>
     <string name="your_privacy_guaranteed">لن نقوم بمشاركة بياناتك لاي احد ولا لأي سبب.</string>
     <string name="by_using_this_app_you_agree_to">إستخدامك لهذا التطبيق يعني الموافقة على</string>
-    <string name="terms_and_conditions">الشروط والاحكام</string>
+    <string name="terms_and_conditions"><a  href="">الشروط والاحكام </a></string>
     <string name="stores">متاجر</string>
     <string name="my_orders">طلباتي</string>
     <string name="profile">حسابي</string>

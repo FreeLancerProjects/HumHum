@@ -112,17 +112,15 @@
                     android:textColor="@color/gray5"
                     android:textSize="13sp" />
 
-                <Button
-                    android:id="@+id/btn_terms"
+                <TextView
+                    android:id="@+id/tv_terms"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:autoLink="web"
-                    android:background="@color/black"
                     android:text="@string/terms_and_conditions"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="13sp"
-                    android:alpha=".8"
+                    android:gravity="center"
 
                     />
             </LinearLayout>
