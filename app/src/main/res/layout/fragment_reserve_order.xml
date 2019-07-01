@@ -130,7 +130,7 @@
                                 android:padding="15dp"
                                 android:src="@drawable/ic_left_arrow"
                                 android:tint="@color/black"
-                                tools:ignore="RtlCompat" />
+                                 />
 
                             <TextView
                                 android:layout_width="wrap_content"

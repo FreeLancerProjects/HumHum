@@ -295,7 +295,7 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
         if (placeModel.isOpenNow())
         {
             tv_state.setText(getString(R.string.active));
-            tv_state.setTextColor(ContextCompat.getColor(activity,R.color.colorPrimary));
+            tv_state.setTextColor(ContextCompat.getColor(activity,R.color.black));
 
         }else
             {

@@ -131,10 +131,10 @@ public class Fragment_Reserve_Order extends Fragment {
 
         if (current_language.equals("ar")) {
             arrow.setImageResource(R.drawable.ic_right_arrow);
-            arrow.setColorFilter(ContextCompat.getColor(activity, R.color.white), PorterDuff.Mode.SRC_IN);
+            arrow.setColorFilter(ContextCompat.getColor(activity, R.color.black), PorterDuff.Mode.SRC_IN);
         } else {
             arrow.setImageResource(R.drawable.ic_left_arrow);
-            arrow.setColorFilter(ContextCompat.getColor(activity, R.color.white), PorterDuff.Mode.SRC_IN);
+            arrow.setColorFilter(ContextCompat.getColor(activity, R.color.black), PorterDuff.Mode.SRC_IN);
 
 
         }
