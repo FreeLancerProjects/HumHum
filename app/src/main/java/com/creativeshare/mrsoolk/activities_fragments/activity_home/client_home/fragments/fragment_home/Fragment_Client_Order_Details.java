@@ -185,9 +185,11 @@ public class Fragment_Client_Order_Details extends Fragment {
 
     private void UpdateUI(OrderDataModel.OrderModel order) {
         if (order != null) {
-
-            if (order.getOrder_image().equals("0"))
+            if (order.getOrder_image()==null)
             {
+
+        Log.e("msg","message");
+
                 order_image.setVisibility(View.GONE);
             }else
                 {
