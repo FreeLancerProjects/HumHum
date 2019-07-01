@@ -22,7 +22,6 @@
             android:layout_height="270dp"
             android:background="@drawable/tool"
 
-
             >
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
