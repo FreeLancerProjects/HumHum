@@ -74,17 +74,8 @@ public class Fragment_Home extends Fragment {
                     case 0:
                         activity.DisplayFragmentStore();
                         break;
-                    case 1:
-                        if (userModel==null)
-                        {
-                            Common.CreateUserNotSignInAlertDialog(activity);
-                        }else
-                        {
-                            activity.DisplayFragmentShipment();
 
-                        }
-                        break;
-                    case 2:
+                    case 1:
                         if (userModel==null)
                         {
                             Common.CreateUserNotSignInAlertDialog(activity);
@@ -96,7 +87,7 @@ public class Fragment_Home extends Fragment {
 
 
                         break;
-                    case 3:
+                    case 2:
 
                         if (userModel==null)
                         {
@@ -110,7 +101,7 @@ public class Fragment_Home extends Fragment {
 
 
                         break;
-                    case 4:
+                    case 3:
                         if (userModel==null)
                         {
                             Common.CreateUserNotSignInAlertDialog(activity);
@@ -131,7 +122,6 @@ public class Fragment_Home extends Fragment {
     {
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.stores),R.drawable.ic_nav_store);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.shipment),R.drawable.ic_box);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.my_orders),R.drawable.ic_nav_order);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.notifications),R.drawable.ic_nav_notification);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(getString(R.string.profile),R.drawable.ic_nav_user);
@@ -144,7 +134,6 @@ public class Fragment_Home extends Fragment {
         ah_bottom_nav.setInactiveColor(ContextCompat.getColor(activity,R.color.gray4));
 
         ah_bottom_nav.addItem(item1);
-        ah_bottom_nav.addItem(item2);
         ah_bottom_nav.addItem(item3);
         ah_bottom_nav.addItem(item4);
         ah_bottom_nav.addItem(item5);

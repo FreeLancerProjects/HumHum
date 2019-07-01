@@ -17,7 +17,7 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@drawable/tool"
+            android:background="@drawable/back"
 
             >
 
@@ -62,7 +62,7 @@
                                 android:longClickable="false"
                                 android:padding="8dp"
                                 android:src="@drawable/ic_left_arrow"
-                                android:tint="@color/white" />
+                                android:tint="@color/black" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                                 android:clickable="false"
                                 android:longClickable="false"
                                 android:text="@string/back"
-                                android:textColor="@color/white"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -115,7 +115,7 @@
                             android:gravity="center"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
 
 
                             />
@@ -161,7 +161,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
                         android:text="@string/order_details"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -194,7 +194,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
                         android:text="@string/address"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -237,7 +237,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/colorPrimary"
+                                android:textColor="@color/black"
                                 android:textStyle="bold"
                                 android:textSize="13sp"
                                 android:text="@string/receiving_location"
@@ -333,7 +333,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
                         android:text="@string/delivery_cost"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
 
@@ -369,19 +369,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@color/black"
             android:text="@string/accept"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
 
         <Button
             android:id="@+id/btn_refused"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/gray1"
+            android:background="@color/black"
             android:text="@string/refuse"
-            android:textColor="@color/delete_color"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

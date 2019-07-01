@@ -56,7 +56,6 @@ import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.
 import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_home.Fragment_Reserve_Order;
 import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_home.Fragment_Search;
 import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_home.Fragment_Settings;
-import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_home.Fragment_Shipment;
 import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_orders.Fragment_Client_Orders;
 import com.creativeshare.mrsoolk.activities_fragments.activity_home.client_home.fragments.fragment_store_details.Fragment_Store_Details;
 import com.creativeshare.mrsoolk.activities_fragments.activity_sign_in.activity.SignInActivity;
@@ -129,7 +128,6 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     private Fragment_Client_Notifications fragment_client_notifications;
     private Fragment_Client_Profile fragment_client_profile;
     private Fragment_Store_Details fragment_store_details;
-    private Fragment_Shipment fragment_shipment;
     private Fragment_Reserve_Order fragment_reserve_order;
     private Fragment_Search fragment_search;
     private Fragment_Settings fragment_settings;
@@ -753,9 +751,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         if (fragment_home != null && fragment_home.isAdded()) {
             fragment_home.updateBottomNavigationPosition(0);
         }
-        if (fragment_shipment != null && fragment_shipment.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_shipment).commit();
-        }
+
         if (fragment_client_orders != null && fragment_client_orders.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_orders).commit();
         }
@@ -778,7 +774,8 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         }
 
     }
-    public void DisplayFragmentShipment()
+
+    public void DisplayFragmentMyOrders()
     {
         if (fragment_home != null && fragment_home.isAdded()) {
             fragment_home.updateBottomNavigationPosition(1);
@@ -787,41 +784,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         if (fragment_client_store != null && fragment_client_store.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_store).commit();
         }
-        if (fragment_client_notifications != null && fragment_client_notifications.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_client_notifications).commit();
-        }
-        if (fragment_client_profile != null && fragment_client_profile.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_client_profile).commit();
-        }
 
-        if (fragment_client_orders != null && fragment_client_orders.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_client_orders).commit();
-        }
-
-        if (fragment_shipment == null) {
-            fragment_shipment = Fragment_Shipment.newInstance();
-        }
-
-        if (fragment_shipment.isAdded()) {
-            fragmentManager.beginTransaction().show(fragment_shipment).commit();
-
-        } else {
-            fragmentManager.beginTransaction().add(R.id.fragment_home_container, fragment_shipment, "fragment_shipment").addToBackStack("fragment_shipment").commit();
-        }
-
-    }
-    public void DisplayFragmentMyOrders()
-    {
-        if (fragment_home != null && fragment_home.isAdded()) {
-            fragment_home.updateBottomNavigationPosition(2);
-        }
-
-        if (fragment_client_store != null && fragment_client_store.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_client_store).commit();
-        }
-        if (fragment_shipment != null && fragment_shipment.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_shipment).commit();
-        }
         if (fragment_client_notifications != null && fragment_client_notifications.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_notifications).commit();
         }
@@ -846,14 +809,12 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         readNotification();
 
         if (fragment_home != null && fragment_home.isAdded()) {
-            fragment_home.updateBottomNavigationPosition(3);
+            fragment_home.updateBottomNavigationPosition(2);
         }
         if (fragment_client_store != null && fragment_client_store.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_store).commit();
         }
-        if (fragment_shipment != null && fragment_shipment.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_shipment).commit();
-        }
+
         if (fragment_client_orders != null && fragment_client_orders.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_orders).commit();
         }
@@ -876,14 +837,12 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     public void DisplayFragmentProfile()
     {
         if (fragment_home != null && fragment_home.isAdded()) {
-            fragment_home.updateBottomNavigationPosition(4);
+            fragment_home.updateBottomNavigationPosition(3);
         }
         if (fragment_client_store != null && fragment_client_store.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_store).commit();
         }
-        if (fragment_shipment != null && fragment_shipment.isAdded()) {
-            fragmentManager.beginTransaction().hide(fragment_shipment).commit();
-        }
+
         if (fragment_client_orders != null && fragment_client_orders.isAdded()) {
             fragmentManager.beginTransaction().hide(fragment_client_orders).commit();
         }
@@ -1080,36 +1039,8 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                             }
                         },1);
             }
-        }else if (from.equals("fragment_shipment_pickup_location"))
-            {
-                if (fragment_shipment!=null&&fragment_shipment.isAdded())
-                {
-                    new Handler()
-                            .postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    fragment_shipment.setLocationData(favourite_location.getPlace_id(),favourite_location.getStreet()+" "+favourite_location.getAddress(),favourite_location.getLat(),favourite_location.getLng(),"pickup_location");
-                                    fragmentManager.popBackStack("fragment_map",FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                    fragment_count-=1;
-                                }
-                            },1);
-                }
-            }
-        else if (from.equals("fragment_shipment_dropoff_location"))
-        {
-            if (fragment_shipment!=null&&fragment_shipment.isAdded())
-            {
-                new Handler()
-                        .postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                fragment_shipment.setLocationData(favourite_location.getPlace_id(),favourite_location.getStreet()+" "+favourite_location.getAddress(),favourite_location.getLat(),favourite_location.getLng(),"dropoff_location");
-                                fragmentManager.popBackStack("fragment_map",FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragment_count-=1;
-                            }
-                        },1);
-            }
         }
+
 
     }
     public void DisplayFragmentDelegates(double place_lat,double place_lng,String type,String client_id,String order_id)
