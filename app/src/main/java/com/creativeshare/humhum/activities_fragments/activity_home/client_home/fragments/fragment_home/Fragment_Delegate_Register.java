@@ -410,8 +410,14 @@ public class Fragment_Delegate_Register extends Fragment {
             {
                 imgUri1 = data.getData();
                 image_id_icon.setVisibility(View.GONE);
-                File file = new File(Common.getImagePath(activity, imgUri1));
-                Picasso.with(activity).load(file).fit().into(image_id);
+                try {
+                    File file = new File(Common.getImagePath(activity, imgUri1));
+                    Picasso.with(activity).load(file).fit().into(image_id);
+                }
+                catch (RuntimeException ex){
+
+                }
+
             }else if (selectedType ==2)
             {
                 image_id_icon.setVisibility(View.GONE);
