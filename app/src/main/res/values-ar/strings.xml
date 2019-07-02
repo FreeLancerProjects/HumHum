@@ -278,6 +278,7 @@
     <string name="account_iban">الايبان</string>
     <string name="account_number">رقم الحساب</string>
     <string name="account_name">إسم الحساب</string>
+    <string name="courier_number">عدد المناديب : </string>
 
 
 </resources>

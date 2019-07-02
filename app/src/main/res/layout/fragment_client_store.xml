@@ -34,13 +34,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:weightSum="1"
                 >
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_weight=".1"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/dotgreen"
+                    />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                   android:layout_weight=".9"
-                    android:text="@string/a_picture_of_the_car_from_behind"
+                   android:layout_weight=".8"
+                    android:text="@string/courier_number"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
