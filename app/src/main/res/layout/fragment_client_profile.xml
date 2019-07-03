@@ -68,7 +68,7 @@
                     app:srb_starSize="25dp"
                     app:srb_starsSeparation="10dp"
                     app:srb_numberOfStars="5"
-                    app:srb_fillColor="@color/golden_stars"
+                    app:srb_fillColor="@color/black"
                     app:srb_borderColor="@color/white"
                     app:srb_starBorderWidth="3"
                     app:srb_drawBorderEnabled="true"

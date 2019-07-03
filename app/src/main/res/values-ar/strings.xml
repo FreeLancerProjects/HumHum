@@ -157,7 +157,7 @@
     <string name="suc">تم بنجاح !</string>
     <string name="succ_be_courier">سنقوم بمراجعة بياناتك سيصلك إشعار قريبا.</string>
     <string name="serv_aval_client">هذه الخدمة متاحة للعملاء فقط</string>
-    <string name="already_courier">تم تسجيلك كمرسول من قبل.</string>
+    <string name="already_courier">تم تسجيلك كمندوب من قبل.</string>
     <string name="order_number">رقم الطلب</string>
     <string name="no_waiting_orders">لا توجد طلبات في الانتظار</string>
     <string name="order_state">حالة الطلب</string>
