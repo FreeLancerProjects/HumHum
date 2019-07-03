@@ -155,7 +155,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         tv_client_name.setText(order.getClient_user_full_name());
         tv_order_details.setText(order.getOrder_details()+"\n"+getString(R.string.delivery_cost)+":"+order.getDriver_offer()+currency.getSymbol());
 
-        if (order.getOrder_image().equals("0"))
+        if (order.getOrder_image()==null)
         {
             order_image.setVisibility(View.GONE);
         }else
