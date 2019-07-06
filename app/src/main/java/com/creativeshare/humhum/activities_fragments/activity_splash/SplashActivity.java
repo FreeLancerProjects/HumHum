@@ -44,7 +44,9 @@ public class SplashActivity extends AppCompatActivity {
         lin.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.move);
         final Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.fade);
+
         cov.startAnimation(animation);
+
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -53,24 +55,6 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                animation.cancel();
-                img_hum.startAnimation(animation1);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        animation1.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
                 lin.setVisibility(View.GONE);
 
                 String session = preferences.getSession(SplashActivity.this);

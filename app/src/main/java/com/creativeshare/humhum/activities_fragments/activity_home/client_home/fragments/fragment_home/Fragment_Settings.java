@@ -39,12 +39,10 @@ import retrofit2.Response;
 public class Fragment_Settings extends Fragment {
 
     private ClientHomeActivity activity;
-    private ConstraintLayout cons_back,cons_alert,cons_complains,cons_edit_profile,cons_language,cons_terms,cons_privacy,cons_rate,cons_about,cons_banks;
+    private ConstraintLayout cons_back,cons_complains,cons_edit_profile,cons_language,cons_terms,cons_privacy,cons_rate,cons_about,cons_banks;
     private ImageView arrow_back,arrow1,arrow2,arrow3,arrow4,arrow5,arrow6,arrow7,arrow8;
     private String current_language;
     private String [] language_array;
-    private ToggleButton toggle_btn;
-    private View v_alert;
     private UserSingleTone userSingleTone;
     private UserModel userModel;
 
@@ -109,7 +107,6 @@ public class Fragment_Settings extends Fragment {
             }
 
         cons_back = view.findViewById(R.id.cons_back);
-        cons_alert = view.findViewById(R.id.cons_alert);
         cons_complains = view.findViewById(R.id.cons_complains);
         cons_edit_profile = view.findViewById(R.id.cons_edit_profile);
         cons_language = view.findViewById(R.id.cons_language);
@@ -120,8 +117,7 @@ public class Fragment_Settings extends Fragment {
         cons_back = view.findViewById(R.id.cons_back);
         cons_banks = view.findViewById(R.id.cons_banks);
 
-        toggle_btn = view.findViewById(R.id.toggle_btn);
-        v_alert = view.findViewById(R.id.v_alert);
+
 
         cons_rate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,19 +178,6 @@ public class Fragment_Settings extends Fragment {
             }
         });
 
-        toggle_btn.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-            @Override
-            public void onToggle(boolean on) {
-                if (on)
-                {
-                    updateState("on");
-                }else
-                    {
-                        updateState("off");
-
-                    }
-            }
-        });
 
         cons_banks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +188,7 @@ public class Fragment_Settings extends Fragment {
 
 
 
-        if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE))
+      /*  if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE))
         {
             cons_alert.setVisibility(View.VISIBLE);
             v_alert.setVisibility(View.VISIBLE);
@@ -221,11 +204,11 @@ public class Fragment_Settings extends Fragment {
             {
                 cons_alert.setVisibility(View.GONE);
                 v_alert.setVisibility(View.GONE);
-            }
+            }*/
 
     }
 
-    private void updateState(final String state)
+  /*  private void updateState(final String state)
     {
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.show();
@@ -280,7 +263,7 @@ public class Fragment_Settings extends Fragment {
                     }
                 });
 
-    }
+    }*/
 
     private void UpdateUserData(UserModel userModel) {
         this.userModel = userModel;

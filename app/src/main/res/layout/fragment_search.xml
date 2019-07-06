@@ -110,7 +110,10 @@
                     android:text="@string/near_me"
                     app:layout_constraintStart_toStartOf="@id/ll_search"
                     app:layout_constraintEnd_toEndOf="@id/ll_search"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/arrow"
+                    android:textColor="@color/gray7"
+                    android:textSize="15sp"
+                    android:gravity="center"
                     />
 
 

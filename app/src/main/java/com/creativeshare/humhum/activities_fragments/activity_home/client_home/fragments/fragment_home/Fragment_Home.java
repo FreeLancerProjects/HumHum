@@ -153,11 +153,11 @@ public class Fragment_Home extends Fragment {
         if (count>0)
         {
             builder.setText(count+"");
-            ah_bottom_nav.setNotification(builder.build(),3);
+            ah_bottom_nav.setNotification(builder.build(),2);
         }else
             {
                 builder.setText("");
-                ah_bottom_nav.setNotification(builder.build(),3);
+                ah_bottom_nav.setNotification(builder.build(),2);
             }
     }
 
