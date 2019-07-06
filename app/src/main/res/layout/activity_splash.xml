@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.creativeshare.humhum.activities_fragments.activity_splash.SplashActivity"
+    tools:context=".activities_fragments.activity_splash.SplashActivity"
     android:background="@drawable/back"
     android:id="@+id/fl"
     >
@@ -19,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="invisible"
         >
         <ImageView
             android:id="@+id/img_cov"
@@ -31,9 +31,20 @@
 
         </ImageView>
         <ImageView
+            android:id="@+id/img_hum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo_only"
+            android:src="@drawable/hum"
+            android:visibility="invisible"
+            android:layout_marginBottom="-15dp"
+            >
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/hand"
             >
 
         </ImageView>

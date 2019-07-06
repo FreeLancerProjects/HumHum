@@ -24,23 +24,26 @@ public class SplashActivity extends AppCompatActivity {
 
     private Preferences preferences;
 
-    private ImageView cov;
+    private ImageView cov, img_hum;
     private String current_lang;
     private LinearLayout lin;
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language_Helper.updateResources(base,Language_Helper.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         preferences = Preferences.getInstance();
-        cov=findViewById(R.id.img_cov);
-        lin=findViewById(R.id.lin);
+        cov = findViewById(R.id.img_cov);
+        img_hum = findViewById(R.id.img_hum);
+        lin = findViewById(R.id.lin);
         lin.setVisibility(View.VISIBLE);
-        Animation animation = AnimationUtils.loadAnimation(this,R.anim.move);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.move);
+        final Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.fade);
         cov.startAnimation(animation);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -50,12 +53,29 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                animation.cancel();
+                img_hum.startAnimation(animation1);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        animation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
                 lin.setVisibility(View.GONE);
 
                 String session = preferences.getSession(SplashActivity.this);
 
-                if (session.equals(Tags.session_login))
-                {
+                if (session.equals(Tags.session_login)) {
                     UserModel userModel = preferences.getUserData(SplashActivity.this);
                     UserSingleTone userSingleTone = UserSingleTone.getInstance();
                     userSingleTone.setUserModel(userModel);
@@ -63,12 +83,11 @@ public class SplashActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashActivity.this, ClientHomeActivity.class);
                     startActivity(intent);
                     finish();
-                }else
-                    {
-                        Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override
