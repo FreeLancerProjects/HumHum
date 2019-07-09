@@ -3,11 +3,11 @@ package com.creativeshare.humhum.activities_fragments.activity_splash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +26,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageView cov, img_hum;
     private String current_lang;
-    private LinearLayout lin;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -40,8 +39,7 @@ public class SplashActivity extends AppCompatActivity {
         preferences = Preferences.getInstance();
         cov = findViewById(R.id.img_cov);
         img_hum = findViewById(R.id.img_hum);
-        lin = findViewById(R.id.lin);
-        lin.setVisibility(View.VISIBLE);
+
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.move);
         final Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.fade);
 
@@ -50,28 +48,50 @@ public class SplashActivity extends AppCompatActivity {
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                img_hum.setVisibility(View.VISIBLE);
+                img_hum.startAnimation(animation1);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        animation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                lin.setVisibility(View.GONE);
+                new Handler()
+                        .postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                String session = preferences.getSession(SplashActivity.this);
 
-                String session = preferences.getSession(SplashActivity.this);
+                                if (session.equals(Tags.session_login)) {
+                                    UserModel userModel = preferences.getUserData(SplashActivity.this);
+                                    UserSingleTone userSingleTone = UserSingleTone.getInstance();
+                                    userSingleTone.setUserModel(userModel);
 
-                if (session.equals(Tags.session_login)) {
-                    UserModel userModel = preferences.getUserData(SplashActivity.this);
-                    UserSingleTone userSingleTone = UserSingleTone.getInstance();
-                    userSingleTone.setUserModel(userModel);
-
-                    Intent intent = new Intent(SplashActivity.this, ClientHomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                                    Intent intent = new Intent(SplashActivity.this, ClientHomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        },1000);
             }
 
             @Override

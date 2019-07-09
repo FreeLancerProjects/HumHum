@@ -4,21 +4,15 @@ import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,12 +33,15 @@ import com.creativeshare.humhum.models.SearchDataModel;
 import com.creativeshare.humhum.models.SearchModel;
 import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
-import com.creativeshare.humhum.share.Common;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,10 +54,10 @@ public class Fragment_Search extends Fragment {
     private static final String TAG2 = "LAT";
     private static final String TAG3 = "LNG";
     private ClientHomeActivity activity;
-    private ImageView arrow, image_icon_delete;
+    private ImageView arrow;
     private ConstraintLayout cons_search;
     private LinearLayout ll_no_store;
-    private EditText edt_search;
+    //private AutoCompleteTextView edt_search;
     private ExpandableLayout expandLayout;
     private RecyclerView recViewQueries, recView;
     private LinearLayoutManager manager, managerQueries;
@@ -75,6 +72,7 @@ public class Fragment_Search extends Fragment {
     private List<PlaceModel> placeModelList;
     private double lat = 0.0, lng = 0.0;
     private String user_address="";
+
 
     @Nullable
     @Override
@@ -124,9 +122,9 @@ public class Fragment_Search extends Fragment {
 
 
 
-        image_icon_delete = view.findViewById(R.id.image_icon_delete);
+        //image_icon_delete = view.findViewById(R.id.image_icon_delete);
         cons_search = view.findViewById(R.id.cons_search);
-        edt_search = view.findViewById(R.id.edt_search);
+        //edt_search = view.findViewById(R.id.edt_search);
         expandLayout = view.findViewById(R.id.expandLayout);
         ll_no_store = view.findViewById(R.id.ll_no_store);
 
@@ -156,7 +154,7 @@ public class Fragment_Search extends Fragment {
             }
         });
 
-        edt_search.addTextChangedListener(new TextWatcher() {
+        /*edt_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -165,11 +163,11 @@ public class Fragment_Search extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (image_icon_delete.getVisibility() != View.VISIBLE)
+               *//* if (image_icon_delete.getVisibility() != View.VISIBLE)
                 {
                     image_icon_delete.setVisibility(View.VISIBLE);
 
-                }
+                }*//*
 
                 if (queryModelList.size()>0) {
                     if (!expandLayout.isExpanded()) {
@@ -182,7 +180,7 @@ public class Fragment_Search extends Fragment {
 
                 if (edt_search.getText().toString().length() == 0){
                     query = "";
-                    image_icon_delete.setVisibility(View.GONE);
+                   // image_icon_delete.setVisibility(View.GONE);
                     expandLayout.collapse(true);
 
                 }
@@ -192,9 +190,9 @@ public class Fragment_Search extends Fragment {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
-        edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+       /* edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -207,17 +205,42 @@ public class Fragment_Search extends Fragment {
                 }
                 return false;
             }
-        });
+        });*/
 
-        image_icon_delete.setOnClickListener(new View.OnClickListener() {
+      //  edt_search.setOnItemClickListener(itemClickListener);
+        //edt_search.setAdapter(autocompleteAdapter);
+        /*image_icon_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 image_icon_delete.setVisibility(View.GONE);
                 edt_search.setText("");
                 query = "";
             }
+        });*/
+
+        com.google.android.libraries.places.api.Places.initialize(activity,getString(R.string.map_api_key));
+
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        autocompleteFragment.setPlaceFields(Arrays.asList(com.google.android.libraries.places.api.model.Place.Field.ID,com.google.android.libraries.places.api.model.Place.Field.NAME,com.google.android.libraries.places.api.model.Place.Field.ADDRESS ));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull com.google.android.libraries.places.api.model.Place place) {
+                query = place.getName()+" "+place.getAddress();
+                Search();
+
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+
+            }
         });
     }
+
+
 
 
     private void Search() {
@@ -227,7 +250,7 @@ public class Fragment_Search extends Fragment {
         expandLayout.collapse(true);
         ll_no_store.setVisibility(View.GONE);
 
-        Common.CloseKeyBoard(activity,edt_search);
+        //Common.CloseKeyBoard(activity,edt_search);
         ll_no_store.setVisibility(View.GONE);
         placeModelList.clear();
         if (adapter != null) {
@@ -330,8 +353,8 @@ public class Fragment_Search extends Fragment {
 
     public void setQueryItemData(QueryModel queryModel) {
         query = queryModel.getKeyword();
-        edt_search.setText(query);
-        image_icon_delete.setVisibility(View.VISIBLE);
+       // edt_search.setText(query);
+        //image_icon_delete.setVisibility(View.VISIBLE);
         Search();
     }
 
@@ -372,5 +395,7 @@ public class Fragment_Search extends Fragment {
 
         return user_address;
     }
+
+
 
 }
