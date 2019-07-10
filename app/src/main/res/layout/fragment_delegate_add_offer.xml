@@ -153,7 +153,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_details"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_map"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -325,7 +325,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_delivery"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:layout_width="wrap_content"

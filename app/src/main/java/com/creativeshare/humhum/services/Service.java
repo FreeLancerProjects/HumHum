@@ -44,6 +44,14 @@ public interface Service {
                                                @Query(value = "key") String key
     );
 
+    @GET("place/nearbysearch/json")
+    Call<NearbyStoreDataModel> getNearbySearchStores(@Query(value = "location") String location,
+                                                     @Query(value = "radius") int radius,
+                                                     @Query(value = "name") String query,
+                                                     @Query(value = "language") String language,
+                                                     @Query(value = "key") String key
+    );
+
     @GET("place/findplacefromtext/json")
     Call<SearchDataModel> getNearbyStoresWithKeyword(@Query(value = "locationbias") String location,
                                                      @Query(value = "inputtype") String inputtype,
@@ -360,24 +368,24 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("/Api/availableStatus")
-    Call<UserModel> updateDelegateAvailable(@Field("user_id") String  user_id,
-                                            @Field("available") String  available
-                                            );
+    Call<UserModel> updateDelegateAvailable(@Field("user_id") String user_id,
+                                            @Field("available") String available
+    );
 
     @GET("directions/json")
     Call<PlaceDirectionModel> getDirection(@Query("origin") String origin,
                                            @Query("destination") String destination,
                                            @Query("transit_mode") String transit_mode,
                                            @Query("key") String key
-                                           );
+    );
 
 
     @FormUrlEncoded
     @POST("/Api/followingDriver")
-    Call<FollowModel> getFollowData(@Field("order_id")String order_id,
-                                    @Field("driver_id")String driver_id,
-                                    @Field("client_id")String client_id
-                                    );
+    Call<FollowModel> getFollowData(@Field("order_id") String order_id,
+                                    @Field("driver_id") String driver_id,
+                                    @Field("client_id") String client_id
+    );
 
     @GET("/Api/banks")
     Call<BankDataModel> getBankAccount();

@@ -150,7 +150,7 @@
                                     android:layout_height="35dp"
                                     android:src="@drawable/user"
                                     android:padding="8dp"
-                                    android:tint="@color/colorPrimary"
+                                    android:tint="@color/black"
                                     />
 
                                 <TextView
@@ -194,7 +194,7 @@
                                     android:layout_height="35dp"
                                     android:src="@drawable/ic_map"
                                     android:padding="8dp"
-                                    android:tint="@color/colorPrimary"
+                                    android:tint="@color/black"
                                     />
                                 <TextView
                                     android:layout_width="match_parent"
@@ -391,12 +391,12 @@
                                     android:layout_height="35dp"
                                     android:src="@drawable/ic_details"
                                     android:padding="8dp"
-                                    android:tint="@color/colorPrimary"
+                                    android:tint="@color/black"
                                     />
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/colorPrimary"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="13sp"
                                     android:text="@string/order_details"

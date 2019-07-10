@@ -292,6 +292,7 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
         tv_address.setText(placeModel.getAddress());
         tv.setVisibility(View.VISIBLE);
         tv_state.setVisibility(View.VISIBLE);
+        Log.e("stat",placeModel.isOpenNow()+"_");
         if (placeModel.isOpenNow())
         {
             tv_state.setText(getString(R.string.active));

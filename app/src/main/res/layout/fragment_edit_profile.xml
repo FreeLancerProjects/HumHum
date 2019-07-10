@@ -170,7 +170,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/user"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/black"
                         android:padding="5dp"
                         />
                     <TextView
@@ -215,7 +215,7 @@
                         android:textSize="16sp"
                         android:gravity="center"
                         android:src="@drawable/ic_mail"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/black"
                         android:padding="10dp"
                         />
                     <EditText
@@ -250,11 +250,10 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
                         android:gravity="center"
                         android:src="@drawable/ic_phone"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/black"
                         android:padding="10dp"
                         android:clickable="false"
                         android:longClickable="false"
@@ -295,11 +294,10 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
                         android:gravity="center"
                         android:src="@drawable/ic_calendar"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/black"
                         android:padding="10dp"
                         android:clickable="false"
                         android:longClickable="false"

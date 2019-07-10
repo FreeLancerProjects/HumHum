@@ -19,8 +19,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="center"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/custom_progress_par"
+
         />
     <TextView
         android:id="@+id/tv_no_orders"

@@ -1,7 +1,6 @@
 package com.creativeshare.humhum.models;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class PlaceModel implements Serializable {
     private String id;
@@ -13,7 +12,6 @@ public class PlaceModel implements Serializable {
     private double lng;
     private String address;
     private boolean isOpenNow;
-    private List<String> weekday_text;
 
     public PlaceModel(String id, String place_id, String name, String icon, float rating, double lat, double lng, String address) {
         this.id = id;
@@ -58,17 +56,11 @@ public class PlaceModel implements Serializable {
         return isOpenNow;
     }
 
-    public List<String> getWeekday_text() {
-        return weekday_text;
-    }
 
     public void setOpenNow(boolean openNow) {
         isOpenNow = openNow;
     }
 
-    public void setWeekday_text(List<String> weekday_text) {
-        this.weekday_text = weekday_text;
-    }
 
     public String getAddress() {
         return address;

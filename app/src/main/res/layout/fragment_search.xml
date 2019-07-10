@@ -37,26 +37,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="RtlCompat" />
 
-            <FrameLayout
-                android:id="@+id/fl2"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                app:layout_constraintStart_toEndOf="@id/arrow"
-                app:layout_constraintTop_toTopOf="@id/arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/ll_seaarch_bg"
-
-
-                >
-                <fragment android:id="@+id/autocomplete_fragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                    />
-            </FrameLayout>
-<!--
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_search"
                 android:layout_width="0dp"
@@ -86,7 +66,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     />
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/edt_search"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
@@ -122,15 +102,14 @@
 
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
--->
 
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:text="@string/near_me"
-                    app:layout_constraintStart_toStartOf="@id/fl2"
-                    app:layout_constraintEnd_toEndOf="@id/fl2"
+                    app:layout_constraintStart_toStartOf="@id/ll_search"
+                    app:layout_constraintEnd_toEndOf="@id/ll_search"
                     app:layout_constraintTop_toBottomOf="@+id/arrow"
                     android:textColor="@color/gray7"
                     android:textSize="15sp"
@@ -209,9 +188,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:visibility="gone"
-            android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/custom_progress_par"
+
             />
+
         <LinearLayout
             android:id="@+id/ll_no_store"
             android:layout_width="wrap_content"

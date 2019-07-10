@@ -120,16 +120,16 @@ public class Fragment_Home extends Fragment {
     private void setUpBottomNavigation()
     {
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.stores),R.drawable.ic_nav_store);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.my_orders),R.drawable.ic_nav_order);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.notifications),R.drawable.ic_nav_notification);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem(getString(R.string.profile),R.drawable.ic_nav_user);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.stores),R.drawable.ic_nav_store2);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.my_orders),R.drawable.ic_nav_order2);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.notifications),R.drawable.ic_nav_not2);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(getString(R.string.profile),R.drawable.user);
 
         ah_bottom_nav.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         ah_bottom_nav.setDefaultBackgroundColor(ContextCompat.getColor(activity,R.color.white));
         ah_bottom_nav.setTitleTextSizeInSp(14,12);
         ah_bottom_nav.setForceTint(true);
-        ah_bottom_nav.setAccentColor(ContextCompat.getColor(activity,R.color.gradient_end_color));
+        ah_bottom_nav.setAccentColor(ContextCompat.getColor(activity,R.color.black));
         ah_bottom_nav.setInactiveColor(ContextCompat.getColor(activity,R.color.gray4));
 
         ah_bottom_nav.addItem(item1);
