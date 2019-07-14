@@ -75,6 +75,7 @@ public class Fragment_Pending_Orders extends Fragment {
         recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recView.setDrawingCacheEnabled(true);
         recView.setItemViewCacheSize(25);
+
         manager = new LinearLayoutManager(activity);
         recView.setLayoutManager(manager);
         adapter = new WaitOrderAdapter(waitOrderList, activity);
