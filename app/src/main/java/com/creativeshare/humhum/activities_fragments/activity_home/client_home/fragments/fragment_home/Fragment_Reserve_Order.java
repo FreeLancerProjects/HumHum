@@ -117,14 +117,12 @@ public class Fragment_Reserve_Order extends Fragment {
         Paper.init(activity);
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-        timesList = new String[]{getString(R.string.hour1),
-                getString(R.string.hour2),
+        timesList = new String[]{getString(R.string.hour1)};
+       /* getString(R.string.hour2),
                 getString(R.string.hour3),
                 getString(R.string.day1),
                 getString(R.string.day2),
-                getString(R.string.day3)
-
-        };
+                getString(R.string.day3)*/
 
 
         arrow = view.findViewById(R.id.arrow);
@@ -537,7 +535,7 @@ public class Fragment_Reserve_Order extends Fragment {
         numberPicker.setMaxValue(timesList.length-1);
         numberPicker.setDisplayedValues(timesList);
         numberPicker.setWrapSelectorWheel(false);
-        numberPicker.setValue(1);
+        numberPicker.setValue(0);
         btn_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

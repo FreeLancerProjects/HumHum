@@ -54,10 +54,10 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
     private static final String TAG3 = "LNG";
     private ClientHomeActivity activity;
     private ImageView arrow, image_pin;
-    private LinearLayout ll_back;
+    private LinearLayout ll_back,ll_map_type;
     private EditText edt_search, edt_floor;
     private ProgressBar progBar;
-    private TextView tv_address;
+    private TextView tv_address,tv_map_type;
     private FloatingActionButton fab;
     private String current_language;
     private double lat = 0.0, lng = 0.0;
@@ -115,6 +115,8 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
         progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         tv_address = view.findViewById(R.id.tv_address);
         fab = view.findViewById(R.id.fab);
+        ll_map_type = view.findViewById(R.id.ll_map_type);
+        tv_map_type = view.findViewById(R.id.tv_map_type);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +151,32 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        ll_map_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (mMap.getMapType())
+                {
+                    case GoogleMap.MAP_TYPE_NORMAL:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        tv_map_type.setText(getString(R.string.hybrid));
+                        break;
+
+                    case GoogleMap.MAP_TYPE_HYBRID:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                        tv_map_type.setText(getString(R.string.terrain));
+
+
+                        break;
+                    case GoogleMap.MAP_TYPE_TERRAIN:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        tv_map_type.setText(getString(R.string.normal));
+
+                        break;
+                }
+            }
+        });
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             from = bundle.getString(TAG1);
@@ -174,6 +202,8 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
 
         if (googleMap != null) {
             mMap = googleMap;
+            tv_map_type.setText(getString(R.string.normal));
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.maps));
             mMap.setTrafficEnabled(false);
             mMap.setBuildingsEnabled(false);

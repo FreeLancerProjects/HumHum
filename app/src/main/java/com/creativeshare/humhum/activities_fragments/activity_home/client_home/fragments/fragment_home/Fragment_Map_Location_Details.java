@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +38,8 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
 
     private ClientHomeActivity activity;
     private ImageView arrow;
-    private LinearLayout ll_back;
+    private LinearLayout ll_back,ll_map_type;
+    private TextView tv_map_type;
     private String current_language;
     private double lat = 0.0, lng = 0.0;
     private String address="";
@@ -85,11 +87,38 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
 
         }
         ll_back = view.findViewById(R.id.ll_back);
-
+        ll_map_type = view.findViewById(R.id.ll_map_type);
+        tv_map_type = view.findViewById(R.id.tv_map_type);
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.Back();
+            }
+        });
+
+        ll_map_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (mMap.getMapType())
+                {
+                    case GoogleMap.MAP_TYPE_NORMAL:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        tv_map_type.setText(getString(R.string.hybrid));
+                        break;
+
+                    case GoogleMap.MAP_TYPE_HYBRID:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                        tv_map_type.setText(getString(R.string.terrain));
+
+
+                        break;
+                    case GoogleMap.MAP_TYPE_TERRAIN:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        tv_map_type.setText(getString(R.string.normal));
+
+                        break;
+                }
             }
         });
 
@@ -120,6 +149,8 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
 
         if (googleMap != null) {
             mMap = googleMap;
+            tv_map_type.setText(getString(R.string.normal));
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.maps));
             mMap.setTrafficEnabled(false);
             mMap.setBuildingsEnabled(false);

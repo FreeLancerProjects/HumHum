@@ -55,9 +55,9 @@ public class Fragment_Map_Follow_Order extends Fragment implements OnMapReadyCal
     private static final String TAG = "DATA";
     private ClientHomeActivity activity;
     private ImageView arrow;
-    private LinearLayout ll_back;
+    private LinearLayout ll_back,ll_map_type;
     private String current_language;
-    private TextView tv_distance, tv_time;
+    private TextView tv_distance, tv_time,tv_map_type;
     private OrderDataModel.OrderModel orderModel;
     private GoogleMap mMap;
     private Marker marker_client, marker_place, marker_driver;
@@ -107,6 +107,8 @@ public class Fragment_Map_Follow_Order extends Fragment implements OnMapReadyCal
 
 
         }
+        ll_map_type = view.findViewById(R.id.ll_map_type);
+        tv_map_type = view.findViewById(R.id.tv_map_type);
         ll_back = view.findViewById(R.id.ll_back);
 
         tv_distance = view.findViewById(R.id.tv_distance);
@@ -116,6 +118,32 @@ public class Fragment_Map_Follow_Order extends Fragment implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 activity.Back();
+            }
+        });
+
+        ll_map_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (mMap.getMapType())
+                {
+                    case GoogleMap.MAP_TYPE_NORMAL:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        tv_map_type.setText(getString(R.string.hybrid));
+                        break;
+
+                    case GoogleMap.MAP_TYPE_HYBRID:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                        tv_map_type.setText(getString(R.string.terrain));
+
+
+                        break;
+                    case GoogleMap.MAP_TYPE_TERRAIN:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        tv_map_type.setText(getString(R.string.normal));
+
+                        break;
+                }
             }
         });
 
@@ -135,6 +163,8 @@ public class Fragment_Map_Follow_Order extends Fragment implements OnMapReadyCal
 
         if (googleMap != null) {
             mMap = googleMap;
+            tv_map_type.setText(getString(R.string.normal));
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(activity, R.raw.maps));
             mMap.setTrafficEnabled(false);
             mMap.setBuildingsEnabled(false);

@@ -62,8 +62,8 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
     private static final String TAG3 = "LNG";
 
     private ClientHomeActivity activity;
-    private LinearLayout ll_map,ll_delegate,ll_today,ll_open_hour;
-    private TextView tv_delegate_count,tv_name,tv_address,tv_state,tv;
+    private LinearLayout ll_map,ll_delegate,ll_today,ll_open_hour,ll_map_type;
+    private TextView tv_delegate_count,tv_name,tv_address,tv_state,tv,tv_map_type;
     private FloatingActionButton fab;
     private ProgressBar progBar;
     private PlaceModel placeModel;
@@ -108,11 +108,15 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
         userModel = userSingleTone.getUserModel();
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         ll_map = view.findViewById(R.id.ll_map);
+        ll_map_type = view.findViewById(R.id.ll_map_type);
+        tv_map_type = view.findViewById(R.id.tv_map_type);
+
         ll_delegate = view.findViewById(R.id.ll_delegate);
         ll_delegate.setEnabled(false);
         tv_delegate_count = view.findViewById(R.id.tv_delegate_count);
         tv_name = view.findViewById(R.id.tv_name);
         tv_address = view.findViewById(R.id.tv_address);
+
         tv = view.findViewById(R.id.tv);
         tv_state = view.findViewById(R.id.tv_state);
         fab = view.findViewById(R.id.fab);
@@ -191,6 +195,32 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
                         arrow_down.animate().setDuration(700).rotation(180).start();
 
                     }
+            }
+        });
+
+        ll_map_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (mMap.getMapType())
+                {
+                    case GoogleMap.MAP_TYPE_NORMAL:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        tv_map_type.setText(getString(R.string.hybrid));
+                        break;
+
+                    case GoogleMap.MAP_TYPE_HYBRID:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                        tv_map_type.setText(getString(R.string.terrain));
+
+
+                        break;
+                    case GoogleMap.MAP_TYPE_TERRAIN:
+                        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        tv_map_type.setText(getString(R.string.normal));
+
+                        break;
+                }
             }
         });
 
@@ -429,6 +459,8 @@ public class Fragment_Details extends Fragment implements OnMapReadyCallback {
         if (googleMap!=null)
         {
             mMap = googleMap;
+            tv_map_type.setText(getString(R.string.normal));
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.setBuildingsEnabled(false);
             mMap.setIndoorEnabled(true);
             mMap.setTrafficEnabled(false);
