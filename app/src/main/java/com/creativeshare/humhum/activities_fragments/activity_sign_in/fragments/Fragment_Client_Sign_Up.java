@@ -45,7 +45,7 @@ import java.util.Locale;
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import io.paperdb.Paper;
 
-public class Fragment_Sign_Up extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class Fragment_Client_Sign_Up extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private FloatingActionButton fab;
     private SignInActivity activity;
@@ -66,13 +66,13 @@ public class Fragment_Sign_Up extends Fragment implements DatePickerDialog.OnDat
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        View view = inflater.inflate(R.layout.fragment_client_sign_up, container, false);
         initView(view);
         return view;
     }
 
-    public static Fragment_Sign_Up newInstance() {
-        return new Fragment_Sign_Up();
+    public static Fragment_Client_Sign_Up newInstance() {
+        return new Fragment_Client_Sign_Up();
     }
 
     private void initView(View view) {

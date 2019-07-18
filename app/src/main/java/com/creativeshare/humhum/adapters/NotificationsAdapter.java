@@ -135,7 +135,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 image_state.setVisibility(View.GONE);
                 image_state.setVisibility(View.GONE);
                 tv_add_rate.setVisibility(View.GONE);
-                Picasso.with(context).load(R.drawable.logo_only).fit().into(image);
+                Picasso.with(context).load(R.drawable.logo).fit().into(image);
                 tv_name.setText(notificationModel.getOrder_details());
 
 
@@ -152,13 +152,13 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (user_type.equals(Tags.TYPE_CLIENT)) {
                     tv_order_state.setText(context.getString(R.string.del_sent_offer));
 
-                    Picasso.with(context).load(R.drawable.logo_only).fit().into(image);
+                    Picasso.with(context).load(R.drawable.logo).fit().into(image);
                     tv_name.setText(notificationModel.getOrder_details());
 
 
                 } else {
                     tv_order_state.setText(context.getString(R.string.offer_accepted));
-                    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getFrom_user_image())).placeholder(R.drawable.logo_only).fit().into(image);
+                    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getFrom_user_image())).placeholder(R.drawable.logo).fit().into(image);
                     tv_name.setText(notificationModel.getFrom_user_full_name());
 
                 }
@@ -181,7 +181,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }else
 
                 {
-                    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getFrom_user_image())).placeholder(R.drawable.logo_only).fit().into(image);
+                    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getFrom_user_image())).placeholder(R.drawable.logo).fit().into(image);
                     tv_name.setText(notificationModel.getFrom_user_full_name());
                     tv_order_state.setText(R.string.offer_refused);
 
@@ -190,7 +190,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<RecyclerView.View
             {
                 if (user_type.equals(Tags.TYPE_CLIENT))
                 {
-                    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getFrom_user_image())).placeholder(R.drawable.logo_only).fit().into(image);
+                    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getFrom_user_image())).placeholder(R.drawable.logo).fit().into(image);
                     tv_name.setText(notificationModel.getFrom_user_full_name());
                     tv_order_state.setText(context.getString(R.string.done));
 

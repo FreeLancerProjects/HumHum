@@ -133,7 +133,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
         public void BindData(MessageModel messageModel) {
 
-            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + chat_user_image)).placeholder(R.drawable.logo_only).fit().priority(Picasso.Priority.HIGH).into(image);
+            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + chat_user_image)).placeholder(R.drawable.logo).fit().priority(Picasso.Priority.HIGH).into(image);
             tv_message_content.setText(messageModel.getMessage());
 
             Paper.init(context);
@@ -195,7 +195,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
             //Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+messageModel.getFile())).resizeDimen(R.dimen.chat_image_width,R.dimen.chat_image_height).into(image_bill);
             new MyAsyncTask().execute(messageModel.getFile());
-            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + chat_user_image)).placeholder(R.drawable.logo_only).fit().priority(Picasso.Priority.HIGH).into(image);
+            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL + chat_user_image)).placeholder(R.drawable.logo).fit().priority(Picasso.Priority.HIGH).into(image);
 
         }
 

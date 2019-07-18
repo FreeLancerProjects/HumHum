@@ -337,20 +337,71 @@
                         android:textSize="15sp" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_delivery_cost"
+                <TextView
+                    android:id="@+id/tv_delivery_cost"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edt_contact_bg"
-                    android:hint="@string/delivery_cost"
-                    android:inputType="numberDecimal"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray4"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/sar15"
+                    />
+
+                <FrameLayout
+                    android:id="@+id/fl_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/btn_show_map"
+                    android:layout_marginBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+
+                    >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:clickable="false"
+                        android:longClickable="false"
+
+                        >
+                        <ImageView
+                            android:id="@+id/image_arrow"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_left_arrow"
+                            android:padding="7dp"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:tint="@color/black"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="@string/show_address_on_map"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
+
+                            />
+                    </LinearLayout>
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -369,12 +420,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/black"
+            android:background="@color/active"
             android:text="@string/accept"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+
             />
 
         <Button
@@ -382,12 +432,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/black"
+            android:background="@color/white"
             android:text="@string/refuse"
-            android:textColor="@color/white"
+            android:textColor="@color/delete_color"
             android:textSize="15sp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

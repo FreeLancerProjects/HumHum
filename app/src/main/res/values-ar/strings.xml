@@ -115,7 +115,7 @@
     <string name="choose_delivery_location">إختر عنوان التوصيل</string>
     <string name="delivery_time">وقت التوصيل</string>
     <string name="check_here_to_choose_delivery_time">إضغط هنا لاختيار وقت التوصيل</string>
-    <string name="write_order_details">إكتب هنا تفاصيل طلبك من المحل مثلا: 1 هامبرجر بالجبنةو 1 بطاطس كبير ونرجو منك كتابة القيمة التقديرية للطلب حتى يتسنى للمرسول خدمتك.</string>
+    <string name="write_order_details">إكتب هنا تفاصيل طلبك من المحل مثلا: 1 هامبرجر بالجبنةو 1 بطاطس كبير ونرجو منك كتابة القيمة التقديرية للطلب حتى يتسنى للمندوب خدمتك.</string>
     <string name="set_location_on_map">حدد الموقع على الخريطة</string>
     <string name="save_favorite_location">حفظ الموقع في المفضلة</string>
     <string name="name">الاسم</string>
@@ -254,7 +254,7 @@
     <string name="refuse2">رفض</string>
     <string name="create_bill">إصدار فاتورة</string>
     <string name="not_certified">غير موثق</string>
-    <string name="coupons">عدد الكوبونات</string>
+    <string name="coupons">كروت الشحن</string>
     <string name="no_media_available">غير متاح الان!</string>
     <string name="excellent">ممتاز</string>
     <string name="very_good">جيد جدا</string>
@@ -283,6 +283,10 @@
     <string name="normal">عادي</string>
     <string name="hybrid">هجين</string>
     <string name="terrain">تضاريس</string>
+    <string name="sar15">15 ر.س</string>
+    <string name="contact_on_whats">إتصل بنا عبر الواتس اب</string>
+    <string name="search_for_courier">إنتظر قليلا جار البحث عن مناديب...</string>
+    <string name="client">عميل</string>
 
 
 </resources>

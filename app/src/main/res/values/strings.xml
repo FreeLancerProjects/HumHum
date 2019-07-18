@@ -286,4 +286,8 @@
     <string name="normal">Normal</string>
     <string name="hybrid">Hybrid</string>
     <string name="terrain">Terrain</string>
+    <string name="sar15">15 SAR</string>
+    <string name="contact_on_whats">Contact us on whatsapp</string>
+    <string name="search_for_courier">Wait searching for courier...</string>
+    <string name="client">Client</string>
 </resources>

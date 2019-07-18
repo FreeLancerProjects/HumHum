@@ -445,7 +445,7 @@ public class Fragment_Reserve_Order extends Fragment {
         RequestBody selected_time_part = Common.getRequestBodyText(String.valueOf(selected_time));
         MultipartBody.Part image_part = Common.getMultiPart(activity,uri,"order_image");
 
-        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.search_for_courier));
         dialog.show();
         Api.getService(Tags.base_url)
                 .sendOrderWithImage(user_id_part,client_address_part,client_lat_part,client_lng_part,order_details_part,place_id_part,place_name,place_address_part,order_type_part,place_lat_part,place_lng_part,selected_time_part,image_part)
@@ -485,7 +485,7 @@ public class Fragment_Reserve_Order extends Fragment {
         //this.delegate_id = delegate_id;
 
 
-        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.search_for_courier));
         dialog.show();
         Api.getService(Tags.base_url)
                 .sendOrder(userModel.getData().getUser_id(),selected_location.getStreet()+" "+selected_location.getAddress(),selected_location.getLat(),selected_location.getLng(),order_details,placeModel.getPlace_id(),placeModel.getName(),placeModel.getAddress(),"1",placeModel.getLat(),placeModel.getLng(),selected_time)

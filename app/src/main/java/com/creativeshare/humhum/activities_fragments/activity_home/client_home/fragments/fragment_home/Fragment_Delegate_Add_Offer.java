@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +20,6 @@ import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
 import com.creativeshare.humhum.models.OrderDataModel;
 import com.creativeshare.humhum.models.UserModel;
-import com.creativeshare.humhum.share.Common;
 import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
 import com.google.android.material.appbar.AppBarLayout;
@@ -34,11 +33,12 @@ import io.paperdb.Paper;
 public class Fragment_Delegate_Add_Offer extends Fragment {
 
     private final static  String TAG = "Data";
-    private ImageView image_back,order_image;
+    private ImageView image_back,order_image,image_arrow;
+    private FrameLayout fl_map;
     private LinearLayout ll_back,ll_client_container,ll_address,ll_shipment;
     private CircleImageView image;
     private TextView tv_client_name,tv_order_details,tv_order_address,tv_location_pickup,tv_location_dropoff;
-    private EditText edt_delivery_cost;
+    private TextView tv_delivery_cost;
     private Button btn_accept,btn_refused;
     private OrderDataModel.OrderModel orderModel;
     private String current_language;
@@ -76,10 +76,12 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
         Paper.init(activity);
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         image_back = view.findViewById(R.id.image_back);
+        image_arrow = view.findViewById(R.id.image_arrow);
 
         if (current_language.equals("ar"))
         {
             image_back.setImageResource(R.drawable.ic_right_arrow);
+            image_arrow.setRotation(180.0f);
         }else
         {
 
@@ -89,10 +91,12 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
 
         ll_back = view.findViewById(R.id.ll_back);
         image = view.findViewById(R.id.image);
+        fl_map = view.findViewById(R.id.fl_map);
+
         tv_client_name = view.findViewById(R.id.tv_client_name);
         tv_order_details = view.findViewById(R.id.tv_order_details);
         tv_order_address = view.findViewById(R.id.tv_order_address);
-        edt_delivery_cost = view.findViewById(R.id.edt_delivery_cost);
+        tv_delivery_cost = view.findViewById(R.id.tv_delivery_cost);
         btn_accept = view.findViewById(R.id.btn_accept);
         btn_refused = view.findViewById(R.id.btn_refused);
         ll_client_container = view.findViewById(R.id.ll_client_container);
@@ -136,6 +140,12 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
             }
         });
 
+        fl_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.DisplayFragmentMapLocationDetails(Double.parseDouble(orderModel.getPlace_lat()),Double.parseDouble(orderModel.getPlace_long()),orderModel.getPlace_address());
+            }
+        });
 
         app_bar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -199,15 +209,15 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
     }
 
     private void CheckData() {
-        String m_cost = edt_delivery_cost.getText().toString().trim();
+        String m_cost = tv_delivery_cost.getText().toString().trim();
         if (!TextUtils.isEmpty(m_cost))
         {
-            edt_delivery_cost.setError(null);
-            Common.CloseKeyBoard(activity,edt_delivery_cost);
+            tv_delivery_cost.setError(null);
+            //Common.CloseKeyBoard(activity,tv_delivery_cost);
             activity.delegateAcceptOrder(userModel.getData().getUser_id(),orderModel.getClient_id(),orderModel.getOrder_id(),m_cost);
         }else
             {
-                edt_delivery_cost.setError(getString(R.string.field_req));
+                tv_delivery_cost.setError(getString(R.string.field_req));
             }
     }
 

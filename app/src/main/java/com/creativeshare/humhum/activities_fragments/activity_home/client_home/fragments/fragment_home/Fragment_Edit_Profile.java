@@ -213,7 +213,7 @@ public class Fragment_Edit_Profile extends Fragment implements DatePickerDialog.
 
         if (userModel!=null)
         {
-            Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL+userModel.getData().getUser_image())).fit().placeholder(R.drawable.logo_only).into(image);
+            Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL+userModel.getData().getUser_image())).fit().placeholder(R.drawable.logo).into(image);
             edt_name.setText(userModel.getData().getUser_full_name());
             edt_email.setText(userModel.getData().getUser_email());
             //////////////////////////

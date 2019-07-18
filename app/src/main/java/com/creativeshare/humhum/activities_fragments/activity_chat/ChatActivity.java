@@ -378,12 +378,16 @@ public class ChatActivity extends AppCompatActivity {
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
         {
             ll_bill.setVisibility(View.GONE);
-        }
+        }else
+            {
+                ll_bill.setVisibility(View.GONE);
+
+            }
         preferences.saveChatUserData(this,chatUserModel);
         tv_name.setText(chatUserModel.getName());
         tv_order_num.setText(getString(R.string.order_number)+"#"+chatUserModel.getOrder_id());
-        Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+chatUserModel.getImage())).placeholder(R.drawable.logo_only).fit().into(image);
-        Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+chatUserModel.getImage())).placeholder(R.drawable.logo_only).fit().into(image_chat_user);
+        Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+chatUserModel.getImage())).placeholder(R.drawable.logo).fit().into(image);
+        Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+chatUserModel.getImage())).placeholder(R.drawable.logo).fit().into(image_chat_user);
         getChatMessages();
     }
     private void SendMessage(String msg,String msg_type)

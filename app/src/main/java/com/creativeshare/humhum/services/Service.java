@@ -108,6 +108,41 @@ public interface Service {
     );
 
 
+    @Multipart
+    @POST("/Api/driverSignup")
+    Call<UserModel> signUpDelegateWithoutImage(@Part("user_email") RequestBody user_email,
+                                               @Part("user_phone") RequestBody user_phone,
+                                               @Part("user_phone_code") RequestBody user_phone_code,
+                                               @Part("user_full_name") RequestBody user_full_name,
+                                               @Part("user_gender") RequestBody user_gender,
+                                               @Part("user_country") RequestBody user_country,
+                                               @Part("user_age") RequestBody user_age,
+                                               @Part("user_card_id") RequestBody user_card_id,
+                                               @Part("user_address") RequestBody user_address,
+                                               @Part MultipartBody.Part user_card_id_image,
+                                               @Part MultipartBody.Part user_driving_license,
+                                               @Part MultipartBody.Part image_car_front,
+                                               @Part MultipartBody.Part image_car_back
+    );
+
+    @Multipart
+    @POST("/Api/driverSignup")
+    Call<UserModel> signUpDelegateWithImage(@Part("user_email") RequestBody user_email,
+                                            @Part("user_phone") RequestBody user_phone,
+                                            @Part("user_phone_code") RequestBody user_phone_code,
+                                            @Part("user_full_name") RequestBody user_full_name,
+                                            @Part("user_gender") RequestBody user_gender,
+                                            @Part("user_country") RequestBody user_country,
+                                            @Part("user_age") RequestBody user_age,
+                                            @Part("user_card_id") RequestBody user_card_id,
+                                            @Part("user_address") RequestBody user_address,
+                                            @Part MultipartBody.Part user_card_id_image,
+                                            @Part MultipartBody.Part user_driving_license,
+                                            @Part MultipartBody.Part image_car_front,
+                                            @Part MultipartBody.Part image_car_back,
+                                            @Part MultipartBody.Part image
+    );
+
     @FormUrlEncoded
     @POST("/Api/login")
     Call<UserModel> signIn(@Field("user_phone") String user_phone,
@@ -389,6 +424,13 @@ public interface Service {
 
     @GET("/Api/banks")
     Call<BankDataModel> getBankAccount();
+
+    @Multipart
+    @POST("Api/addBillData")
+    Call<ResponseBody> payment(@Part("order_id") RequestBody order_id,
+                               @Part("bill_cost") RequestBody bill_cost,
+                               @Part MultipartBody.Part image
+    );
 }
 
 

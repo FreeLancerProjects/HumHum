@@ -8,12 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +64,6 @@ import com.creativeshare.humhum.models.BeDriverModel;
 import com.creativeshare.humhum.models.ChatUserModel;
 import com.creativeshare.humhum.models.Favourite_location;
 import com.creativeshare.humhum.models.FollowModel;
-import com.creativeshare.humhum.models.LocationError;
 import com.creativeshare.humhum.models.NotStateModel;
 import com.creativeshare.humhum.models.NotificationCountModel;
 import com.creativeshare.humhum.models.NotificationModel;
@@ -461,19 +458,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     },1);
         }
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void LocationErrorListener(final LocationError locationError)
-    {
-        /*stopService(intentService);
-        if (locationError.getStatus()==0)
-        {
-            StartService(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        }else if (locationError.getStatus()==1)
-        {
-            StartService(LocationRequest.PRIORITY_LOW_POWER);
 
-        }*/
-    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ListenNotificationChange(final NotStateModel notStateModel)
     {
@@ -525,7 +510,6 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     public void ListenNotificationDriverUpdate(final FollowModel followModel)
     {
 
-        Log.e("ssss",followModel.getDriver_lat()+"__");
        if (fragment_map_follow_order!=null&&fragment_map_follow_order.isAdded())
        {
            new Handler()
@@ -774,7 +758,6 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         }
 
     }
-
     public void DisplayFragmentMyOrders()
     {
         if (fragment_home != null && fragment_home.isAdded()) {
@@ -1059,7 +1042,6 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         }
 
     }
-
     public void DisplayFragmentDelegatesResult(NotificationModel notificationModel)
     {
         fragment_count+=1;
@@ -1521,6 +1503,47 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     }
                 });
     }
+
+
+
+    public void setDelegate_id(final String delegate_id,String client_id,String order_id, String type)
+    {
+        if (type.equals("reserve_order"))
+        {
+            if (fragment_reserve_order!=null&&fragment_reserve_order.isAdded())
+            {
+                new Handler()
+                        .postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ClientHomeActivity.super.onBackPressed();
+                                fragment_count-=1;
+                                //fragment_reserve_order.sendOrder(delegate_id);
+                                RefreshFragment_Notification();
+                            }
+                        },1);
+            }
+        }else
+        if (type.equals("resend_order"))
+        {
+            ClientHomeActivity.super.onBackPressed();
+            fragment_count-=1;
+           // ResendOrder(client_id,delegate_id,order_id);
+        }else if (type.equals("reserve_shipment"))
+        {
+            new Handler()
+                    .postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ClientHomeActivity.super.onBackPressed();
+                            fragment_count-=1;
+                            //fragment_shipment.sendOrder(delegate_id);
+                        }
+                    },1);
+        }
+
+
+    }
     ////////////////////////
    /* public  void CreateAcceptRefuseDialog(final String order_id, final double place_lat, final double place_long, final String client_id)
     {
@@ -1559,44 +1582,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     ////////////////////////
 
     //from fragment delegate,fragment client delegate offer order_id and client_id may be empty
-   /* public void setDelegate_id(final String delegate_id,String client_id,String order_id, String type)
-    {
-        *//*if (type.equals("reserve_order"))
-        {
-            if (fragment_reserve_order!=null&&fragment_reserve_order.isAdded())
-            {
-                new Handler()
-                        .postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                ClientHomeActivity.super.onBackPressed();
-                                fragment_count-=1;
-                                fragment_reserve_order.sendOrder(delegate_id);
-                                RefreshFragment_Notification();
-                            }
-                        },1);
-            }
-        }else*//*
-        if (type.equals("resend_order"))
-        {
-            ClientHomeActivity.super.onBackPressed();
-            fragment_count-=1;
-            ResendOrder(client_id,delegate_id,order_id);
-        }else if (type.equals("reserve_shipment"))
-            {
-                new Handler()
-                        .postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                ClientHomeActivity.super.onBackPressed();
-                                fragment_count-=1;
-                                fragment_shipment.sendOrder(delegate_id);
-                            }
-                        },1);
-            }
-
-
-    }*/
+   /*
 
 /*
     private void ResendOrder(String client_id, String delegate_id, String order_id) {
@@ -2197,61 +2183,8 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                 }*/
         }
     }
-    private void StartService(int accuracy)
-    {
-
-       /* intentService = new Intent(this, UpdateLocationService.class);
-        intentService.putExtra("accuracy",accuracy);
-        startService(intentService);*/
-    }
-    private boolean isGpsOpen()
-    {
-        boolean isOpened = false;
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (manager != null) {
-            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)||manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                isOpened = true;
-            }
-        }
-
-        return isOpened;
-    }
-    private void OpenGps()
-    {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivityForResult(intent, 33);
-    }
-    private void CreateGpsDialog()
-    {
-        final AlertDialog dialog = new AlertDialog.Builder(this)
-                .setCancelable(true)
-                .create();
-
-        View view = LayoutInflater.from(this).inflate(R.layout.gps_dialog,null);
-        Button btn_allow = view.findViewById(R.id.btn_allow);
-        Button btn_deny = view.findViewById(R.id.btn_deny);
-
-        btn_allow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                OpenGps();
-            }
-        });
-        btn_deny.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
 
 
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
-        dialog.setView(view);
-        dialog.show();
-    }
 
     /////////////////////////////////////////////////////////////////
     private void intLocationRequest()

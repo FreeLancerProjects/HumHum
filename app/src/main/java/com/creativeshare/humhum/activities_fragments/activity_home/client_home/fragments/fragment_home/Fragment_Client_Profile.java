@@ -46,12 +46,12 @@ public class Fragment_Client_Profile extends Fragment {
     private TextView tv_name, tv_balance, tv_order_count, tv_feedback, tv_certified, tv_coupons;
     private SimpleRatingBar rateBar;
     private ConstraintLayout cons_logout, cons_register_delegate, cons_comment, cons_add_coupon;
-    private LinearLayout ll_telegram, ll_certification;
+    private LinearLayout ll_telegram, ll_certification,ll_whats;
     private String current_language;
     private ClientHomeActivity activity;
     private UserModel userModel;
     private UserSingleTone userSingleTone;
-    private String facebook = "0", twitter = "0", instegram = "0", telegram = "0";
+    private String facebook = "0", twitter = "0", instegram = "0", telegram = "0",whatsapp="0";
 
     @Nullable
     @Override
@@ -109,6 +109,7 @@ public class Fragment_Client_Profile extends Fragment {
         cons_logout = view.findViewById(R.id.cons_logout);
 
         ll_certification = view.findViewById(R.id.ll_certification);
+        ll_whats = view.findViewById(R.id.ll_whats);
 
         ll_telegram = view.findViewById(R.id.ll_telegram);
 
@@ -130,7 +131,8 @@ public class Fragment_Client_Profile extends Fragment {
         cons_register_delegate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.DisplayFragmentDocumentation();
+                //activity.DisplayFragmentDocumentation();
+                activity.DisplayFragmentRegisterDelegate();
             }
         });
         cons_comment.setOnClickListener(new View.OnClickListener() {
@@ -149,14 +151,38 @@ public class Fragment_Client_Profile extends Fragment {
                 activity.DisplayFragmentAddCoupon();
             }
         });
-       /* ll_telegram.setOnClickListener(new View.OnClickListener() {
+        ll_telegram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
-                startActivity(intent);
-            }
-        });*/
+                if (!telegram.equals("0")) {
+                    ViewSocial(telegram);
 
+                } else {
+                    CreateAlertDialog();
+
+                }
+            }
+        });
+
+        ll_whats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!whatsapp.equals("0"))
+                {
+                    if (!whatsapp.startsWith("+966")||!whatsapp.startsWith("00966")||!whatsapp.startsWith("966"))
+                    {
+                        whatsapp = "+966"+whatsapp;
+
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("whatsapp://send?phone="+whatsapp));
+                    startActivity(intent);
+                }else
+                    {
+                        CreateAlertDialog();
+                    }
+            }
+        });
 
         image_twitter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +191,7 @@ public class Fragment_Client_Profile extends Fragment {
                     ViewSocial(twitter);
 
                 } else {
+                    CreateAlertDialog();
 
                 }
             }
@@ -265,7 +292,11 @@ public class Fragment_Client_Profile extends Fragment {
 
             if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT)) {
                 ll_certification.setVisibility(View.GONE);
+                ll_telegram.setVisibility(View.GONE);
+                ll_whats.setVisibility(View.VISIBLE);
             } else {
+
+
                 if (userModel.getData().getNum_orders() > 0) {
                     tv_certified.setText(getString(R.string.certified_account));
                     img_certified.setImageResource(R.drawable.checked_certified);
@@ -274,6 +305,8 @@ public class Fragment_Client_Profile extends Fragment {
                     img_certified.setImageResource(R.drawable.checked_not_certified);
 
                 }
+                ll_telegram.setVisibility(View.VISIBLE);
+                ll_whats.setVisibility(View.GONE);
                 ll_certification.setVisibility(View.VISIBLE);
 
 
@@ -281,7 +314,7 @@ public class Fragment_Client_Profile extends Fragment {
             tv_name.setText(userModel.getData().getUser_full_name());
             tv_order_count.setText(String.valueOf(userModel.getData().getNum_orders()));
             tv_coupons.setText(String.valueOf(userModel.getData().getNum_coupon()));
-            Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + userModel.getData().getUser_image())).placeholder(R.drawable.logo_only).into(image);
+            Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + userModel.getData().getUser_image())).placeholder(R.drawable.logo).into(image);
             Currency currency = Currency.getInstance(new Locale(current_language, userModel.getData().getUser_country()));
             if (userModel.getData().getAccount_balance() > 0) {
                 tv_balance.setTextColor(ContextCompat.getColor(activity, R.color.active));

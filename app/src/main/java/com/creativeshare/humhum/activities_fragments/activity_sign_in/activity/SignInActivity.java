@@ -7,16 +7,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Chooser_Login;
+import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Client_Sign_Up;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Code_Verification;
+import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Delegate_Sign_Up;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Language;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Phone;
-import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Sign_Up;
+import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_User_Type;
 import com.creativeshare.humhum.activities_fragments.terms_conditions.TermsConditionsActivity;
 import com.creativeshare.humhum.language.Language_Helper;
 import com.creativeshare.humhum.models.UserModel;
@@ -27,6 +32,7 @@ import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
@@ -42,7 +48,9 @@ public class SignInActivity extends AppCompatActivity {
     private Fragment_Language fragment_language;
     private Fragment_Chooser_Login fragment_chooser_login;
     private Fragment_Phone fragment_phone;
-    private Fragment_Sign_Up fragment_signUp;
+    private Fragment_Client_Sign_Up fragment_signUp;
+    private Fragment_Delegate_Sign_Up fragment_delegate_sign_up;
+    private Fragment_User_Type fragment_user_type;
     private Fragment_Code_Verification fragment_code_verification;
     private Preferences preferences;
     private String phone = "";
@@ -145,13 +153,14 @@ public class SignInActivity extends AppCompatActivity {
 
 
     }
-    public void DisplayFragmentSignUp(String phone)
+    public void DisplayFragmentClientSignUp()
     {
+
         fragment_count +=1;
 
         if (fragment_signUp == null)
         {
-            fragment_signUp = Fragment_Sign_Up.newInstance();
+            fragment_signUp = Fragment_Client_Sign_Up.newInstance();
         }
         if (fragment_signUp.isAdded())
         {
@@ -165,7 +174,6 @@ public class SignInActivity extends AppCompatActivity {
 
 
     }
-
     public void DisplayFragmentCodeVerification(String phone_code,String phone_number,String country_code)
     {
         fragment_count +=1;
@@ -181,6 +189,47 @@ public class SignInActivity extends AppCompatActivity {
         }else
         {
             fragmentManager.beginTransaction().add(R.id.fragment_sign_in_container, fragment_code_verification,"fragment_code_verification").addToBackStack("fragment_code_verification").commit();
+
+        }
+
+
+    }
+    public void DisplayFragmentDelegateSignUp()
+    {
+        fragment_count +=1;
+
+        if (fragment_delegate_sign_up == null)
+        {
+            fragment_delegate_sign_up = Fragment_Delegate_Sign_Up.newInstance();
+        }
+        if (fragment_delegate_sign_up.isAdded())
+        {
+            fragmentManager.beginTransaction().show(fragment_delegate_sign_up).commit();
+
+        }else
+        {
+            fragmentManager.beginTransaction().add(R.id.fragment_sign_in_container, fragment_delegate_sign_up,"fragment_delegate_sign_up").addToBackStack("fragment_delegate_sign_up").commit();
+
+        }
+
+
+    }
+    public void DisplayFragmentUserType()
+    {
+        Back();
+        fragment_count +=1;
+
+        if (fragment_user_type == null)
+        {
+            fragment_user_type = Fragment_User_Type.newInstance();
+        }
+        if (fragment_user_type.isAdded())
+        {
+            fragmentManager.beginTransaction().show(fragment_user_type).commit();
+
+        }else
+        {
+            fragmentManager.beginTransaction().add(R.id.fragment_sign_in_container, fragment_user_type,"fragment_user_type").addToBackStack("fragment_user_type").commit();
 
         }
 
@@ -257,7 +306,6 @@ public class SignInActivity extends AppCompatActivity {
         }
 
     }
-
     public void signIn(String m_phone, String country_code,String phone_code)
     {
 
@@ -294,7 +342,8 @@ public class SignInActivity extends AppCompatActivity {
                             if (response.code() == 404)
                             {
 
-                                DisplayFragmentSignUp(phone);
+                                //DisplayFragmentClientSignUp();
+                                DisplayFragmentUserType();
                             }
                         }
                     }
@@ -410,6 +459,157 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    public void signUpDelegateWithoutImage(String m_name, String m_email, int gender, long date_of_birth,String m_national_id,String m_address,Uri imgUri1,Uri imgUri2,Uri imgUri3,Uri imgUri4)
+    {
+        RequestBody email_part = Common.getRequestBodyText(m_email);
+        RequestBody phone_part = Common.getRequestBodyText(phone);
+        RequestBody phone_code_part = Common.getRequestBodyText(this.phone_code);
+        RequestBody name_part = Common.getRequestBodyText(m_name);
+        RequestBody gender_part = Common.getRequestBodyText(String.valueOf(gender));
+        RequestBody country_code_part = Common.getRequestBodyText(countrycode);
+        RequestBody date_birth_part = Common.getRequestBodyText(String.valueOf(date_of_birth));
+
+        RequestBody national_id_part =Common.getRequestBodyText(m_national_id);
+        RequestBody address_part =Common.getRequestBodyText(m_address);
+        MultipartBody.Part image_national_id_part = Common.getMultiPart(this,imgUri1,"user_card_id_image");
+        MultipartBody.Part image_license_part = Common.getMultiPart(this,imgUri2,"user_driving_license");
+
+        MultipartBody.Part image_front_part = Common.getMultiPart(this,imgUri3,"image_car_front");
+        MultipartBody.Part image_back_part = Common.getMultiPart(this,imgUri4,"image_car_back");
+
+
+
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .signUpDelegateWithoutImage(email_part,phone_part,phone_code_part,name_part,gender_part,country_code_part,date_birth_part,national_id_part,address_part,image_national_id_part,image_license_part,image_front_part,image_back_part)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful())
+                        {
+                            UserModel userModel = response.body();
+                            preferences.create_update_userData(SignInActivity.this,userModel);
+                            userSingleTone.setUserModel(userModel);
+
+                            Intent intent = new Intent(SignInActivity.this,ClientHomeActivity.class);
+                            startActivity(intent);
+                            finish();
+
+
+                        }else
+                        {
+                            try {
+                                Log.e("error",response.code()+""+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code() == 422)
+                            {
+                                Common.CreateSignAlertDialog(SignInActivity.this,getString(R.string.inc_em_phone));
+                            }else
+                            {
+                                Common.CreateSignAlertDialog(SignInActivity.this,getString(R.string.failed));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+
+                    }
+                });
+
+    }
+
+    public void signUpDelegateWithImage(String m_name, String m_email, int gender, long date_of_birth,String m_national_id,String m_address,Uri image,Uri imgUri1,Uri imgUri2,Uri imgUri3,Uri imgUri4)
+    {
+
+
+        RequestBody email_part = Common.getRequestBodyText(m_email);
+        RequestBody phone_part = Common.getRequestBodyText(phone);
+        RequestBody phone_code_part = Common.getRequestBodyText(this.phone_code);
+        RequestBody name_part = Common.getRequestBodyText(m_name);
+        RequestBody gender_part = Common.getRequestBodyText(String.valueOf(gender));
+        RequestBody country_code_part = Common.getRequestBodyText(countrycode);
+        RequestBody date_birth_part = Common.getRequestBodyText(String.valueOf(date_of_birth));
+
+        RequestBody national_id_part =Common.getRequestBodyText(m_national_id);
+        RequestBody address_part =Common.getRequestBodyText(m_address);
+        MultipartBody.Part image_national_id_part = Common.getMultiPart(this,imgUri1,"user_card_id_image");
+        MultipartBody.Part image_license_part = Common.getMultiPart(this,imgUri2,"user_driving_license");
+
+        MultipartBody.Part image_front_part = Common.getMultiPart(this,imgUri3,"image_car_front");
+        MultipartBody.Part image_back_part = Common.getMultiPart(this,imgUri4,"image_car_back");
+        MultipartBody.Part image_part = Common.getMultiPart(this,imgUri4,"user_image");
+
+
+
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .signUpDelegateWithImage(email_part,phone_part,phone_code_part,name_part,gender_part,country_code_part,date_birth_part,national_id_part,address_part,image_national_id_part,image_license_part,image_front_part,image_back_part,image_part)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful())
+                        {
+                            UserModel userModel = response.body();
+                            preferences.create_update_userData(SignInActivity.this,userModel);
+                            userSingleTone.setUserModel(userModel);
+
+                            Intent intent = new Intent(SignInActivity.this,ClientHomeActivity.class);
+                            startActivity(intent);
+                            finish();
+
+
+                        }else
+                        {
+                            try {
+                                Log.e("error",response.code()+""+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code() == 422)
+                            {
+                                Common.CreateSignAlertDialog(SignInActivity.this,getString(R.string.inc_em_phone));
+                            }else
+                            {
+                                Common.CreateSignAlertDialog(SignInActivity.this,getString(R.string.failed));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+
+                    }
+                });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+        for (Fragment fragment :fragmentList)
+        {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+        for (Fragment fragment :fragmentList)
+        {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         Back();
@@ -421,7 +621,7 @@ public class SignInActivity extends AppCompatActivity {
         {
             finish();
 
-        }else if (fragment_count>1&&fragment_count<3)
+        }else if (fragment_count>1)
         {
             fragment_count-=1;
             super.onBackPressed();

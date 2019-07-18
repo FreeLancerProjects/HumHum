@@ -32,7 +32,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -62,7 +61,6 @@ public class Fragment_Map_Follow_Order extends Fragment implements OnMapReadyCal
     private GoogleMap mMap;
     private Marker marker_client, marker_place, marker_driver;
     private float zoom = 15.6f;
-    private Circle circle_driver;
     private long distance = 0, time = 0;
     private ProgressDialog dialog = null;
     private UserSingleTone userSingleTone;

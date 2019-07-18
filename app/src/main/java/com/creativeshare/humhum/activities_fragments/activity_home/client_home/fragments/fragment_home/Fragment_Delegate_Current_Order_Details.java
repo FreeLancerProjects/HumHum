@@ -1,17 +1,33 @@
 package com.creativeshare.humhum.activities_fragments.activity_home.client_home.fragments.fragment_home;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.creativeshare.humhum.R;
@@ -19,19 +35,30 @@ import com.creativeshare.humhum.activities_fragments.activity_home.client_home.a
 import com.creativeshare.humhum.models.ChatUserModel;
 import com.creativeshare.humhum.models.OrderDataModel;
 import com.creativeshare.humhum.models.UserModel;
+import com.creativeshare.humhum.remote.Api;
+import com.creativeshare.humhum.share.Common;
 import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Currency;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Delegate_Current_Order_Details extends Fragment {
     private static final String TAG = "ORDER";
     private ClientHomeActivity activity;
-    private ImageView image_back,image_arrow,image_arrow2,image_chat,order_image;
+    private ImageView image_back,image_arrow,image_arrow2,image_chat,order_image,image_bill;
     private LinearLayout ll_back,ll_address,ll_shipment;
     private String current_lang;
     private TextView tv_client_name,tv_address,tv_order_details,tv_order_state,tv_order_next_state,tv_location_pickup,tv_location_dropoff;
@@ -40,6 +67,11 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
     private UserSingleTone userSingleTone;
     private UserModel userModel;
     private int order_state;
+    private final int IMG1 = 1, IMG2 = 2;
+    private Uri uri = null;
+    private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private final String camera_permission = Manifest.permission.CAMERA;
 
 
 
@@ -87,6 +119,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         }
         image_chat = view.findViewById(R.id.image_chat);
         order_image = view.findViewById(R.id.order_image);
+        image_bill = view.findViewById(R.id.image_bill);
 
         ll_back = view.findViewById(R.id.ll_back);
         tv_order_details = view.findViewById(R.id.tv_order_details);
@@ -146,6 +179,12 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         });
 
 
+        image_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateImageAlertDialog();
+            }
+        });
 
     }
 
@@ -195,18 +234,25 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
             case Tags.STATE_CLIENT_ACCEPT_OFFER:
                 tv_order_state.setText(getString(R.string.accepted));
                 tv_order_next_state.setText(getString(R.string.collect_order));
+                image_bill.setVisibility(View.GONE);
+
                 break;
             case Tags.STATE_DELEGATE_COLLECTING_ORDER:
                 tv_order_state.setText(getString(R.string.collecting_order));
                 tv_order_next_state.setText(getString(R.string.collected_order));
+                image_bill.setVisibility(View.GONE);
+
                 break;
             case Tags.STATE_DELEGATE_COLLECTED_ORDER:
                 tv_order_state.setText(getString(R.string.collected_order));
                 tv_order_next_state.setText(getString(R.string.deliver_order));
+                image_bill.setVisibility(View.VISIBLE);
                 break;
             case Tags.STATE_DELEGATE_DELIVERING_ORDER:
                 tv_order_state.setText(getString(R.string.delivering_order));
                 tv_order_next_state.setText(getString(R.string.delivered_order));
+                image_bill.setVisibility(View.GONE);
+
                 break;
 
 
@@ -218,7 +264,259 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
     }
 
 
+    private void CreateImageAlertDialog() {
 
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setCancelable(true)
+                .create();
+
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_select_image, null);
+        Button btn_camera = view.findViewById(R.id.btn_camera);
+        Button btn_gallery = view.findViewById(R.id.btn_gallery);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+
+
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Check_CameraPermission();
+
+            }
+        });
+
+        btn_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Check_ReadPermission();
+
+
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+
+    private void Check_ReadPermission() {
+        if (ContextCompat.checkSelfPermission(activity, read_permission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{read_permission}, IMG1);
+        } else {
+            select_photo(1);
+        }
+    }
+
+    private void Check_CameraPermission() {
+        if (ContextCompat.checkSelfPermission(activity, camera_permission) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, write_permission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{camera_permission, write_permission}, IMG2);
+        } else {
+            select_photo(2);
+
+        }
+
+    }
+
+    private void select_photo(int type) {
+
+        Intent intent = new Intent();
+
+        if (type == 1)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            {
+                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            }else
+            {
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            }
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+            startActivityForResult(intent,IMG1);
+
+        }else if (type ==2)
+        {
+            try {
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,IMG2);
+            }catch (SecurityException e)
+            {
+                Toast.makeText(activity,R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(activity,R.string.perm_image_denied, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMG1 && resultCode == Activity.RESULT_OK && data != null) {
+            uri = data.getData();
+
+            String path = Common.getImagePath(activity, uri);
+            CreateBillAlertDialog(path);
+        } else if (requestCode == IMG2 && resultCode == Activity.RESULT_OK && data != null) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+            uri = getUriFromBitmap(bitmap);
+            if (uri != null) {
+                String path = Common.getImagePath(activity, uri);
+                CreateBillAlertDialog(path);
+            }
+
+        }
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == IMG1) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    select_photo(IMG1);
+                } else {
+                    Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else if (requestCode == IMG2) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    select_photo(2);
+
+                } else {
+                    Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    private Uri getUriFromBitmap(Bitmap bitmap) {
+        String path = "";
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            path = MediaStore.Images.Media.insertImage(activity.getContentResolver(), bitmap, "title", null);
+            return Uri.parse(path);
+
+        } catch (SecurityException e) {
+            Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+
+        }
+        return null;
+    }
+
+
+    private void CreateBillAlertDialog(String image_path)
+    {
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setCancelable(true)
+                .create();
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_bill_photo,null);
+        ImageView image = view.findViewById(R.id.image);
+        EditText edt_order_cost = view.findViewById(R.id.edt_order_cost);
+        Button btn_upload = view.findViewById(R.id.btn_upload);
+
+        if (image_path != null) {
+                Picasso.with(activity).load(new File(image_path)).fit().into(image);
+
+            } else {
+                Picasso.with(activity).load(uri).fit().into(image);
+
+            }
+
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cost = edt_order_cost.getText().toString().trim();
+                if (!TextUtils.isEmpty(cost))
+                {
+                    dialog.dismiss();
+                    edt_order_cost.setError(null);
+                    Common.CloseKeyBoard(activity,edt_order_cost);
+                    uploadBill(cost);
+                }else
+                    {
+                        edt_order_cost.setError(getString(R.string.field_req));
+                    }
+
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    private void uploadBill(String cost)
+    {
+
+        RequestBody order_id_part = Common.getRequestBodyText(order.getOrder_id());
+        RequestBody cost_part = Common.getRequestBodyText(cost);
+        MultipartBody.Part image_part = Common.getMultiPart(activity,uri,"bill_image");
+
+        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.search_for_courier));
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .payment(order_id_part,cost_part,image_part)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful())
+                        {
+                            uri = null;
+                            Toast.makeText(activity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            try {
+                                Log.e("Error_code",response.code()+""+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(activity, R.string.failed, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                            Log.e("Error",t.getMessage());
+                        }catch (Exception e){}
+                    }
+                });
+    }
 
 
 }

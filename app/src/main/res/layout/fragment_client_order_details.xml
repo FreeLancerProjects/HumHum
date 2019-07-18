@@ -255,7 +255,7 @@
                 android:src="@drawable/ic_call"
                 tools:ignore="RtlCompat"
                 android:visibility="gone"
-                android:tint="@color/black"
+                android:tint="@color/white"
                 />
         </RelativeLayout>
 

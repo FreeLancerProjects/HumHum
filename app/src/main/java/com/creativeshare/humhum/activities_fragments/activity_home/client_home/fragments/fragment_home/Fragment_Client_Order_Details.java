@@ -187,9 +187,7 @@ public class Fragment_Client_Order_Details extends Fragment {
         if (order != null) {
             if (order.getOrder_image()==null)
             {
-
-        Log.e("msg","message");
-
+                
                 order_image.setVisibility(View.GONE);
             }else
                 {
@@ -260,84 +258,84 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image1.setBackgroundResource(R.drawable.step_green_circle);
                 image1.setImageResource(R.drawable.step_green_true);
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv1.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 break;
             case Tags.STATE_DELEGATE_COLLECTING_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
                 image1.setImageResource(R.drawable.step_green_true);
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv1.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image2.setBackgroundResource(R.drawable.step_green_circle);
                 image2.setImageResource(R.drawable.step_green_list);
                 view2.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv2.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv2.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 break;
             case Tags.STATE_DELEGATE_COLLECTED_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
                 image1.setImageResource(R.drawable.step_green_true);
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv1.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image2.setBackgroundResource(R.drawable.step_green_circle);
                 image2.setImageResource(R.drawable.step_green_list);
                 view2.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv2.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv2.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image3.setBackgroundResource(R.drawable.step_green_circle);
                 image3.setImageResource(R.drawable.step_green_box);
                 view3.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv3.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv3.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 break;
             case Tags.STATE_DELEGATE_DELIVERING_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
                 image1.setImageResource(R.drawable.step_green_true);
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv1.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image2.setBackgroundResource(R.drawable.step_green_circle);
                 image2.setImageResource(R.drawable.step_green_list);
                 view2.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv2.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv2.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image3.setBackgroundResource(R.drawable.step_green_circle);
                 image3.setImageResource(R.drawable.step_green_box);
                 view3.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv3.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv3.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image4.setBackgroundResource(R.drawable.step_green_circle);
                 image4.setImageResource(R.drawable.step_green_truck);
                 view4.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv4.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv4.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 break;
             case Tags.STATE_DELEGATE_DELIVERED_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
                 image1.setImageResource(R.drawable.step_green_true);
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv1.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image2.setBackgroundResource(R.drawable.step_green_circle);
                 image2.setImageResource(R.drawable.step_green_list);
                 view2.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv2.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv2.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image3.setBackgroundResource(R.drawable.step_green_circle);
                 image3.setImageResource(R.drawable.step_green_box);
                 view3.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv3.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv3.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image4.setBackgroundResource(R.drawable.step_green_circle);
                 image4.setImageResource(R.drawable.step_green_truck);
                 view4.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
-                tv4.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv4.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 image5.setBackgroundResource(R.drawable.step_green_circle);
                 image5.setImageResource(R.drawable.step_green_heart);
-                tv5.setTextColor(ContextCompat.getColor(activity, R.color.colorPrimary));
+                tv5.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
 
                 break;
 
