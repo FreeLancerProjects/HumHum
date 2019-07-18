@@ -376,7 +376,11 @@ public interface Service {
                                     @Field("user_phone") String user_phone,
                                     @Field("confirm_code") String confirm_code
     );
-
+    @FormUrlEncoded
+    @POST("/Api/logMe")
+    Call<UserModel> checkfound(@Field("user_phone_code") String user_phone_code,
+                                  @Field("user_phone") String user_phone
+    );
     @FormUrlEncoded
     @POST("/Api/resendSms")
     Call<ResponseBody> getSmsCode(@Field("user_phone_code") String user_phone_code,

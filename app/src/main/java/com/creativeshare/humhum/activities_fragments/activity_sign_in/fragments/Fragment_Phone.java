@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.activity.SignInActivity;
+import com.creativeshare.humhum.models.UserModel;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.share.Common;
 import com.creativeshare.humhum.tags.Tags;
@@ -154,7 +155,8 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
             if (type.equals("signup"))
             {
 
-                sendSMSCode(code,phone);
+                checkfound(code,phone);
+                //sendSMSCode(code,phone);
                 //((SignInActivity)activity).signIn(phone,country_code,code);
 
             }else if (type.equals("edit_profile"))
@@ -172,7 +174,53 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
                 }
         }
     }
+    private void checkfound(String phone_code, final String phone) {
+        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .checkfound(phone_code.replace("+","00"),phone)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
 
+                        dialog.dismiss();
+
+                        if (response.isSuccessful())
+                        {
+                            Log.e("body",response.body()+"__");
+                            ((SignInActivity)activity).signIn(response.body());
+
+                        }else
+                        {
+                            try {
+                                Log.e("error_code",response.code()+"_"+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code()==401)
+                            {
+                                sendSMSCode(phone_code,phone);
+                                //((SignInActivity)activity).DisplayFragmentCodeVerification(code.replace("+","00"),phone,country_code);
+                            }else
+                            {
+                                Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                            Log.e("Error",t.getMessage());
+
+
+                        }catch (Exception e){}
+                    }
+                });
+    }
     private void sendSMSCode(String phone_code, final String phone) {
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.setCancelable(false);

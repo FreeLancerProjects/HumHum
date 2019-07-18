@@ -631,5 +631,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-
+    public void signIn(UserModel userModel) {
+        preferences.create_update_userData(SignInActivity.this,userModel);
+        userSingleTone.setUserModel(userModel);
+        Intent intent = new Intent(SignInActivity.this,ClientHomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
