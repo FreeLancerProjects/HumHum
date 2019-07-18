@@ -320,7 +320,7 @@
                             app:sbg_dividerPadding="8dp"
                             app:sbg_ripple="true"
                             app:sbg_position="0"
-                            app:sbg_selectorColor="@color/colorPrimary"
+                            app:sbg_selectorColor="@color/black"
                             app:sbg_backgroundColor="@color/white"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
