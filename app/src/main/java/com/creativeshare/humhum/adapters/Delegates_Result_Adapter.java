@@ -92,7 +92,7 @@ public class Delegates_Result_Adapter extends RecyclerView.Adapter<Delegates_Res
 
         public void BindData(NotificationModel.Drivers drivers) {
 
-            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+drivers.getUser_image())).fit().placeholder(R.drawable.logo_only).into(image);
+            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+drivers.getUser_image())).fit().placeholder(R.drawable.logo).into(image);
             tv_name.setText(drivers.getUser_full_name());
             tv_distance.setText(String.format("%.2f",drivers.getDistance())+" "+context.getString(R.string.km));
             tv_offer.setText(drivers.getDriver_offer()+" "+money_sembole);

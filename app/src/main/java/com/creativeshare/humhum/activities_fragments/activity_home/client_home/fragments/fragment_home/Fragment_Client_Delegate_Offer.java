@@ -173,7 +173,7 @@ public class Fragment_Client_Delegate_Offer extends Fragment {
 
             }
             Currency currency = Currency.getInstance(new Locale(current_language,userModel.getData().getUser_country()));
-            Picasso.with(activity).load(Tags.IMAGE_URL+notificationModel.getFrom_user_image()).placeholder(R.drawable.logo_only).fit().into(image);
+            Picasso.with(activity).load(Tags.IMAGE_URL+notificationModel.getFrom_user_image()).placeholder(R.drawable.logo).fit().into(image);
             tv_delegate_name.setText(notificationModel.getFrom_user_full_name());
             tv_order_details.setText(notificationModel.getOrder_details());
             tv_order_address.setText(notificationModel.getClient_address());

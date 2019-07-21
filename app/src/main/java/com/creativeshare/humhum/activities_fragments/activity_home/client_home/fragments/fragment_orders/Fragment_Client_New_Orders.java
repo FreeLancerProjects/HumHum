@@ -114,13 +114,17 @@ public class Fragment_Client_New_Orders extends Fragment {
     public void getOrders()
     {
 
+        Log.e("utype",userModel.getData().getUser_type()+"_");
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
         {
             call  = Api.getService(Tags.base_url).getClientOrders(userModel.getData().getUser_id(),"new", 1);
+            Log.e("1111","gggg");
+
         }else if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE))
         {
             call  = Api.getService(Tags.base_url).getDelegateOrders(userModel.getData().getUser_id(),"new", 1);
 
+            Log.e("sss","dddd");
         }
 
 

@@ -2,6 +2,7 @@ package com.creativeshare.humhum.services;
 
 import com.creativeshare.humhum.models.AppDataModel;
 import com.creativeshare.humhum.models.BankDataModel;
+import com.creativeshare.humhum.models.BillModel;
 import com.creativeshare.humhum.models.CommentDataModel;
 import com.creativeshare.humhum.models.FollowModel;
 import com.creativeshare.humhum.models.MessageDataModel;
@@ -278,7 +279,7 @@ public interface Service {
 
 
     @FormUrlEncoded
-    @POST("/Api/driverAction")
+    @POST("/Api/doOrder")
     Call<ResponseBody> delegateAccept(@Field("driver_id") String driver_id,
                                       @Field("client_id") String client_id,
                                       @Field("order_id") String order_id,
@@ -435,6 +436,10 @@ public interface Service {
                                @Part("bill_cost") RequestBody bill_cost,
                                @Part MultipartBody.Part image
     );
+
+    @FormUrlEncoded
+    @POST("Api/getOrder")
+    Call<BillModel> getBillData(@Field("order_id") String order_id);
 }
 
 

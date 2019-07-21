@@ -97,7 +97,7 @@ public class WaitOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void BindData(WatingOrderData.WaitOrder waitOrder) {
-            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+waitOrder.getDriver_user_image())).fit().placeholder(R.drawable.logo_only).into(image);
+            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+waitOrder.getDriver_user_image())).fit().placeholder(R.drawable.logo).into(image);
             tv_name.setText(waitOrder.getDriver_user_full_name());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy , hh:mm aa", Locale.ENGLISH);
             String date = dateFormat.format(new Date(Long.parseLong(waitOrder.getOrder_time_arrival())*1000));

@@ -283,10 +283,12 @@
     <string name="normal">عادي</string>
     <string name="hybrid">هجين</string>
     <string name="terrain">تضاريس</string>
-    <string name="sar15">15 ر.س</string>
+    <string name="sar15">15</string>
     <string name="contact_on_whats">إتصل بنا عبر الواتس اب</string>
     <string name="search_for_courier">إنتظر قليلا جار البحث عن مناديب...</string>
     <string name="client">عميل</string>
+    <string name="bill_price">تكلفة الفاتوة :</string>
+    <string name="total">الإجمالي :</string>
 
 
 </resources>

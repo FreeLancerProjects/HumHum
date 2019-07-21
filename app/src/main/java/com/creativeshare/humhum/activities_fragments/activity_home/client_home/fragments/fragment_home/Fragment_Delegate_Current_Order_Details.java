@@ -156,7 +156,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         fl_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              activity.DisplayFragmentMapLocationDetails(Double.parseDouble(order.getPlace_lat()),Double.parseDouble(order.getPlace_long()),order.getClient_address());
+              activity.DisplayFragmentMapLocationDetails(Double.parseDouble(order.getPlace_lat()),Double.parseDouble(order.getPlace_long()),Double.parseDouble(order.getClient_lat()),Double.parseDouble(order.getClient_long()),order.getClient_address());
             }
         });
 
@@ -484,7 +484,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         RequestBody cost_part = Common.getRequestBodyText(cost);
         MultipartBody.Part image_part = Common.getMultiPart(activity,uri,"bill_image");
 
-        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.search_for_courier));
+        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.show();
         Api.getService(Tags.base_url)
                 .payment(order_id_part,cost_part,image_part)

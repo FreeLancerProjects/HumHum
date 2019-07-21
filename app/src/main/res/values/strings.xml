@@ -54,7 +54,7 @@
     <string name="your_privacy_guaranteed">Your privacy is 100% guaranteed</string>
     <string name="by_using_this_app_you_agree_to">By using this app you agree to</string>
 
-    <string name="terms_and_conditions"><a  href="">Terms and conditions</a></string>
+    <string name="terms_and_conditions"><a href="">Terms and conditions</a></string>
     <string name="stores">Stores</string>
     <string name="my_orders">My Orders</string>
     <string name="profile">Profile</string>
@@ -286,8 +286,10 @@
     <string name="normal">Normal</string>
     <string name="hybrid">Hybrid</string>
     <string name="terrain">Terrain</string>
-    <string name="sar15">15 SAR</string>
+    <string name="sar15">15</string>
     <string name="contact_on_whats">Contact us on whatsapp</string>
     <string name="search_for_courier">Wait searching for courier...</string>
     <string name="client">Client</string>
+    <string name="bill_price">Bill price :</string>
+    <string name="total">Total :</string>
 </resources>

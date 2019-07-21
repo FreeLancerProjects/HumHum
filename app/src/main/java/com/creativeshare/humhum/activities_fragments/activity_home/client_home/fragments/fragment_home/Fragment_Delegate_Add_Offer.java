@@ -2,7 +2,6 @@ package com.creativeshare.humhum.activities_fragments.activity_home.client_home.
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,7 +142,7 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
         fl_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.DisplayFragmentMapLocationDetails(Double.parseDouble(orderModel.getPlace_lat()),Double.parseDouble(orderModel.getPlace_long()),orderModel.getPlace_address());
+                activity.DisplayFragmentMapLocationDetails(Double.parseDouble(orderModel.getPlace_lat()),Double.parseDouble(orderModel.getPlace_long()),Double.parseDouble(orderModel.getClient_lat()),Double.parseDouble(orderModel.getClient_long()),orderModel.getPlace_address());
             }
         });
 
@@ -170,7 +169,7 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
     private void UpdateUI(OrderDataModel.OrderModel orderModel) {
         if (orderModel!=null)
         {
-            Picasso.with(activity).load(Tags.IMAGE_URL+orderModel.getClient_user_image()).placeholder(R.drawable.logo_only).fit().into(image);
+            Picasso.with(activity).load(Tags.IMAGE_URL+orderModel.getClient_user_image()).placeholder(R.drawable.logo).fit().into(image);
             tv_client_name.setText(orderModel.getClient_user_full_name());
             tv_order_details.setText(orderModel.getOrder_details());
 
@@ -210,15 +209,17 @@ public class Fragment_Delegate_Add_Offer extends Fragment {
 
     private void CheckData() {
         String m_cost = tv_delivery_cost.getText().toString().trim();
-        if (!TextUtils.isEmpty(m_cost))
+        /*if (!TextUtils.isEmpty(m_cost))
         {
             tv_delivery_cost.setError(null);
             //Common.CloseKeyBoard(activity,tv_delivery_cost);
-            activity.delegateAcceptOrder(userModel.getData().getUser_id(),orderModel.getClient_id(),orderModel.getOrder_id(),m_cost);
         }else
             {
                 tv_delivery_cost.setError(getString(R.string.field_req));
-            }
+            }*/
+
+        activity.delegateAcceptOrder(userModel.getData().getUser_id(),orderModel.getClient_id(),orderModel.getOrder_id(),"");
+
     }
 
 

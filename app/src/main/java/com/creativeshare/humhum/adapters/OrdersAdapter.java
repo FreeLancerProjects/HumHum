@@ -123,7 +123,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public void BindData(OrderDataModel.OrderModel orderModel) {
             if (orderModel.getOrder_status().equals(String.valueOf(Tags.STATE_ORDER_NEW))||orderModel.getOrder_status().equals(String.valueOf(Tags.STATE_DELEGATE_SEND_OFFER)))
             {
-                Picasso.with(context).load(R.drawable.logo_only).fit().into(image);
+                Picasso.with(context).load(R.drawable.logo).fit().into(image);
                 image_state.setBackgroundResource(R.drawable.wait_bg_gray);
                 image_state.setImageResource(R.drawable.ic_time_left);
                 tv_order_state.setText(context.getString(R.string.new_order_2));
@@ -132,11 +132,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 {
                     if (user_type.equals(Tags.TYPE_CLIENT))
                     {
-                        Picasso.with(context).load(Tags.IMAGE_URL+orderModel.getDriver_user_image()).fit().placeholder(R.drawable.logo_only).into(image);
+                        Picasso.with(context).load(Tags.IMAGE_URL+orderModel.getDriver_user_image()).fit().placeholder(R.drawable.logo).into(image);
 
                     }else
                         {
-                            Picasso.with(context).load(Tags.IMAGE_URL+orderModel.getClient_user_image()).fit().placeholder(R.drawable.logo_only).into(image);
+                            Picasso.with(context).load(Tags.IMAGE_URL+orderModel.getClient_user_image()).fit().placeholder(R.drawable.logo).into(image);
 
                         }
 

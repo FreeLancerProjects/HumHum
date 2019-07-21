@@ -1,5 +1,6 @@
 package com.creativeshare.humhum.activities_fragments.activity_home.client_home.fragments.fragment_home;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,22 +23,30 @@ import androidx.fragment.app.Fragment;
 
 import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
+import com.creativeshare.humhum.activities_fragments.bill_activity.BillActivity;
+import com.creativeshare.humhum.models.BillModel;
 import com.creativeshare.humhum.models.ChatUserModel;
 import com.creativeshare.humhum.models.OrderDataModel;
+import com.creativeshare.humhum.remote.Api;
+import com.creativeshare.humhum.share.Common;
 import com.creativeshare.humhum.tags.Tags;
 import com.google.android.material.appbar.AppBarLayout;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Client_Order_Details extends Fragment {
     private static final String TAG = "ORDER";
     private ClientHomeActivity activity;
-    private ImageView image_back, image_chat, image_call,order_image;
+    private ImageView image_back, image_chat, image_call,order_image,image_bill;
     private LinearLayout ll_back, ll_delegate_data_container,ll_shipment;
     private CircleImageView image;
     private TextView tv_delegate_name, tv_rate;
@@ -54,6 +64,7 @@ public class Fragment_Client_Order_Details extends Fragment {
     private View view1, view2, view3, view4;
     ////////////////////////////////
     private OrderDataModel.OrderModel order;
+    private BillModel billModel=null;
 
     @Nullable
     @Override
@@ -84,6 +95,7 @@ public class Fragment_Client_Order_Details extends Fragment {
 
         }
         order_image = view.findViewById(R.id.order_image);
+        image_bill = view.findViewById(R.id.image_bill);
 
         ll_delegate_data_container = view.findViewById(R.id.ll_delegate_data_container);
         ll_shipment = view.findViewById(R.id.ll_shipment);
@@ -152,7 +164,7 @@ public class Fragment_Client_Order_Details extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + order.getDriver_user_phone()));
+                intent.setData(Uri.parse("tel:" + "0"+order.getDriver_user_phone()));
                 activity.startActivity(intent);
             }
         });
@@ -179,6 +191,19 @@ public class Fragment_Client_Order_Details extends Fragment {
             }
         });
 
+        image_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (billModel!=null)
+                {
+                    Intent intent = new Intent(activity, BillActivity.class);
+                    intent.putExtra("data",billModel);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
 
     }
 
@@ -198,7 +223,7 @@ public class Fragment_Client_Order_Details extends Fragment {
                 }
 
             tv_delegate_name.setText(order.getDriver_user_full_name());
-            Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + order.getDriver_user_image())).placeholder(R.drawable.logo_only).fit().into(image);
+            Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + order.getDriver_user_image())).placeholder(R.drawable.logo).fit().into(image);
             tv_rate.setText("(" + order.getRate() + ")");
             tv_order_details.setText(order.getOrder_details());
 
@@ -221,7 +246,7 @@ public class Fragment_Client_Order_Details extends Fragment {
             builder.setInterpolator(new AccelerateInterpolator());
             builder.start();
 
-
+            Log.e("status",order.getOrder_status());
             if (order.getOrder_status().equals(String.valueOf(Tags.STATE_ORDER_NEW))) {
                 ll_delegate_data_container.setVisibility(View.GONE);
                 image_chat.setVisibility(View.GONE);
@@ -247,6 +272,40 @@ public class Fragment_Client_Order_Details extends Fragment {
 
     }
 
+    private void getBillData() {
+        ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .getBillData(order.getOrder_id())
+                .enqueue(new Callback<BillModel>() {
+                    @Override
+                    public void onResponse(Call<BillModel> call, Response<BillModel> response) {
+                        dialog.dismiss();
+
+                        if (response.body() != null) {
+                            billModel = response.body();
+                        } else {
+                            try {
+                                Log.e("code",response.code()+"_"+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            dialog.dismiss();
+                            Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BillModel> call, Throwable t) {
+                        try {
+                            Log.e("error",t.getMessage());
+                            dialog.dismiss();
+                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+    }
 
     public void updateStepView(int completePosition) {
         Log.e("completePosition",completePosition+"__");
@@ -259,6 +318,7 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image1.setImageResource(R.drawable.step_green_true);
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
+                image_bill.setVisibility(View.GONE);
 
                 break;
             case Tags.STATE_DELEGATE_COLLECTING_ORDER:
@@ -271,7 +331,7 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image2.setImageResource(R.drawable.step_green_list);
                 view2.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv2.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
-
+                image_bill.setVisibility(View.GONE);
                 break;
             case Tags.STATE_DELEGATE_COLLECTED_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
@@ -288,7 +348,9 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image3.setImageResource(R.drawable.step_green_box);
                 view3.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv3.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
-
+                image_bill.setVisibility(View.VISIBLE);
+                billModel = new BillModel(order.getBill_image(),order.getBill_cost(),order.getDriver_offer());
+                getBillData();
                 break;
             case Tags.STATE_DELEGATE_DELIVERING_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
@@ -310,6 +372,8 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image4.setImageResource(R.drawable.step_green_truck);
                 view4.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv4.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
+                image_bill.setVisibility(View.VISIBLE);
+                billModel = new BillModel(order.getBill_image(),order.getBill_cost(),order.getDriver_offer());
 
                 break;
             case Tags.STATE_DELEGATE_DELIVERED_ORDER:
@@ -336,11 +400,15 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image5.setBackgroundResource(R.drawable.step_green_circle);
                 image5.setImageResource(R.drawable.step_green_heart);
                 tv5.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
+                image_bill.setVisibility(View.VISIBLE);
+                billModel = new BillModel(order.getBill_image(),order.getBill_cost(),order.getDriver_offer());
 
                 break;
 
         }
     }
+
+
 
     private void ClearStepUI() {
         image1.setBackgroundResource(R.drawable.gray_circle);
@@ -366,6 +434,7 @@ public class Fragment_Client_Order_Details extends Fragment {
         image5.setBackgroundResource(R.drawable.gray_circle);
         image5.setImageResource(R.drawable.step_gray_heart);
         tv5.setTextColor(ContextCompat.getColor(activity, R.color.gray3));
+        image_bill.setVisibility(View.GONE);
 
     }
 

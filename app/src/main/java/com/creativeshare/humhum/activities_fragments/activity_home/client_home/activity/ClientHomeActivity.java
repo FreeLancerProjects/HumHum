@@ -1167,11 +1167,11 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
     }
 
-    public void DisplayFragmentMapLocationDetails(double lat,double lng,String address)
+    public void DisplayFragmentMapLocationDetails(double place_lat,double place_lng,double client_lat,double client_lng,String address)
     {
 
         fragment_count+=1;
-        fragment_map_location_details = Fragment_Map_Location_Details.newInstance(lat,lng,address);
+        fragment_map_location_details = Fragment_Map_Location_Details.newInstance(place_lat,place_lng,client_lat,client_lng,address);
 
         if (fragment_map_location_details.isAdded()) {
             fragmentManager.beginTransaction().show(fragment_map_location_details).commit();
@@ -1634,20 +1634,32 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
         fragment_count-=2;
 
-        DisplayFragmentMyOrders();
-
         new Handler()
                 .postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            DisplayFragmentMyOrders();
 
-                        if (fragment_client_orders!=null&&fragment_client_orders.isAdded())
-                        {
-                            fragment_client_orders.NavigateToFragmentRefresh(0);
+                        }catch (Exception e){}
+                        new Handler()
+                                .postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            if (fragment_client_orders!=null&&fragment_client_orders.isAdded())
+                                            {
+                                                fragment_client_orders.NavigateToFragmentRefresh(0);
 
-                        }
+                                            }
+                                        }catch (Exception e){}
+
+
+                                    }
+                                },1000);
                     }
                 },1000);
+
     }
 
     public void FollowOrderFromShipment()
@@ -2138,10 +2150,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
             if (resultCode == RESULT_OK)
             {
                 startLocationUpdate();
-            }else
-                {
-                    //create dialog to open_gps
-                }
+            }
         }
 
         /*if (requestCode == 33) {

@@ -92,7 +92,7 @@ public class Fragment_Client_Notifications extends Fragment {
 
         activity = (ClientHomeActivity) getActivity();
         Paper.init(activity);
-        current_language = Paper.book().read("lang",Locale.getDefault().getLanguage());
+        current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
         ll_not = view.findViewById(R.id.ll_not);
@@ -134,13 +134,10 @@ public class Fragment_Client_Notifications extends Fragment {
     public void getNotification() {
 
 
-
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT)) {
             call = Api.getService(Tags.base_url).getNotification(userModel.getData().getUser_id(), "client", 1);
-            if (lastSelectedItem!=-1)
-            {
-                if (notificationModelList.size()>0)
-                {
+            if (lastSelectedItem != -1) {
+                if (notificationModelList.size() > 0) {
                     notificationModelList.remove(lastSelectedItem);
                     adapter.notifyItemRemoved(lastSelectedItem);
                     lastSelectedItem = -1;
@@ -254,14 +251,19 @@ public class Fragment_Client_Notifications extends Fragment {
 
     }
 
-    public void setItemData(NotificationModel notificationModel, int pos)
-    {
-        if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT) && Integer.parseInt(notificationModel.getOrder_status())<Tags.STATE_CLIENT_ACCEPT_OFFER) {
-            CreateAlertDialogForDrivers(notificationModel);
+    public void setItemData(NotificationModel notificationModel, int pos) {
+        if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT) && Integer.parseInt(notificationModel.getOrder_status()) < Tags.STATE_CLIENT_ACCEPT_OFFER) {
+            //CreateAlertDialogForDrivers(notificationModel);
             //activity.DisplayFragmentClientDelegateOffer(notificationModel);
             lastSelectedItem = pos;
-        }else if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT) && Integer.parseInt(notificationModel.getOrder_status())==Tags.STATE_DELEGATE_DELIVERED_ORDER) {
+        } else if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT) && Integer.parseInt(notificationModel.getOrder_status()) == Tags.STATE_DELEGATE_DELIVERED_ORDER) {
             activity.CreateAddRateAlertDialog(notificationModel);
+        } else if (notificationModel.getOrder_status().equals(String.valueOf(Tags.STATE_ORDER_NEW))) {
+            if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE)) {
+
+                activity.DisplayFragmentMyOrders();
+            }
+
         }
 
         /*else if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT) && notificationModel.getOrder_status().equals(String.valueOf(Tags.STATE_DELEGATE_REFUSE_ORDER)))
@@ -270,17 +272,17 @@ public class Fragment_Client_Notifications extends Fragment {
             activity.CreateAcceptRefuseDialog(notificationModel.getOrder_id(),Double.parseDouble(notificationModel.getPlace_lat()),Double.parseDouble(notificationModel.getPlace_long()),notificationModel.getClient_id());
         }*/
     }
-    private void CreateAlertDialogForDrivers(final NotificationModel notificationModel)
-    {
+
+    private void CreateAlertDialogForDrivers(final NotificationModel notificationModel) {
         final NotificationModel.Drivers drivers = notificationModel.getDriver_list().get(0);
 
         final AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setCancelable(true)
                 .create();
 
-        Currency currency = Currency.getInstance(new Locale(current_language,userModel.getData().getUser_country()));
+        Currency currency = Currency.getInstance(new Locale(current_language, userModel.getData().getUser_country()));
 
-        View view = LayoutInflater.from(activity).inflate(R.layout.drivers_dialog,null);
+        View view = LayoutInflater.from(activity).inflate(R.layout.drivers_dialog, null);
         CircleImageView image = view.findViewById(R.id.image);
         ImageView image_certified = view.findViewById(R.id.image_certified);
         SimpleRatingBar rateBar = view.findViewById(R.id.rateBar);
@@ -295,36 +297,33 @@ public class Fragment_Client_Notifications extends Fragment {
         Button btn_accept = view.findViewById(R.id.btn_accept);
         Button btn_refuse = view.findViewById(R.id.btn_refuse);
 
-        Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL+notificationModel.getDriver_list().get(0).getUser_image())).placeholder(R.drawable.logo_only).into(image);
+        Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + notificationModel.getDriver_list().get(0).getUser_image())).placeholder(R.drawable.logo).into(image);
         tv_name.setText(drivers.getUser_full_name());
-        tv_rate.setText("("+drivers.getRate()+")");
+        tv_rate.setText("(" + drivers.getRate() + ")");
         rateBar.setRating((float) drivers.getRate());
-        tv_delivery_cost.setText(drivers.getDriver_offer()+" "+currency.getSymbol());
-        tv_distance.setText(drivers.getDistance()+" "+getString(R.string.km));
-        tv_offers_count.setText("("+notificationModel.getDriver_list().size()+")");
+        tv_delivery_cost.setText(drivers.getDriver_offer() + " " + currency.getSymbol());
+        tv_distance.setText(drivers.getDistance() + " " + getString(R.string.km));
+        tv_offers_count.setText("(" + notificationModel.getDriver_list().size() + ")");
 
-        if (drivers.isCertified())
-        {
+        if (drivers.isCertified()) {
             image_certified.setImageResource(R.drawable.ic_checked);
-            image_certified.setColorFilter(ContextCompat.getColor(activity,R.color.active));
+            image_certified.setColorFilter(ContextCompat.getColor(activity, R.color.active));
             tv_certified.setText(getString(R.string.certified_account));
-            tv_certified.setTextColor(ContextCompat.getColor(activity,R.color.active));
+            tv_certified.setTextColor(ContextCompat.getColor(activity, R.color.active));
 
-        }else
-            {
-                image_certified.setImageResource(R.drawable.checked_not_certified);
-                tv_certified.setText(getString(R.string.not_certified));
-                tv_certified.setTextColor(ContextCompat.getColor(activity,R.color.rating));
+        } else {
+            image_certified.setImageResource(R.drawable.checked_not_certified);
+            tv_certified.setText(getString(R.string.not_certified));
+            tv_certified.setTextColor(ContextCompat.getColor(activity, R.color.rating));
 
-            }
+        }
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 dialog.dismiss();
-                if (notificationModel.getDriver_list().size()>0)
-                {
+                if (notificationModel.getDriver_list().size() > 0) {
                     activity.DisplayFragmentDelegatesResult(notificationModel);
                 }
 
@@ -335,7 +334,7 @@ public class Fragment_Client_Notifications extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                activity.clientAcceptOffer(drivers.getDriver_id(),userModel.getData().getUser_id(),notificationModel.getOrder_id(),"accept",notificationModel.getDriver_offer(),"dialog");
+                activity.clientAcceptOffer(drivers.getDriver_id(), userModel.getData().getUser_id(), notificationModel.getOrder_id(), "accept", notificationModel.getDriver_offer(), "dialog");
             }
         });
 
@@ -349,7 +348,7 @@ public class Fragment_Client_Notifications extends Fragment {
         });
 
 
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
         dialog.setView(view);

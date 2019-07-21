@@ -299,10 +299,13 @@ public class Fragment_Client_Profile extends Fragment {
 
                 if (userModel.getData().getNum_orders() > 0) {
                     tv_certified.setText(getString(R.string.certified_account));
-                    img_certified.setImageResource(R.drawable.checked_certified);
+                    tv_certified.setTextColor(ContextCompat.getColor(activity,R.color.active));
+                    img_certified.setImageResource(R.drawable.green_checked);
                 } else {
                     tv_certified.setText(R.string.not_certified);
-                    img_certified.setImageResource(R.drawable.checked_not_certified);
+                    tv_certified.setTextColor(ContextCompat.getColor(activity,R.color.delete));
+
+                    img_certified.setImageResource(R.drawable.red_info);
 
                 }
                 ll_telegram.setVisibility(View.VISIBLE);

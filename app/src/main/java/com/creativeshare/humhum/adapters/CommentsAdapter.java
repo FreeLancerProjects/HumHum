@@ -83,7 +83,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         public void BindData(CommentDataModel.CommentModel commentModel) {
-            Picasso.with(context).load(Tags.IMAGE_URL + commentModel.getClient_user_image()).placeholder(R.drawable.logo_only).fit().into(image);
+            Picasso.with(context).load(Tags.IMAGE_URL + commentModel.getClient_user_image()).placeholder(R.drawable.logo).fit().into(image);
             tv_name.setText(commentModel.getClient_user_full_name());
             tv_comment.setText(commentModel.getClient_comment());
 
