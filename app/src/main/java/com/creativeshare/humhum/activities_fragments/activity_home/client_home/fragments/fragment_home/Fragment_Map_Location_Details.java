@@ -57,6 +57,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
+import com.google.maps.android.SphericalUtil;
 import com.google.maps.android.ui.IconGenerator;
 
 import java.util.List;
@@ -89,6 +90,7 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
     private LocationCallback locationCallback;
     private Location location;
     private ProgressDialog dialog = null;
+    private TextView tvDistance1,tvDistance2;
 
 
 
@@ -135,6 +137,9 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
         ll_back = view.findViewById(R.id.ll_back);
         ll_map_type = view.findViewById(R.id.ll_map_type);
         tv_map_type = view.findViewById(R.id.tv_map_type);
+        tvDistance1 = view.findViewById(R.id.tvDistance1);
+        tvDistance2 = view.findViewById(R.id.tvDistance2);
+
         ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,8 +228,8 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
 
         getDirection(1);
 
-        View view = LayoutInflater.from(activity).inflate(R.layout.map_client_icon,null);
-        View view2 = LayoutInflater.from(activity).inflate(R.layout.map_shop_icon,null);
+        View view = LayoutInflater.from(activity).inflate(R.layout.map_shop_icon,null);
+        View view2 = LayoutInflater.from(activity).inflate(R.layout.map_client_icon,null);
         View view3 = LayoutInflater.from(activity).inflate(R.layout.map_you_icon,null);
 
         IconGenerator iconGenerator= new IconGenerator(activity);
@@ -289,6 +294,14 @@ public class Fragment_Map_Location_Details extends Fragment implements OnMapRead
                             {
                                 drawRoute(PolyUtil.decode(response.body().getRoutes().get(0).getOverview_polyline().getPoints()));
                                 dialog.dismiss();
+                                double dist1 = SphericalUtil.computeDistanceBetween(new LatLng(location.getLatitude(), location.getLongitude()), new LatLng(lat, lng));
+                                double dist2 = SphericalUtil.computeDistanceBetween(new LatLng(lat, lng), new LatLng(client_lat,client_lng));
+
+                                tvDistance1.setText(String.format("%s %s",String.format(Locale.ENGLISH,"%.2f",(dist1/1000)),getString(R.string.km)));
+                                tvDistance2.setText(String.format("%s %s",String.format(Locale.ENGLISH,"%.2f",(dist2/1000)),getString(R.string.km)));
+
+
+
                             }
 
                         } else {

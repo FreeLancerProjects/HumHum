@@ -66,7 +66,7 @@ public class BillActivity extends AppCompatActivity {
             BillModel billModel = (BillModel) intent.getSerializableExtra("data");
             tv_cost.setText(String.format("%s %s",getString(R.string.bill_price),billModel.getBill_cost()));
             double total = Double.parseDouble(billModel.getBill_cost())+Double.parseDouble(billModel.getDelivery_cost());
-            tv_delivery_cost.setText(String.format("%s %s %s",getString(R.string.delivery_cost),":","15"));
+            tv_delivery_cost.setText(String.format("%s %s %s",getString(R.string.delivery_cost),":",billModel.getDelivery_cost()));
             tv_total.setText(String.format("%s %s",getString(R.string.total),String.valueOf(total)));
             Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+billModel.getBill_image())).fit().into(image);
         }

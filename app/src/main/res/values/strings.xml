@@ -117,7 +117,7 @@
     <string name="choose_delivery_location">Choose Delivery Location</string>
     <string name="delivery_time">Delivery Time</string>
     <string name="check_here_to_choose_delivery_time">Check here to choose Delivery Time</string>
-    <string name="write_order_details">Write here the details of your order for example i want 1 Cheeseburger,1 Large Fries.Please write also how much is approximate cost of your order.</string>
+    <string name="write_order_details">Write your order details.</string>
     <string name="set_location_on_map">Set location on map</string>
     <string name="save_favorite_location">Save Favorite Location</string>
     <string name="name">Name</string>
@@ -292,4 +292,5 @@
     <string name="client">Client</string>
     <string name="bill_price">Bill price :</string>
     <string name="total">Total :</string>
+    <string name="pls_upload_img_bill">Please Upload Bill Image.</string>
 </resources>

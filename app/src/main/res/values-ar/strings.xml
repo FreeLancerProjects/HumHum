@@ -115,7 +115,7 @@
     <string name="choose_delivery_location">إختر عنوان التوصيل</string>
     <string name="delivery_time">وقت التوصيل</string>
     <string name="check_here_to_choose_delivery_time">إضغط هنا لاختيار وقت التوصيل</string>
-    <string name="write_order_details">إكتب هنا تفاصيل طلبك من المحل مثلا: 1 هامبرجر بالجبنةو 1 بطاطس كبير ونرجو منك كتابة القيمة التقديرية للطلب حتى يتسنى للمندوب خدمتك.</string>
+    <string name="write_order_details">إكتب تفاصيل وجبتك هنا.</string>
     <string name="set_location_on_map">حدد الموقع على الخريطة</string>
     <string name="save_favorite_location">حفظ الموقع في المفضلة</string>
     <string name="name">الاسم</string>
@@ -289,6 +289,7 @@
     <string name="client">عميل</string>
     <string name="bill_price">تكلفة الفاتوة :</string>
     <string name="total">الإجمالي :</string>
+    <string name="pls_upload_img_bill">قم برفع صورة الفاتورة</string>
 
 
 </resources>

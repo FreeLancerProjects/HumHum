@@ -173,7 +173,14 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
             @Override
             public void onClick(View v) {
 
-                activity.UpdateOrderMovement(order.getClient_id(),order.getDriver_id(),order.getOrder_id(),order_state);
+                if (order_state==Tags.STATE_DELEGATE_COLLECTED_ORDER)
+                {
+                    Common.CreateSignAlertDialog(activity,getString(R.string.pls_upload_img_bill));
+                }else
+                    {
+                        activity.UpdateOrderMovement(order.getClient_id(),order.getDriver_id(),order.getOrder_id(),order_state);
+
+                    }
 
             }
         });

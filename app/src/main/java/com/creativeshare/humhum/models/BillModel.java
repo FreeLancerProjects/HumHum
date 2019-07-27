@@ -6,12 +6,12 @@ public class BillModel implements Serializable {
 
     private String bill_image;
     private String bill_cost;
-    private String delivery_cost;
+    private String driver_offer;
 
-    public BillModel(String bill_image, String bill_cost, String delivery_cost) {
+    public BillModel(String bill_image, String bill_cost, String driver_offer) {
         this.bill_image = bill_image;
         this.bill_cost = bill_cost;
-        this.delivery_cost = delivery_cost;
+        this.driver_offer = driver_offer;
     }
 
     public String getBill_image() {
@@ -23,6 +23,6 @@ public class BillModel implements Serializable {
     }
 
     public String getDelivery_cost() {
-        return delivery_cost;
+        return driver_offer;
     }
 }

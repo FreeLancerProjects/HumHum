@@ -616,8 +616,6 @@ public class Fragment_Reserve_Order extends Fragment {
 
 
 
-
-
             }
         });
 

@@ -13,6 +13,7 @@
         android:clickable="true"
         android:focusable="true">
 
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
@@ -153,6 +154,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -229,7 +231,8 @@
                             android:layout_weight=".9"
                             android:ellipsize="end"
                             android:maxLines="2"
-                            android:text="@string/choose_delivery_location"
+                            android:hint="@string/choose_delivery_location"
+                            android:textColorHint="@color/active"
                             android:textColor="@color/gray4"
                             android:textSize="13sp"
                             tools:ignore="RtlCompat"
@@ -483,8 +486,9 @@
                         android:layout_marginStart="40dp"
                         android:clickable="false"
                         android:longClickable="false"
-                        android:text="@string/check_here_to_choose_delivery_time"
+                        android:hint="@string/check_here_to_choose_delivery_time"
                         android:textColor="@color/gray4"
+                        android:textColorHint="@color/active"
                         android:textSize="13sp"
                         tools:ignore="RtlCompat" />
 
@@ -512,7 +516,7 @@
                     android:paddingRight="25dp"
                     android:paddingBottom="8dp"
                     android:textColor="@color/gray4"
-                    android:textColorHint="@color/gray4"
+                    android:textColorHint="@color/active"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

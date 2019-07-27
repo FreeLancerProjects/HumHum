@@ -284,6 +284,15 @@ public class Fragment_Client_Order_Details extends Fragment {
 
                         if (response.body() != null) {
                             billModel = response.body();
+                            Log.e("bill_cost",billModel.getDelivery_cost()+"_");
+                            if (billModel.getBill_image()!=null&&billModel.getBill_cost()!=null)
+                            {
+                                image_bill.setVisibility(View.VISIBLE);
+                            }else
+                                {
+                                    image_bill.setVisibility(View.GONE);
+
+                                }
                         } else {
                             try {
                                 Log.e("code",response.code()+"_"+response.errorBody().string());
