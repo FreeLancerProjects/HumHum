@@ -1350,6 +1350,11 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                                                     fragment_client_orders.NavigateToFragmentRefresh(2);
 
                                                 }
+
+                                                if (fragment_client_profile!=null&&fragment_client_profile.isAdded())
+                                                {
+                                                    getUserDataById(userModel.getData().getUser_id());
+                                                }
                                             }
                                         },1000);
                             }

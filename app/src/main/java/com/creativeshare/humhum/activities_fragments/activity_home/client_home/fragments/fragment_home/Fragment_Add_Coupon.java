@@ -198,11 +198,7 @@ public class Fragment_Add_Coupon extends Fragment {
                                 }else
                                     {
                                         Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
-
-
                                     }
-
-
                             }
                     }
 
