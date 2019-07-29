@@ -115,7 +115,17 @@ public class Fragment_Add_Coupon extends Fragment {
         btn_use_coupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkData();
+
+                String coupon = edt_coupon.getText().toString().trim();
+                if (!TextUtils.isEmpty(coupon))
+                {
+                    edt_coupon.setError(null);
+                    Common.CloseKeyBoard(activity,edt_coupon);
+                    SendCoupon(coupon,"use");
+                }else
+                {
+                    edt_coupon.setError(getString(R.string.field_req));
+                }
             }
         });
 
@@ -169,15 +179,13 @@ public class Fragment_Add_Coupon extends Fragment {
                             if (type.equals("check"))
                             {
                                 CreateAlertDialog(getString(R.string.coupon_found));
-                            }else
-                                {
-                                    if (response.body()!=null)
-                                    {
-                                        CreateAlertDialog(getString(R.string.coupon_used));
-                                        edt_coupon.setText("");
-                                        updateUserData(response.body());
-                                    }
-                                }
+                            }else if (type.equals("use")){
+                                CreateAlertDialog(getString(R.string.coupon_used));
+                                edt_coupon.setText("");
+                                updateUserData(response.body());
+                            }
+
+
                         }else
                             {
                                 try {
@@ -237,6 +245,34 @@ public class Fragment_Add_Coupon extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setView(view);
+        dialog.show();
+    }
+
+    public  void CreateAlertDialogprofile(String msg)
+    {
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setCancelable(true)
+                .create();
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_sign,null);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        TextView tv_title = view.findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.app_name));
+        tv_msg.setText(msg);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.DisplayFragmentProfile();
+                dialog.dismiss();
+
             }
         });
 
