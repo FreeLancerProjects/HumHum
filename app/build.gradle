@@ -2,12 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
 
+
     defaultConfig {
         applicationId "com.creativeshare.humhum"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 10
         versionName "1.9"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -21,8 +23,8 @@ android {
     compileSdkVersion = 28
 
     compileOptions {
-        targetCompatibility 1.9
-        sourceCompatibility 1.9
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
     repositories {
 
@@ -46,8 +48,8 @@ dependencies {
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.castorflex.smoothprogressbar:library:1.3.0'
@@ -68,6 +70,7 @@ dependencies {
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'com.zcw:togglebutton-library:1.0.0'
     implementation 'com.google.android.libraries.places:places:1.1.0'
+
 
 
 }

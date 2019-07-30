@@ -72,7 +72,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
-
+    private boolean isBillUploaded = false;
 
 
 
@@ -173,7 +173,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (order_state==Tags.STATE_DELEGATE_COLLECTED_ORDER)
+                if (order_state==Tags.STATE_DELEGATE_COLLECTED_ORDER&&!isBillUploaded)
                 {
                     Common.CreateSignAlertDialog(activity,getString(R.string.pls_upload_img_bill));
                 }else
@@ -201,6 +201,14 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         tv_client_name.setText(order.getClient_user_full_name());
         tv_order_details.setText(order.getOrder_details()+"\n"+getString(R.string.delivery_cost)+":"+order.getDriver_offer()+currency.getSymbol());
 
+        if (order.getBill_image()!=null&&!TextUtils.isEmpty(order.getBill_image())&&!order.getBill_image().equals("0"))
+        {
+            isBillUploaded = true;
+        }else
+            {
+                isBillUploaded = false;
+
+            }
         if (order.getOrder_image()==null)
         {
             order_image.setVisibility(View.GONE);
@@ -501,6 +509,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
                         dialog.dismiss();
                         if (response.isSuccessful())
                         {
+                            isBillUploaded = true;
                             uri = null;
                             Toast.makeText(activity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                         }else
