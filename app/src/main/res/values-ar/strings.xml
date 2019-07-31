@@ -290,6 +290,6 @@
     <string name="bill_price">تكلفة الفاتوة :</string>
     <string name="total">الإجمالي :</string>
     <string name="pls_upload_img_bill">قم برفع صورة الفاتورة</string>
-
+    <string name="place_name">اسم المكان</string>
 
 </resources>

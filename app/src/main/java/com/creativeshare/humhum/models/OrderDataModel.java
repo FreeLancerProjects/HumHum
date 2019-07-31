@@ -49,8 +49,15 @@ public class OrderDataModel implements Serializable {
         private String driver_long;
         private String bill_image;
         private String bill_cost;
+        private String place_name;
 
+        public String getPlace_name() {
+            return place_name;
+        }
 
+        public void setPlace_name(String place_name) {
+            this.place_name = place_name;
+        }
 
         public String getOrder_id() {
             return order_id;

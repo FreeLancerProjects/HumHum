@@ -34,6 +34,7 @@ import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
 import com.creativeshare.humhum.models.ChatUserModel;
 import com.creativeshare.humhum.models.OrderDataModel;
+import com.creativeshare.humhum.models.PlaceDetailsModel;
 import com.creativeshare.humhum.models.UserModel;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.share.Common;
@@ -61,7 +62,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
     private ImageView image_back,image_arrow,image_arrow2,image_chat,order_image,image_bill;
     private LinearLayout ll_back,ll_address,ll_shipment;
     private String current_lang;
-    private TextView tv_client_name,tv_address,tv_order_details,tv_order_state,tv_order_next_state,tv_location_pickup,tv_location_dropoff;
+    private TextView tv_client_name,tv_address,rest_name,tv_order_details,tv_order_state,tv_order_next_state,tv_location_pickup,tv_location_dropoff;
     private FrameLayout fl_map,fl_update_order_state;
     private OrderDataModel.OrderModel order;
     private UserSingleTone userSingleTone;
@@ -73,7 +74,6 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
     private boolean isBillUploaded = false;
-
 
 
     @Nullable
@@ -123,13 +123,13 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
 
         ll_back = view.findViewById(R.id.ll_back);
         tv_order_details = view.findViewById(R.id.tv_order_details);
+        rest_name = view.findViewById(R.id.tv_rest_name);
         tv_order_state = view.findViewById(R.id.tv_order_state);
         tv_order_next_state = view.findViewById(R.id.tv_order_next_state);
         tv_client_name = view.findViewById(R.id.tv_client_name);
         tv_address = view.findViewById(R.id.tv_address);
         fl_map = view.findViewById(R.id.fl_map);
         fl_update_order_state = view.findViewById(R.id.fl_update_order_state);
-
 
         ll_address = view.findViewById(R.id.ll_address);
         ll_shipment = view.findViewById(R.id.ll_shipment);
@@ -200,7 +200,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
         Currency currency = Currency.getInstance(new Locale(current_lang,userModel.getData().getUser_country()));
         tv_client_name.setText(order.getClient_user_full_name());
         tv_order_details.setText(order.getOrder_details()+"\n"+getString(R.string.delivery_cost)+":"+order.getDriver_offer()+currency.getSymbol());
-
+        rest_name.setText(order.getPlace_name());
         if (order.getBill_image()!=null&&!TextUtils.isEmpty(order.getBill_image())&&!order.getBill_image().equals("0"))
         {
             isBillUploaded = true;
