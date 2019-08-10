@@ -1353,10 +1353,8 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
                                                 }
 
-                                                if (fragment_client_profile!=null&&fragment_client_profile.isAdded())
-                                                {
-                                                    getUserDataById(userModel.getData().getUser_id());
-                                                }
+                                                getUserDataById(userModel.getData().getUser_id());
+
                                             }
                                         },1000);
                             }
