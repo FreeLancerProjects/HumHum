@@ -158,7 +158,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String deliveryTime = dateFormat.format(new Date(Long.parseLong(orderModel.getOrder_time_arrival())*1000));
             tv_delivery_time.setText(deliveryTime);
             tv_order_num.setText("#"+orderModel.getOrder_id());
-            tv_order_date.setText(TimeAgo.getTimeAgo(Long.parseLong(orderModel.getOrder_date())*1000,context));
+            tv_order_date.setText(TimeAgo.getTimeAgo(Long.parseLong(orderModel.getOrder_time())*1000,context));
 
         }
     }

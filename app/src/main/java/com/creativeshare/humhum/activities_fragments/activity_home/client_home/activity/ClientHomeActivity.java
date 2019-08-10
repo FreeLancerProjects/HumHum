@@ -1292,6 +1292,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                             ClientHomeActivity.super.onBackPressed();
                             Toast.makeText(ClientHomeActivity.this, R.string.accepted, Toast.LENGTH_SHORT).show();
                             RefreshFragment_Order();
+                            RefreshFragment_Notification();
                         }else
                             {
                                 dialog.dismiss();
@@ -1341,6 +1342,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                                 Toast.makeText(ClientHomeActivity.this,getString(R.string.done), Toast.LENGTH_SHORT).show();
                                 DisplayFragmentMyOrders();
                                 RefreshFragment_Order();
+
                                 new Handler()
                                         .postDelayed(new Runnable() {
                                             @Override
