@@ -214,7 +214,7 @@
     <string name="deliver_within">مدة التوصيل</string>
     <string name="write_package_details">إكتب هنا تفاصيل الغرض اللي ترغب في إرسالة. مثلا ماهو، وكيف حجمة، واذا محتاج سيارة مخصصة لنقلة. ملاحظة: لاتستخدم هذه الخدمة للطلب من المطاعم. </string>
     <string name="contact_us_on_telegram">تواصل معنا عبر تيليجرام.</string>
-    <string name="rate_of_courier">تقييم المرسول</string>
+    <string name="rate_of_courier">تقييم المندوب</string>
     <string name="comment">تعليقك</string>
     <string name="add_rate">إضافة تقييم</string>
     <string name="offer_refused">تم رفض العرض</string>
