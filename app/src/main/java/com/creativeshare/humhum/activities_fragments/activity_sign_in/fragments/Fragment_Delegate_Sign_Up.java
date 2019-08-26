@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -676,9 +677,12 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
 
             if (selectedType == 1)
             {
+               // imgUri2 = data.getData();
+
                 uri = data.getData();
                 image_icon1.setVisibility(View.GONE);
-                File file = new File(Common.getImagePath(activity, imgUri2));
+                Log.e("ggggg",uri.toString());
+                File file = new File(Common.getImagePath(activity, uri));
 
                 Picasso.with(activity).load(file).fit().into(image_personal);
             }else if (selectedType ==2)
