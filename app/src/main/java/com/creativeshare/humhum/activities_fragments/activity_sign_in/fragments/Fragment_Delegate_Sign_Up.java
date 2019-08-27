@@ -667,12 +667,7 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
 
                     }
                 }
-
-
             }
-
-
-
         }else if (requestCode == IMG_REQ5 && resultCode == Activity.RESULT_OK && data != null) {
 
             if (selectedType == 1)
@@ -705,8 +700,6 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
                     }
                 }
             }
-
-
 
         }
     }
