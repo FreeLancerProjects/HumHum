@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -62,6 +63,8 @@ public class Fragment_Client_Order_Details extends Fragment {
     private ImageView image1, image2, image3, image4, image5;
     private TextView tv1, tv2, tv3, tv4, tv5, tv_order_id;
     private View view1, view2, view3, view4;
+    private Button btn_order_cancel;
+
     ////////////////////////////////
     private OrderDataModel.OrderModel order;
     private BillModel billModel=null;
@@ -94,6 +97,7 @@ public class Fragment_Client_Order_Details extends Fragment {
             image_back.setImageResource(R.drawable.ic_left_arrow);
 
         }
+        btn_order_cancel=view.findViewById(R.id.btn_order_cancel);
         order_image = view.findViewById(R.id.order_image);
         image_bill = view.findViewById(R.id.image_bill);
 
@@ -209,6 +213,7 @@ public class Fragment_Client_Order_Details extends Fragment {
 
 
     private void UpdateUI(OrderDataModel.OrderModel order) {
+
         if (order != null) {
             if (order.getOrder_image()==null)
             {
@@ -252,6 +257,7 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image_chat.setVisibility(View.GONE);
                 image_call.setVisibility(View.GONE);
                 tv_not_approved.setVisibility(View.VISIBLE);
+
                 updateStepView(0);
             } else{
 
@@ -317,10 +323,14 @@ public class Fragment_Client_Order_Details extends Fragment {
     }
 
     public void updateStepView(int completePosition) {
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .setCancelable(true)
+                .create();
         Log.e("completePosition",completePosition+"__");
         switch (completePosition) {
             case Tags.STATE_ORDER_NEW:
                 ClearStepUI();
+
                 break;
             case Tags.STATE_CLIENT_ACCEPT_OFFER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
@@ -328,6 +338,13 @@ public class Fragment_Client_Order_Details extends Fragment {
                 view1.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv1.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
                 image_bill.setVisibility(View.GONE);
+                btn_order_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        activity.clientCancelOrder(order.getOrder_id());
+                    }
+                });
 
                 break;
             case Tags.STATE_DELEGATE_COLLECTING_ORDER:
@@ -341,6 +358,7 @@ public class Fragment_Client_Order_Details extends Fragment {
                 view2.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv2.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
                 image_bill.setVisibility(View.GONE);
+                btn_order_cancel.setVisibility(View.GONE);
                 break;
             case Tags.STATE_DELEGATE_COLLECTED_ORDER:
                 image1.setBackgroundResource(R.drawable.step_green_circle);
@@ -359,6 +377,8 @@ public class Fragment_Client_Order_Details extends Fragment {
                 tv3.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
                 image_bill.setVisibility(View.VISIBLE);
                 billModel = new BillModel(order.getBill_image(),order.getBill_cost(),order.getDriver_offer());
+                btn_order_cancel.setVisibility(View.GONE);
+
                 getBillData();
                 break;
             case Tags.STATE_DELEGATE_DELIVERING_ORDER:
@@ -382,6 +402,8 @@ public class Fragment_Client_Order_Details extends Fragment {
                 view4.setBackgroundColor(ContextCompat.getColor(activity, R.color.green_text));
                 tv4.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
                 image_bill.setVisibility(View.VISIBLE);
+                btn_order_cancel.setVisibility(View.GONE);
+
                 billModel = new BillModel(order.getBill_image(),order.getBill_cost(),order.getDriver_offer());
 
                 break;
@@ -410,6 +432,7 @@ public class Fragment_Client_Order_Details extends Fragment {
                 image5.setImageResource(R.drawable.step_green_heart);
                 tv5.setTextColor(ContextCompat.getColor(activity, R.color.green_text));
                 image_bill.setVisibility(View.VISIBLE);
+                btn_order_cancel.setVisibility(View.GONE);
                 billModel = new BillModel(order.getBill_image(),order.getBill_cost(),order.getDriver_offer());
 
                 break;

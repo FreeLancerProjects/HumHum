@@ -294,4 +294,7 @@
     <string name="total">Total :</string>
     <string name="pls_upload_img_bill">Please Upload Bill Image.</string>
     <string name="place_name">place name</string>
+    <string name="order_cancel"> cancel order</string>
+    <string name="order_canceled">order canceled by client order number : </string>
+
 </resources>

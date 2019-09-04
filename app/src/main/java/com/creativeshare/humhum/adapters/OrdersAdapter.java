@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class  OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int ITEM_DATA = 1;
     private final int ITEM_LOAD = 2;
     private String user_type;

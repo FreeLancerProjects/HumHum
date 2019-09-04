@@ -317,6 +317,10 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER))) {
                     builder.setContentText(getString(R.string.order_delivered_successfully));
 
+                }else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_CANCEL_ORDER))) {
+                    String order_id = map.get("order_id");
+
+                    builder.setContentText(getString(R.string.order_canceled)+order_id);
                 }
 
                 intent.putExtra("status", order_status);
@@ -478,7 +482,6 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             String message_id = map.get("id_message");
             String date = map.get("date");
             String message = map.get("message");
-
             String from_user_id = map.get("from_user");
             String to_user_id = map.get("to_user");
             String from_name = map.get("from_user_full_name");
@@ -667,6 +670,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                 }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER))) {
                     builder.setContentText(getString(R.string.order_delivered_successfully));
+
+                }else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_CANCEL_ORDER))) {
+                    String order_id = map.get("order_id");
+
+                    builder.setContentText(getString(R.string.order_canceled)+order_id);
 
                 }
 

@@ -1466,7 +1466,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     }
                 });
     }
-    private void clientCancelOrder(String order_id)
+    public void clientCancelOrder(String order_id)
     {
         Log.e("order_id",order_id+"__");
         final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
@@ -1485,7 +1485,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                             ClientHomeActivity.super.onBackPressed();
                             RefreshFragment_Notification();
                             RefreshFragment_Order();
-                            Toast.makeText(ClientHomeActivity.this, getString(R.string.refused), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ClientHomeActivity.this, getString(R.string.order_cancel), Toast.LENGTH_SHORT).show();
 
                         }else
                         {

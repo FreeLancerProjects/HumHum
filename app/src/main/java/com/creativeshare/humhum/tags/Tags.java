@@ -34,6 +34,7 @@ public class Tags {
     public static final int STATE_DELEGATE_COLLECTED_ORDER = 6;
     public static final int STATE_DELEGATE_DELIVERING_ORDER = 7;
     public static final int STATE_DELEGATE_DELIVERED_ORDER = 8;
+    public static final int STATE_CLIENT_CANCEL_ORDER =9;
 
 
     public static final int START_TYPING = 1;

@@ -263,14 +263,14 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
 
             }
 
-            if (TextUtils.isEmpty(m_email)) {
+          /*  if (TextUtils.isEmpty(m_email)) {
                 edt_email.setError(getString(R.string.field_req));
             } else if (!Patterns.EMAIL_ADDRESS.matcher(m_email).matches()) {
                 edt_email.setError(getString(R.string.inv_email));
             } else {
                 edt_email.setError(null);
 
-            }
+            }*/
 
             if (date_of_birth == 0) {
                 tv_birth_date.setError(getString(R.string.field_req));
