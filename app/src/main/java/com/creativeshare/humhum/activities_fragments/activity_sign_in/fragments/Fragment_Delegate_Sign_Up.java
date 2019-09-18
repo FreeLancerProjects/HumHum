@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,11 +90,11 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
         image_back_photo = view.findViewById(R.id.image_back_photo);
         if (current_language.equals("ar")) {
             image_back_photo.setImageResource(R.drawable.ic_right_arrow);
-            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.black), PorterDuff.Mode.SRC_IN);
 
         } else {
             image_back_photo.setImageResource(R.drawable.ic_left_arrow);
-            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.black), PorterDuff.Mode.SRC_IN);
 
 
 
@@ -540,12 +539,16 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
             {
                 imgUri1 = data.getData();
                 image_id_icon.setVisibility(View.GONE);
+
                 try {
+
                     File file = new File(Common.getImagePath(activity, imgUri1));
                     Picasso.with(activity).load(file).fit().into(image_id);
                 }
-                catch (RuntimeException ex){
+                catch (Exception e){
+                    image_id_icon.setVisibility(View.VISIBLE);
 
+                    Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
                 }
 
             }else if (selectedType ==2)
@@ -577,9 +580,20 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
             {
                 imgUri2 = data.getData();
                 image_license_icon.setVisibility(View.GONE);
-                File file = new File(Common.getImagePath(activity, imgUri2));
 
-                Picasso.with(activity).load(file).fit().into(image_license);
+                try {
+                    File file = new File(Common.getImagePath(activity, imgUri2));
+
+                    Picasso.with(activity).load(file).fit().into(image_license);
+
+                }catch (Exception e)
+                {
+                    image_license_icon.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
+
+                }
+
             }else if (selectedType ==2)
             {
 
@@ -610,9 +624,21 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
             {
                 imgUri3 = data.getData();
                 car_front_icon.setVisibility(View.GONE);
-                File file = new File(Common.getImagePath(activity, imgUri3));
 
-                Picasso.with(activity).load(file).fit().into(car_front_image);
+
+                try {
+                    File file = new File(Common.getImagePath(activity, imgUri3));
+
+                    Picasso.with(activity).load(file).fit().into(car_front_image);
+
+                }catch (Exception e)
+                {
+                    car_front_icon.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
+
+                }
+
             }else if (selectedType ==2)
             {
 
@@ -646,9 +672,20 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
             {
                 imgUri4 = data.getData();
                 car_back_icon.setVisibility(View.GONE);
-                File file = new File(Common.getImagePath(activity, imgUri4));
 
-                Picasso.with(activity).load(file).fit().into(car_back_image);
+
+                try {
+                    File file = new File(Common.getImagePath(activity, imgUri4));
+
+                    Picasso.with(activity).load(file).fit().into(car_back_image);
+
+                }catch (Exception e)
+                {
+                    car_back_icon.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
+
+                }
             }else if (selectedType ==2)
             {
 
@@ -677,10 +714,16 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
 
                 uri = data.getData();
                 image_icon1.setVisibility(View.GONE);
-               // Log.e("ggggg",uri.toString());
-                File file = new File(Common.getImagePath(activity, uri));
+                try {
+                    File file = new File(Common.getImagePath(activity, uri));
+                    Picasso.with(activity).load(file).fit().into(image_personal);
 
-                Picasso.with(activity).load(file).fit().into(image_personal);
+                }catch (Exception e)
+                {
+                    image_icon1.setVisibility(View.VISIBLE);
+                    Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
+                }
+
             }else if (selectedType ==2)
             {
 

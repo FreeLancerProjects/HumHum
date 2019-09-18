@@ -178,10 +178,8 @@ public class SignInActivity extends AppCompatActivity {
     {
         fragment_count +=1;
 
-        if (fragment_code_verification == null)
-        {
-            fragment_code_verification = Fragment_Code_Verification.newInstance(phone_code,phone_number,country_code);
-        }
+        fragment_code_verification = Fragment_Code_Verification.newInstance(phone_code,phone_number,country_code);
+
         if (fragment_code_verification.isAdded())
         {
             fragmentManager.beginTransaction().show(fragment_code_verification).commit();

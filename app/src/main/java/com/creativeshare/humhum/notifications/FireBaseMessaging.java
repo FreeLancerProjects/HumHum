@@ -57,7 +57,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             String current_user_id = getUserData().getData().getUser_id();
             String to_user_id = map.get("to_user");
-            if (current_user_id.equals(to_user_id)) {
+            if (current_user_id.equals(to_user_id)||to_user_id.equals("all")) {
                 ManageNotification(map);
             }
 
@@ -277,7 +277,8 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
             builder.setSmallIcon(R.drawable.ic_notification);
 
-            if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS)) {
+            if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS))
+            {
 
 
                 builder.setContentTitle(map.get("from_name"));
@@ -461,6 +462,24 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                 FollowModel followModel = new FollowModel(client_lat,client_long,place_lat,place_long,driver_lat,driver_long);
                 EventBus.getDefault().post(followModel);
+
+            }
+            else if (notification_type.equals(Tags.FIREBASE_NOT_GENERAL_NOT)) {
+
+                NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+                String content = map.get("notification_message");
+                builder.setContentTitle(getString(R.string.admin));
+                builder.setContentText(content);
+                bigTextStyle.bigText(content);
+                builder.setStyle(bigTextStyle);
+
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.createNotificationChannel(channel);
+                    manager.notify(new Random().nextInt(200), builder.build());
+                }
+
 
             }
 
@@ -816,6 +835,20 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                 FollowModel followModel = new FollowModel(client_lat,client_long,place_lat,place_long,driver_lat,driver_long);
                 EventBus.getDefault().post(followModel);
+
+            }
+
+            else if (notification_type.equals(Tags.FIREBASE_NOT_GENERAL_NOT)) {
+
+                String content = map.get("notification_message");
+                builder.setContentTitle(getString(R.string.admin));
+                builder.setContentText(content);
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.notify(new Random().nextInt(200), builder.build());
+                }
+
 
             }
 

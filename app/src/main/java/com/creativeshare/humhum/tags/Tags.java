@@ -1,7 +1,5 @@
 package com.creativeshare.humhum.tags;
 
-import com.creativeshare.humhum.BuildConfig;
-
 public class Tags {
 
 
@@ -52,6 +50,7 @@ public class Tags {
     public static final String FIREBASE_NOT_RATE = "rate";
     public static final String FIREBASE_NOT_BEDRIVER = "be_driver";
     public static final String FIREBASE_NOT_DRIVER_UPDATE_LOCATION = "driver_update_location";
+    public static final String FIREBASE_NOT_GENERAL_NOT = "general_notifications";
 
 
 

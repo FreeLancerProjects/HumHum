@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -27,7 +28,6 @@ import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
 
 import java.io.File;
-import java.net.URLEncoder;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -180,61 +180,101 @@ public class Common {
         {
 
 
-            if ( DocumentsContract.isDocumentUri(context, uri)) {
+            try {
+                if ( DocumentsContract.isDocumentUri(context, uri)) {
 
-                if (isExternalStorageDocument(uri)) {
-                    final String docId = DocumentsContract.getDocumentId(uri);
-                    final String[] split = docId.split(":");
-                    final String type = split[0];
+                    if (isExternalStorageDocument(uri)) {
 
-                    if ("primary".equalsIgnoreCase(type)) {
-                        return Environment.getExternalStorageDirectory() + "/"
-                                + split[1];
+                        try {
+                            final String docId = DocumentsContract.getDocumentId(uri);
+                            final String[] split = docId.split(":");
+                            final String type = split[0];
+
+                            if ("primary".equalsIgnoreCase(type)) {
+                                return Environment.getExternalStorageDirectory() + "/"
+                                        + split[1];
+                            }
+                        }catch (Exception e)
+                        {
+                            Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    else if (isDownloadsDocument(uri)) {
+
+                        try {
+                            final String id = DocumentsContract.getDocumentId(uri);
+                            final Uri contentUri = ContentUris.withAppendedId(
+                                    Uri.parse("content://downloads/public_downloads"),
+                                    Long.valueOf(id));
+                            return getDataColumn(context, contentUri, null, null);
+
+
+                        }catch (Exception e)
+                        {
+                            Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    // MediaProvider
+                    else if (isMediaDocument(uri)) {
+
+                        try {
+                            final String docId = DocumentsContract.getDocumentId(uri);
+                            final String[] split = docId.split(":");
+                            final String type = split[0];
+
+                            Uri contentUri = null;
+                            if ("image".equals(type)) {
+                                contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                            } else if ("video".equals(type)) {
+                                contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                            } else if ("audio".equals(type)) {
+                                contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                            }
+
+                            final String selection = "_id=?";
+                            final String[] selectionArgs = new String[] { split[1] };
+
+                            return getDataColumn(context, contentUri, selection,
+                                    selectionArgs);
+                        }catch (Exception e)
+                        {
+                            Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
+                        }
+
+
                     }
                 }
-                else if (isDownloadsDocument(uri)) {
+                // MediaStore (and general)
+                else if ("content".equalsIgnoreCase(uri.getScheme())) {
 
-                    final String id = DocumentsContract.getDocumentId(uri);
-                    final Uri contentUri = ContentUris.withAppendedId(
-                            Uri.parse("content://downloads/public_downloads"),
-                            Long.valueOf(id));
+                    try {
+                        if (isGooglePhotosUri(uri))
+                            return uri.getLastPathSegment();
 
-                    return getDataColumn(context, contentUri, null, null);
-                }
-                // MediaProvider
-                else if (isMediaDocument(uri)) {
-                    final String docId = DocumentsContract.getDocumentId(uri);
-                    final String[] split = docId.split(":");
-                    final String type = split[0];
-
-                    Uri contentUri = null;
-                    if ("image".equals(type)) {
-                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    } else if ("video".equals(type)) {
-                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                    } else if ("audio".equals(type)) {
-                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                        return getDataColumn(context, uri, null, null);
+                    }catch (Exception e)
+                    {
+                        Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
                     }
+                    // Return the remote address
 
-                    final String selection = "_id=?";
-                    final String[] selectionArgs = new String[] { split[1] };
-
-                    return getDataColumn(context, contentUri, selection,
-                            selectionArgs);
                 }
-            }
-            // MediaStore (and general)
-            else if ("content".equalsIgnoreCase(uri.getScheme())) {
+                // File
+                else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                    try {
+                        return uri.getPath();
 
-                // Return the remote address
-                if (isGooglePhotosUri(uri))
-                    return uri.getLastPathSegment();
+                    }catch (Exception e)
+                    {
+                        Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-                return getDataColumn(context, uri, null, null);
-            }
-            // File
-            else if ("file".equalsIgnoreCase(uri.getScheme())) {
-                return uri.getPath();
+            }catch (Exception e)
+            {
+                Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
             }
 
             return null;
@@ -245,28 +285,42 @@ public class Common {
             String[] proj = {MediaStore.Images.Media.DATA};
             String result = null;
 
-            CursorLoader cursorLoader = new CursorLoader(
-                    context,
-                    uri, proj, null, null, null);
-            Cursor cursor = cursorLoader.loadInBackground();
+            try {
+                CursorLoader cursorLoader = new CursorLoader(
+                        context,
+                        uri, proj, null, null, null);
+                Cursor cursor = cursorLoader.loadInBackground();
 
-            if (cursor != null)
+                if (cursor != null)
+                {
+                    int column_index =
+                            cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    result = cursor.getString(column_index);
+                }
+            }catch (Exception e)
             {
-                int column_index =
-                        cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                result = cursor.getString(column_index);
+                Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
             }
+
+
             return result;
         }
         else
         {
-
             String[] proj = {MediaStore.Images.Media.DATA};
             Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
             int column_index
                     = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
+
+
+            try {
+                cursor.moveToFirst();
+            }catch (Exception e)
+            {
+                Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
+            }
+
             return cursor.getString(column_index);
         }
     }
@@ -308,6 +362,7 @@ public class Common {
         return "com.google.android.apps.photos.content".equals(uri
                 .getAuthority());
     }
+
     private static File getFileFromImagePath(String path)
     {
         File file = new File(path);

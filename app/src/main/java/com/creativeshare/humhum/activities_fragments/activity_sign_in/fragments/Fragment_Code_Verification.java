@@ -222,4 +222,12 @@ public class Fragment_Code_Verification extends Fragment {
                 });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer!=null)
+        {
+            countDownTimer.cancel();
+        }
+    }
 }

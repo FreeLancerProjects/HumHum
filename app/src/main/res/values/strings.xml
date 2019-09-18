@@ -295,4 +295,5 @@
     <string name="place_name">place name</string>
     <string name="order_cancel"> cancel order</string>
     <string name="order_canceled">order canceled by client order number : </string>
+    <string name="admin">Hum Hum App</string>
 </resources>

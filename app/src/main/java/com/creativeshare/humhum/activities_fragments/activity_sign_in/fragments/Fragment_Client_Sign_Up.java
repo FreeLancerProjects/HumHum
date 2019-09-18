@@ -98,13 +98,13 @@ public class Fragment_Client_Sign_Up extends Fragment implements DatePickerDialo
 
         if (current_language.equals("ar")) {
             image_back_photo.setImageResource(R.drawable.ic_right_arrow);
-            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.black), PorterDuff.Mode.SRC_IN);
 
 
         } else {
 
             image_back_photo.setImageResource(R.drawable.ic_left_arrow);
-            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            image_back_photo.setColorFilter(ContextCompat.getColor(activity, R.color.black), PorterDuff.Mode.SRC_IN);
 
 
         }
@@ -331,29 +331,39 @@ public class Fragment_Client_Sign_Up extends Fragment implements DatePickerDialo
             image_icon1.setVisibility(View.GONE);
             uri = data.getData();
 
-            String path = Common.getImagePath(activity, uri);
-            if (path != null) {
-                Picasso.with(activity).load(new File(path)).fit().into(image_personal);
+            try {
 
-            } else {
-                Picasso.with(activity).load(uri).fit().into(image_personal);
+                    try {
+                        File file = new File(Common.getImagePath(activity, uri));
+
+                        Picasso.with(activity).load(file).fit().into(image_personal);
+
+                    }catch (Exception e)
+
+                    {
+                        image_icon1.setVisibility(View.VISIBLE);
+
+                        Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
+                    }
+
+
+            }catch (Exception e)
+            {
+                image_icon1.setVisibility(View.VISIBLE);
+
+                Toast.makeText(activity, "invalid image", Toast.LENGTH_SHORT).show();
 
             }
+
         } else if (requestCode == IMG2 && resultCode == Activity.RESULT_OK && data != null) {
             image_icon1.setVisibility(View.GONE);
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
             uri = getUriFromBitmap(bitmap);
             if (uri != null) {
-                String path = Common.getImagePath(activity, uri);
 
-                if (path != null) {
-                    Picasso.with(activity).load(new File(path)).fit().into(image_personal);
+                Picasso.with(activity).load(new File(Common.getImagePath(activity, uri))).fit().into(image_personal);
 
-                } else {
-                    Picasso.with(activity).load(uri).fit().into(image_personal);
-
-                }
             }
 
         }
