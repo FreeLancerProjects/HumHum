@@ -303,6 +303,7 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
                 Toast.makeText(activity, R.string.choose_identity_card_image, Toast.LENGTH_SHORT).show();
             }
 
+
             if (imgUri2==null)
             {
                 Toast.makeText(activity, R.string.choose_license_image, Toast.LENGTH_SHORT).show();
