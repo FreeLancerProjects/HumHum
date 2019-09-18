@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -371,9 +372,8 @@ public class Common {
     public static MultipartBody.Part getMultiPart(Context context, Uri uri, String partName)
     {
         File file =  getFileFromImagePath(getImagePath(context,uri));
-
         RequestBody requestBody = getRequestBodyImage(file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData(partName,file.getName(),requestBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(partName, SystemClock.uptimeMillis()+".png",requestBody);
         return part;
 
     }
