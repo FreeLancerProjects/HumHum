@@ -1,8 +1,13 @@
 package com.creativeshare.humhum.tags;
 
+import com.creativeshare.humhum.BuildConfig;
+
 public class Tags {
 
-    public static final String base_url = "http://humhum.store";
+
+    public static  String base_url ="http://humhum.store/";
+
+
     public static final String IMAGE_URL = base_url+"/uploads/images/";
     public static final String session_login = "login";
     public static final String session_logout = "logout";

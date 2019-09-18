@@ -676,7 +676,7 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
 
                 uri = data.getData();
                 image_icon1.setVisibility(View.GONE);
-                Log.e("ggggg",uri.toString());
+               // Log.e("ggggg",uri.toString());
                 File file = new File(Common.getImagePath(activity, uri));
 
                 Picasso.with(activity).load(file).fit().into(image_personal);

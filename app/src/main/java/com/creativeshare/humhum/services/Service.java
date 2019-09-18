@@ -176,7 +176,8 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("/Api/logout")
-    Call<ResponseBody> logOut(@Field("user_id") String user_id);
+    Call<ResponseBody> logOut(@Field("user_id") String user_id,
+                              @Field("user_token_id") String user_token_id);
 
     @FormUrlEncoded
     @POST("/Api/addOrder")

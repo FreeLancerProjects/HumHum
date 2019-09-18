@@ -27,6 +27,7 @@ import com.creativeshare.humhum.R;
 import com.creativeshare.humhum.activities_fragments.activity_home.client_home.activity.ClientHomeActivity;
 
 import java.io.File;
+import java.net.URLEncoder;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -315,6 +316,7 @@ public class Common {
     public static MultipartBody.Part getMultiPart(Context context, Uri uri, String partName)
     {
         File file =  getFileFromImagePath(getImagePath(context,uri));
+
         RequestBody requestBody = getRequestBodyImage(file);
         MultipartBody.Part part = MultipartBody.Part.createFormData(partName,file.getName(),requestBody);
         return part;

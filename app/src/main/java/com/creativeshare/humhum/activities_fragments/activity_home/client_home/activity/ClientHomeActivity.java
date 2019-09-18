@@ -2287,44 +2287,52 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     {
         final ProgressDialog dialog =Common.createProgressDialog(this,getString(R.string.wait));
         dialog.show();
-        Api.getService(Tags.base_url)
-                .logOut(userModel.getData().getUser_id())
-                .enqueue(new Callback<ResponseBody>() {
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        dialog.dismiss();
-                        if (response.isSuccessful())
-                        {
-                            new Handler()
-                                    .postDelayed(new Runnable() {
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                            String token = task.getResult().getToken();
+
+                            Api.getService(Tags.base_url)
+                                    .logOut(userModel.getData().getUser_id(), token)
+                                    .enqueue(new Callback<ResponseBody>() {
                                         @Override
-                                        public void run() {
-                                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                            manager.cancelAll();
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                            dialog.dismiss();
+                                            if (response.isSuccessful()) {
+                                                new Handler()
+                                                        .postDelayed(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                                                manager.cancelAll();
+                                                            }
+                                                        }, 1);
+                                                userSingleTone.clear(ClientHomeActivity.this);
+                                                Intent intent = new Intent(ClientHomeActivity.this, SignInActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                                if (current_lang.equals("ar")) {
+                                                    overridePendingTransition(R.anim.from_left, R.anim.to_right);
+
+
+                                                } else {
+                                                    overridePendingTransition(R.anim.from_right, R.anim.to_left);
+
+
+                                                }
+                                            }
                                         }
-                                    },1);
-                            userSingleTone.clear(ClientHomeActivity.this);
-                            Intent intent = new Intent(ClientHomeActivity.this, SignInActivity.class);
-                            startActivity(intent);
-                            finish();
-                            if (current_lang.equals("ar"))
-                            {
-                                overridePendingTransition(R.anim.from_left,R.anim.to_right);
 
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-
-                            }else
-                            {
-                                overridePendingTransition(R.anim.from_right,R.anim.to_left);
-
-
-                            }
+                                        }
+                                    });
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
                     }
                 });
     }
