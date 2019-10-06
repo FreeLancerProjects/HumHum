@@ -296,4 +296,6 @@
     <string name="order_cancel"> cancel order</string>
     <string name="order_canceled">order canceled by client order number : </string>
     <string name="admin">Hum Hum App</string>
+    <string name="searching">Searching for a delegate </string>
+
 </resources>

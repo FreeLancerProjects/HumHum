@@ -175,13 +175,13 @@ public class Fragment_Client_Sign_Up extends Fragment implements DatePickerDialo
 
 
         if (!TextUtils.isEmpty(m_name) &&
-                !TextUtils.isEmpty(m_email) &&
-                Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
+//                !TextUtils.isEmpty(m_email) &&
+//                Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
                 date_of_birth != 0
         ) {
             Common.CloseKeyBoard(activity, edt_name);
             edt_name.setError(null);
-            edt_email.setError(null);
+           // edt_email.setError(null);
             tv_birth_date.setError(null);
 
             if (uri == null) {

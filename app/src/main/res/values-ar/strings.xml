@@ -294,5 +294,5 @@
     <string name="order_cancel">الغاء الطلب</string>
     <string name="order_canceled"> تم الغاء الطلب بواسطه العميل رقم الطلب : </string>
     <string name="admin">تطبيق هم هم</string>
-
+    <string name="searching">جارى البحث عن مندوب </string>
 </resources>

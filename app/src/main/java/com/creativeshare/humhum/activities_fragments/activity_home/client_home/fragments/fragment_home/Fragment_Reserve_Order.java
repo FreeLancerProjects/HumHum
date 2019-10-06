@@ -607,7 +607,7 @@ public class Fragment_Reserve_Order extends Fragment {
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
 
         TextView tv_msg = view.findViewById(R.id.tv_msg);
-        tv_msg.setText(getString(R.string.order_sent_successfully_order_number_is)+" #"+order_id);
+        tv_msg.setText(getString(R.string.order_sent_successfully_order_number_is)+" #"+order_id+""+R.string.searching);
         btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

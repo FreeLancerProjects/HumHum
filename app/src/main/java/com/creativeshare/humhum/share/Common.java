@@ -37,15 +37,12 @@ import okhttp3.RequestBody;
 public class Common {
 
 
-
-    public static void CloseKeyBoard(Context context, View view)
-    {
-        if (context!=null&&view!=null)
-        {
+    public static void CloseKeyBoard(Context context, View view) {
+        if (context != null && view != null) {
             InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-            if (manager!=null){
-                manager.hideSoftInputFromWindow(view.getWindowToken(),0);
+            if (manager != null) {
+                manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
             }
 
@@ -54,8 +51,7 @@ public class Common {
 
     }
 
-    public static void CreateUserNotSignInAlertDialog(final Context context)
-    {
+    public static void CreateUserNotSignInAlertDialog(final Context context) {
 
 
         final AlertDialog dialog = new AlertDialog.Builder(context)
@@ -63,7 +59,7 @@ public class Common {
                 .create();
 
 
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null);
         Button btn_sign_in = view.findViewById(R.id.btn_sign_in);
         Button btn_sign_up = view.findViewById(R.id.btn_sign_up);
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
@@ -75,12 +71,10 @@ public class Common {
 
                 dialog.dismiss();
 
-                if (context instanceof ClientHomeActivity)
-                {
+                if (context instanceof ClientHomeActivity) {
                     ClientHomeActivity activity = (ClientHomeActivity) context;
                     activity.NavigateToSignInActivity();
                 }
-
 
 
             }
@@ -92,8 +86,7 @@ public class Common {
 
                 dialog.dismiss();
 
-                if (context instanceof ClientHomeActivity)
-                {
+                if (context instanceof ClientHomeActivity) {
                     ClientHomeActivity activity = (ClientHomeActivity) context;
                     activity.NavigateToSignInActivity();
 
@@ -107,19 +100,18 @@ public class Common {
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations= R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setView(view);
         dialog.show();
     }
 
-    public static void CreateSignAlertDialog(Context context, String msg)
-    {
+    public static void CreateSignAlertDialog(Context context, String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(context)
                 .setCancelable(true)
                 .create();
 
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_sign,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_sign, null);
         Button doneBtn = view.findViewById(R.id.doneBtn);
         TextView tv_msg = view.findViewById(R.id.tv_msg);
         tv_msg.setText(msg);
@@ -130,7 +122,7 @@ public class Common {
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
         dialog.setView(view);
@@ -138,13 +130,12 @@ public class Common {
     }
 
 
-    public static void CreateSuccessDialog(Context context, String msg)
-    {
+    public static void CreateSuccessDialog(Context context, String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(context)
                 .setCancelable(true)
                 .create();
 
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_sign,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_sign, null);
         Button doneBtn = view.findViewById(R.id.doneBtn);
         TextView tv_title = view.findViewById(R.id.tv_title);
         tv_title.setText(R.string.suc);
@@ -157,7 +148,7 @@ public class Common {
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
         dialog.setView(view);
@@ -165,24 +156,19 @@ public class Common {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static String getImagePath(Context context,Uri uri)
-    {
+    public static String getImagePath(Context context, Uri uri) {
         int currentApiVersion;
-        try
-        {
+        try {
             currentApiVersion = Build.VERSION.SDK_INT;
-        }
-        catch(NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             //API 3 will crash if SDK_INT is called
             currentApiVersion = 3;
         }
-        if (currentApiVersion >= Build.VERSION_CODES.KITKAT)
-        {
+        if (currentApiVersion >= Build.VERSION_CODES.KITKAT) {
 
 
             try {
-                if ( DocumentsContract.isDocumentUri(context, uri)) {
+                if (DocumentsContract.isDocumentUri(context, uri)) {
 
                     if (isExternalStorageDocument(uri)) {
 
@@ -195,13 +181,11 @@ public class Common {
                                 return Environment.getExternalStorageDirectory() + "/"
                                         + split[1];
                             }
-                        }catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
                         }
 
-                    }
-                    else if (isDownloadsDocument(uri)) {
+                    } else if (isDownloadsDocument(uri)) {
 
                         try {
                             final String id = DocumentsContract.getDocumentId(uri);
@@ -211,8 +195,7 @@ public class Common {
                             return getDataColumn(context, contentUri, null, null);
 
 
-                        }catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
                         }
 
@@ -235,12 +218,11 @@ public class Common {
                             }
 
                             final String selection = "_id=?";
-                            final String[] selectionArgs = new String[] { split[1] };
+                            final String[] selectionArgs = new String[]{split[1]};
 
                             return getDataColumn(context, contentUri, selection,
                                     selectionArgs);
-                        }catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
                         }
 
@@ -255,8 +237,7 @@ public class Common {
                             return uri.getLastPathSegment();
 
                         return getDataColumn(context, uri, null, null);
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
                     }
                     // Return the remote address
@@ -267,22 +248,17 @@ public class Common {
                     try {
                         return uri.getPath();
 
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
                     }
                 }
 
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
             }
 
             return null;
-        }
-        else if (currentApiVersion <= Build.VERSION_CODES.HONEYCOMB_MR2 && currentApiVersion >= Build.VERSION_CODES.HONEYCOMB)
-
-        {
+        } else if (currentApiVersion <= Build.VERSION_CODES.HONEYCOMB_MR2 && currentApiVersion >= Build.VERSION_CODES.HONEYCOMB) {
             String[] proj = {MediaStore.Images.Media.DATA};
             String result = null;
 
@@ -292,23 +268,19 @@ public class Common {
                         uri, proj, null, null, null);
                 Cursor cursor = cursorLoader.loadInBackground();
 
-                if (cursor != null)
-                {
+                if (cursor != null) {
                     int column_index =
                             cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     cursor.moveToFirst();
                     result = cursor.getString(column_index);
                 }
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
             }
 
 
             return result;
-        }
-        else
-        {
+        } else {
             String[] proj = {MediaStore.Images.Media.DATA};
             Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
             int column_index
@@ -317,8 +289,7 @@ public class Common {
 
             try {
                 cursor.moveToFirst();
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 Toast.makeText(context, "invalid image", Toast.LENGTH_SHORT).show();
             }
 
@@ -331,7 +302,7 @@ public class Common {
 
         Cursor cursor = null;
         final String column = "_data";
-        final String[] projection = { column };
+        final String[] projection = {column};
 
         try {
             cursor = context.getContentResolver().query(uri, projection,
@@ -346,10 +317,12 @@ public class Common {
         }
         return null;
     }
+
     public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri
                 .getAuthority());
     }
+
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri
                 .getAuthority());
@@ -359,38 +332,36 @@ public class Common {
         return "com.android.providers.media.documents".equals(uri
                 .getAuthority());
     }
+
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri
                 .getAuthority());
     }
 
-    private static File getFileFromImagePath(String path)
-    {
+    private static File getFileFromImagePath(String path) {
         File file = new File(path);
         return file;
     }
-    public static MultipartBody.Part getMultiPart(Context context, Uri uri, String partName)
-    {
-        File file =  getFileFromImagePath(getImagePath(context,uri));
+
+    public static MultipartBody.Part getMultiPart(Context context, Uri uri, String partName) {
+        File file = getFileFromImagePath(getImagePath(context, uri));
         RequestBody requestBody = getRequestBodyImage(file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData(partName, SystemClock.uptimeMillis()+".png",requestBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(partName, SystemClock.uptimeMillis() + ".png", requestBody);
         return part;
 
     }
 
-    private static RequestBody getRequestBodyImage(File file)
-    {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"),file);
+    private static RequestBody getRequestBodyImage(File file) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         return requestBody;
     }
 
-    public static RequestBody getRequestBodyText(String data)
-    {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"),data);
+    public static RequestBody getRequestBodyText(String data) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), data);
         return requestBody;
     }
-    public static ProgressDialog createProgressDialog(Context context , String msg)
-    {
+
+    public static ProgressDialog createProgressDialog(Context context, String msg) {
         ProgressDialog dialog = new ProgressDialog(context);
         dialog.setMessage(msg);
         dialog.setCancelable(true);
@@ -403,9 +374,7 @@ public class Common {
         return dialog;
 
 
-
     }
-
 
 
 }

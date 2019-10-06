@@ -229,8 +229,8 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
 
 
         if (!TextUtils.isEmpty(m_name) &&
-                !TextUtils.isEmpty(m_email) &&
-                Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
+//                !TextUtils.isEmpty(m_email) &&
+//                Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
                 date_of_birth != 0&&
                 !TextUtils.isEmpty(m_national_id) &&
                 !TextUtils.isEmpty(m_address)&&
@@ -241,7 +241,7 @@ public class Fragment_Delegate_Sign_Up extends Fragment implements DatePickerDia
         ) {
             Common.CloseKeyBoard(activity, edt_name);
             edt_name.setError(null);
-            edt_email.setError(null);
+         //   edt_email.setError(null);
             edt_address.setError(null);
             edt_national_num.setError(null);
             tv_birth_date.setError(null);
