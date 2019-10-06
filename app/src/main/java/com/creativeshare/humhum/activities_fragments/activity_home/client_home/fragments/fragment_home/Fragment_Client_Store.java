@@ -315,7 +315,9 @@ public class Fragment_Client_Store extends Fragment {
                 adapter.notifyDataSetChanged();
             }
 
+
             activity.DisplayFragmentHomeView();
+        activity.checkUserAvailability();
 
     }
 

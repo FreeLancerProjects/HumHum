@@ -441,6 +441,11 @@ public interface Service {
     @FormUrlEncoded
     @POST("Api/getOrder")
     Call<BillModel> getBillData(@Field("order_id") String order_id);
+
+    @FormUrlEncoded
+    @POST("Api/deleteUser")
+    Call<ResponseBody> deleteUser(@Field("user_id") String user_id);
+
 }
 
 

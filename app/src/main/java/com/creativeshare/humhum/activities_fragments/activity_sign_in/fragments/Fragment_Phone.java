@@ -54,7 +54,7 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
     private CountryPicker picker;
     private String current_language="";
     private String code = "";
-    private String country_code="";
+    private String country_code="sa";
     // from where , access from fragment chooser , fragment edit profile
     private String type;
 
@@ -155,7 +155,7 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
             if (type.equals("signup"))
             {
 
-                checkfound(code,phone);
+                checkFound(code,phone);
                 //sendSMSCode(code,phone);
                 //((SignInActivity)activity).signIn(phone,country_code,code);
 
@@ -174,7 +174,7 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
                 }
         }
     }
-    private void checkfound(String phone_code, final String phone) {
+    private void checkFound(String phone_code, final String phone) {
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -184,20 +184,20 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
 
+
                         dialog.dismiss();
 
                         if (response.isSuccessful())
                         {
-                            Log.e("body",response.body()+"__");
                             ((SignInActivity)activity).signIn(response.body());
 
+                        }else if (response.code()==406)
+                        {
+                            Toast.makeText(activity, getString(R.string.user_bloked), Toast.LENGTH_SHORT).show();
                         }else
                         {
-                            try {
-                                Log.e("error_code",response.code()+"_"+response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            Log.e("error_code",response.code()+"_");
+
                             if (response.code()==401)
                             {
                                 sendSMSCode(phone_code,phone);
@@ -235,7 +235,6 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
 
                         if (response.isSuccessful())
                         {
-                            Log.e("body",response.body()+"__");
                             ((SignInActivity)activity).DisplayFragmentCodeVerification(code.replace("+","00"),phone,country_code);
                         }else
                         {
@@ -306,7 +305,6 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
 
     private void updateUi(Country country) {
         country_code = country.getCode();
-
         tv_country.setText(country.getName());
         tv_code.setText(country.getDialCode());
         code = country.getDialCode();

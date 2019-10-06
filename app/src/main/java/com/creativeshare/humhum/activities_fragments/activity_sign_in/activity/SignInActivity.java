@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Delegate_Sign_Up;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Language;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_Phone;
+import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_User_Available;
 import com.creativeshare.humhum.activities_fragments.activity_sign_in.fragments.Fragment_User_Type;
 import com.creativeshare.humhum.activities_fragments.terms_conditions.TermsConditionsActivity;
 import com.creativeshare.humhum.language.Language_Helper;
@@ -52,12 +54,16 @@ public class SignInActivity extends AppCompatActivity {
     private Fragment_Delegate_Sign_Up fragment_delegate_sign_up;
     private Fragment_User_Type fragment_user_type;
     private Fragment_Code_Verification fragment_code_verification;
+    private Fragment_User_Available fragment_user_available;
+
     private Preferences preferences;
     private String phone = "";
     private String countrycode="",phone_code="";
     private String current_lang;
     private UserSingleTone userSingleTone;
     private int fragment_count=0;
+    private int available=0;
+
 
 
     @Override
@@ -70,17 +76,28 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_in);
+
         Paper.init(this);
         current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-        setContentView(R.layout.activity_sign_in);
         fragmentManager = getSupportFragmentManager();
         preferences = Preferences.getInstance();
         userSingleTone = UserSingleTone.getInstance();
-
+        getDataFromIntent();
 
         setUpFragment();
 
     }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent!=null&&intent.hasExtra("available"))
+        {
+             available = intent.getIntExtra("available",0);
+
+        }
+    }
+
     private void setUpFragment()
     {
         int state = preferences.getFragmentState(this);
@@ -127,6 +144,11 @@ public class SignInActivity extends AppCompatActivity {
 
             }
 
+        if (available==1||available==2)
+        {
+            DisplayFragmentUserAvailablity(available);
+        }
+
     }
     public void DisplayFragmentPhone()
     {
@@ -171,6 +193,28 @@ public class SignInActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().add(R.id.fragment_sign_in_container, fragment_signUp,"fragment_signUp").addToBackStack("fragment_signUp").commit();
 
             }
+
+
+    }
+
+    public void DisplayFragmentUserAvailablity(int available)
+    {
+
+        fragment_count +=1;
+
+        if (fragment_user_available == null)
+        {
+            fragment_user_available = Fragment_User_Available.newInstance(available);
+        }
+        if (fragment_user_available.isAdded())
+        {
+            fragmentManager.beginTransaction().show(fragment_user_available).commit();
+
+        }else
+        {
+            fragmentManager.beginTransaction().add(R.id.fragment_sign_in_container, fragment_user_available,"fragment_user_available").addToBackStack("fragment_user_available").commit();
+
+        }
 
 
     }
@@ -330,7 +374,11 @@ public class SignInActivity extends AppCompatActivity {
                             finish();
 
 
-                        }else
+                        }else if (response.code()==406)
+                        {
+                            Toast.makeText(SignInActivity.this, getString(R.string.user_bloked), Toast.LENGTH_SHORT).show();
+                        }
+                        else
                         {
                             try {
                                 Log.e("code",response.code()+""+response.errorBody().string());

@@ -297,5 +297,7 @@
     <string name="order_canceled">order canceled by client order number : </string>
     <string name="admin">Hum Hum App</string>
     <string name="searching">Searching for a delegate </string>
+    <string name="user_dele">User deleted from admin</string>
+    <string name="user_bloked">User blocked from admin</string>
 
 </resources>

@@ -524,6 +524,17 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
     }
 
+    public void checkUserAvailability()
+    {
+
+        if (userModel!=null)
+        {
+            getUserDataById(userModel.getData().getUser_id());
+
+        }
+
+    }
+
     private void getUserDataById(String user_id)
     {
         Api.getService(Tags.base_url)
@@ -533,7 +544,34 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         if (response.isSuccessful()&&response.body()!=null)
                         {
-                            updateUserData(response.body());
+                            if (userModel.getData().getAvailable().equals("0"))
+                            {
+
+                                deleteUser(user_id);
+
+                            }else if (userModel.getData().getUser_show().equals("2"))
+                                {
+
+                                    userSingleTone.clear(ClientHomeActivity.this);
+                                    Intent intent = new Intent(ClientHomeActivity.this, SignInActivity.class);
+                                    intent.putExtra("available",2);
+                                    startActivity(intent);
+                                    finish();
+                                    if (current_lang.equals("ar")) {
+                                        overridePendingTransition(R.anim.from_left, R.anim.to_right);
+
+
+                                    } else {
+                                        overridePendingTransition(R.anim.from_right, R.anim.to_left);
+
+
+                                    }
+
+                                }else
+                                    {
+                                        updateUserData(response.body());
+
+                                    }
 
                         }
                     }
@@ -545,6 +583,73 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                         }catch (Exception e){}
                     }
                 });
+    }
+
+    private void deleteUser(String user_id) {
+
+        ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+
+        Api.getService(Tags.base_url)
+                .deleteUser(user_id)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()&&response.body()!=null)
+                        {
+                            userSingleTone.clear(ClientHomeActivity.this);
+                            Intent intent = new Intent(ClientHomeActivity.this, SignInActivity.class);
+                            intent.putExtra("available",1);
+                            startActivity(intent);
+                            finish();
+                            if (current_lang.equals("ar")) {
+                                overridePendingTransition(R.anim.from_left, R.anim.to_right);
+
+
+                            } else {
+                                overridePendingTransition(R.anim.from_right, R.anim.to_left);
+
+
+                            }
+
+                        }else
+                            {
+                                try {
+                                    Log.e("error_code",response.code()+"__"+response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                Toast.makeText(ClientHomeActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            Log.e("Error",t.getMessage());
+                        }catch (Exception e){}
+                    }
+                });
+
+        /*userSingleTone.clear(ClientHomeActivity.this);
+        Intent intent = new Intent(ClientHomeActivity.this, SignInActivity.class);
+        intent.putExtra("available",1);
+        startActivity(intent);
+        finish();
+        if (current_lang.equals("ar")) {
+            overridePendingTransition(R.anim.from_left, R.anim.to_right);
+
+
+        } else {
+            overridePendingTransition(R.anim.from_right, R.anim.to_left);
+
+
+        }*/
     }
 
     //////////////////////////////////////////////////
@@ -696,6 +801,9 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     ///////////////////////////////////
     public void updateUserData(final UserModel userModel)
     {
+
+
+
         preferences.create_update_userData(this,userModel);
         userSingleTone.setUserModel(userModel);
         this.userModel = userModel;

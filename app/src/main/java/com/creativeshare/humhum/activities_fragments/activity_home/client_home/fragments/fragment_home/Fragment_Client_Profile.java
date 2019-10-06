@@ -319,13 +319,14 @@ public class Fragment_Client_Profile extends Fragment {
             tv_coupons.setText(String.valueOf(userModel.getData().getNum_coupon()));
             Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + userModel.getData().getUser_image())).placeholder(R.drawable.logo).into(image);
             Currency currency = Currency.getInstance(new Locale(current_language, userModel.getData().getUser_country()));
+            Log.e("country",userModel.getData().getUser_country()+"_");
             if (userModel.getData().getAccount_balance() > 0) {
                 tv_balance.setTextColor(ContextCompat.getColor(activity, R.color.active));
             } else {
                 tv_balance.setTextColor(ContextCompat.getColor(activity, R.color.delete_color));
 
             }
-            tv_balance.setText(String.valueOf(userModel.getData().getAccount_balance()) + " " + currency.getSymbol());
+            tv_balance.setText(String.format("%s %s",userModel.getData().getAccount_balance(),currency.getSymbol()));
 
             if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE)) {
                 tv_feedback.setText(String.valueOf(userModel.getData().getNum_comments()));
