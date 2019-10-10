@@ -537,6 +537,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
     private void getUserDataById(String user_id)
     {
+        Log.e("000dsdsd","sdsdsdsdsdsds");
         Api.getService(Tags.base_url)
                 .getUserDataById(user_id)
                 .enqueue(new Callback<UserModel>() {
@@ -544,11 +545,13 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         if (response.isSuccessful()&&response.body()!=null)
                         {
+                            userModel = response.body();
                             if (userModel.getData().getAvailable().equals("0"))
                             {
 
                                 deleteUser(user_id);
 
+                                Log.e("user_ashow",userModel.getData().getUser_show()+"_");
                             }else if (userModel.getData().getUser_show().equals("2"))
                                 {
 

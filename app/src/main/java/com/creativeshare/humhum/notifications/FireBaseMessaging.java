@@ -779,11 +779,13 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 if (status!=null&&status.equals("2"))
                 {
                     builder.setContentText(getString(R.string.req_acc_as_cour));
+
                 }else
                 {
                     builder.setContentText(getString(R.string.rej_as_cour));
 
                 }
+
 
                 final Target target = new Target() {
                     @Override
@@ -793,6 +795,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                             builder.setLargeIcon(bitmap);
                             EventBus.getDefault().post(beDriverModel);
                             manager.notify(new Random().nextInt(200), builder.build());
+
                         }
 
                     }
