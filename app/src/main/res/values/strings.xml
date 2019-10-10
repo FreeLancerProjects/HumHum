@@ -299,5 +299,6 @@
     <string name="searching">Searching for a delegate </string>
     <string name="user_dele">User deleted from admin</string>
     <string name="user_bloked">User blocked from admin</string>
+    <string name="pharmacies">Pharmacies</string>
 
 </resources>

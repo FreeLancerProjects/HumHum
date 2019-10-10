@@ -297,4 +297,6 @@
     <string name="searching">جارى البحث عن مندوب </string>
     <string name="user_dele">تم حذف المستخدم من الادارة</string>
     <string name="user_bloked">تم حظر المستخدم من الادارة</string>
+    <string name="pharmacies">صيدليات</string>
+
 </resources>

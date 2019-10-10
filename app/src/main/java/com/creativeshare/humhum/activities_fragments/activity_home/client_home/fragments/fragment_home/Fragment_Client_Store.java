@@ -95,6 +95,7 @@ public class Fragment_Client_Store extends Fragment {
         queriesList.add("bakery");
         queriesList.add("supermarket");
         queriesList.add("cafe");
+        queriesList.add("pharmacy");
 
 
         en_ar_queriesList = new ArrayList<>();
@@ -102,6 +103,7 @@ public class Fragment_Client_Store extends Fragment {
         en_ar_queriesList.add(new QuerySearchModel(getString(R.string.bakery),R.drawable.ic_sweet));
         en_ar_queriesList.add(new QuerySearchModel(getString(R.string.supermarket),R.drawable.ic_nav_store));
         en_ar_queriesList.add(new QuerySearchModel(getString(R.string.cafe),R.drawable.ic_cup));
+        en_ar_queriesList.add(new QuerySearchModel(getString(R.string.pharmacies),R.drawable.ic_pharmacy));
 
 
 
