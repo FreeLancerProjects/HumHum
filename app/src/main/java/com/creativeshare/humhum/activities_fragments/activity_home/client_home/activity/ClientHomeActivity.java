@@ -352,6 +352,9 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
     private void initView()
     {
+        if(getIntent().getStringExtra("data")!=null&&getIntent().getStringExtra("data").equals("1")){
+            Logout();
+        }
         Paper.init(this);
         current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 

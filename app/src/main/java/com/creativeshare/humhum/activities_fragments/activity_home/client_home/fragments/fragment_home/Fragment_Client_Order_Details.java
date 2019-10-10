@@ -53,7 +53,7 @@ public class Fragment_Client_Order_Details extends Fragment {
     private TextView tv_delegate_name, tv_rate;
     private SimpleRatingBar rateBar;
     private String current_lang;
-    private TextView tv_not_approved, tv_order_details,tv_location_pickup,tv_location_dropoff;
+    private TextView tv_not_approved, tv_order_details,tv_location_pickup,tv_location_dropoff,tv_delegete;
     private RelativeLayout rl;
     private LinearLayout ll;
     private AppBarLayout app_bar;
@@ -109,7 +109,7 @@ public class Fragment_Client_Order_Details extends Fragment {
         tv_not_approved = view.findViewById(R.id.tv_not_approved);
         tv_order_details = view.findViewById(R.id.tv_order_details);
         btn_follow_order = view.findViewById(R.id.btn_follow_order);
-
+        tv_delegete=view.findViewById(R.id.tv_delegete);
         /////////////////////////////////////////////////
         app_bar = view.findViewById(R.id.app_bar);
         rl = view.findViewById(R.id.rl);
@@ -252,6 +252,14 @@ public class Fragment_Client_Order_Details extends Fragment {
             builder.start();
 
             Log.e("status",order.getOrder_status());
+            if (order.getOrder_status().equals(String.valueOf(Tags.STATE_ORDER_NEW))||order.getOrder_status().equals(String.valueOf(Tags.STATE_DELEGATE_SEND_OFFER))) {
+                tv_delegete.setVisibility(View.VISIBLE);
+
+            }
+            else {
+                tv_delegete.setVisibility(View.GONE);
+
+            }
             if (order.getOrder_status().equals(String.valueOf(Tags.STATE_ORDER_NEW))) {
                 ll_delegate_data_container.setVisibility(View.GONE);
                 image_chat.setVisibility(View.GONE);

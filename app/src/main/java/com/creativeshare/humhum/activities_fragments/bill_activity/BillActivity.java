@@ -68,7 +68,7 @@ public class BillActivity extends AppCompatActivity {
             double total = Double.parseDouble(billModel.getBill_cost())+Double.parseDouble(billModel.getDelivery_cost());
             tv_delivery_cost.setText(String.format("%s %s %s",getString(R.string.delivery_cost),":",billModel.getDelivery_cost()));
             tv_total.setText(String.format("%s %s",getString(R.string.total),String.valueOf(total)));
-            Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+billModel.getBill_image())).fit().into(image);
+            Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+billModel.getBill_image())).fit().placeholder(R.drawable.logo).into(image);
         }
     }
 }

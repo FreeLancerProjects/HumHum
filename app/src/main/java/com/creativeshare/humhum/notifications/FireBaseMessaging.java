@@ -404,7 +404,13 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                 if (status!=null&&status.equals("2"))
                 {
-                    builder.setContentText(getString(R.string.req_acc_as_cour));
+                    Intent intent = new Intent(this, ClientHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("data", "1");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                    builder.setContentText(getString(R.string.req_acc_as_cour)).setContentIntent(pendingIntent);
+
+
                 }else
                 {
                     builder.setContentText(getString(R.string.rej_as_cour));
@@ -778,7 +784,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                 if (status!=null&&status.equals("2"))
                 {
-                    builder.setContentText(getString(R.string.req_acc_as_cour));
+                    Intent intent = new Intent(this, ClientHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("data", "1");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                    builder.setContentText(getString(R.string.req_acc_as_cour)).setContentIntent(pendingIntent);
 
                 }else
                 {

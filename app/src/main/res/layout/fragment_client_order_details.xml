@@ -163,6 +163,18 @@
                             android:visibility="gone"
 
                             />
+                        <TextView
+                            android:id="@+id/tv_delegete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:text="@string/searching"
+                            android:visibility="gone"
+                            />
                     </LinearLayout>
 
                 </FrameLayout>
