@@ -49,15 +49,14 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         final Map<String, String> map = remoteMessage.getData();
 
-        for (String key : map.keySet())
-        {
-            Log.e("key : ",key+" value :"+ map.get(key));
+        for (String key : map.keySet()) {
+            Log.e("key : ", key + " value :" + map.get(key));
         }
         if (getSession().equals(Tags.session_login)) {
 
             String current_user_id = getUserData().getData().getUser_id();
             String to_user_id = map.get("to_user");
-            if (current_user_id.equals(to_user_id)||to_user_id.equals("all")) {
+            if (current_user_id.equals(to_user_id) || to_user_id.equals("all")) {
                 ManageNotification(map);
             }
 
@@ -83,7 +82,6 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
         String notification_type = map.get("notification_type");
 
-
         if (notification_type.equals(Tags.FIREBASE_NOT_SEND_MESSAGE)) {
 
             String room_id_fk = map.get("room_id_fk");
@@ -108,11 +106,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String class_name = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-            Log.e("class_name",class_name);
+            Log.e("class_name", class_name);
             if (class_name.equals("com.creativeshare.mrsool.activities_fragments.activity_chat.ChatActivity")) {
                 if (room_id_fk.equals(getChatUserModel().getRoom_id())) {
 
-                    MessageModel messageModel = new MessageModel(message_id,room_id_fk,date,message,message_type,msg_image,from_user_id,from_name,from_user_image,from_user_phone_code,from_user_phone,to_user_id,to_user_full_name,to_user_image,to_user_phone_code,to_user_phone);
+                    MessageModel messageModel = new MessageModel(message_id, room_id_fk, date, message, message_type, msg_image, from_user_id, from_name, from_user_image, from_user_phone_code, from_user_phone, to_user_id, to_user_full_name, to_user_image, to_user_phone_code, to_user_phone);
                     EventBus.getDefault().post(messageModel);
                 } else {
                     String CHANNEL_ID = "my_channel_02";
@@ -134,7 +132,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                     builder.setContentTitle(map.get("from_name"));
 
                     Intent intent = new Intent(this, ChatActivity.class);
-                    ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code,order_id,driver_offer);
+                    ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code, order_id, driver_offer);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("data", chatUserModel);
 
@@ -171,19 +169,16 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                                 @Override
                                 public void run() {
 
-                                    if (from_user_image.equals("0"))
-                                    {
+                                    if (from_user_image.equals("0")) {
                                         Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
 
-                                    }else
-                                    {
-                                        Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250,250).into(target);
+                                    } else {
+                                        Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250, 250).into(target);
 
                                     }
 
                                 }
                             }, 1);
-
 
 
                 }
@@ -207,7 +202,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 builder.setContentTitle(map.get("from_name"));
 
                 Intent intent = new Intent(this, ChatActivity.class);
-                ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code,order_id,driver_offer);
+                ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code, order_id, driver_offer);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("data", chatUserModel);
 
@@ -241,13 +236,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                             @Override
                             public void run() {
 
-                                if (from_user_image.equals("0"))
-                                {
+                                if (from_user_image.equals("0")) {
                                     Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
 
-                                }else
-                                {
-                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250,250).into(target);
+                                } else {
+                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250, 250).into(target);
 
                                 }
 
@@ -277,8 +270,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
             builder.setSmallIcon(R.drawable.ic_notification);
 
-            if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS))
-            {
+            if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS)) {
 
 
                 builder.setContentTitle(map.get("from_name"));
@@ -286,7 +278,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 Intent intent = new Intent(this, ClientHomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 String order_status = map.get("order_status");
-                Log.e("order_status",order_status+"_");
+                Log.e("order_status", order_status + "_");
                 final NotStateModel notStateModel = new NotStateModel(order_status);
 
                 if (order_status.equals(String.valueOf(Tags.STATE_ORDER_NEW))) {
@@ -306,22 +298,22 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 } else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_REFUSE_OFFER))) {
                     builder.setContentText(getString(R.string.offer_refused));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTING_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTING_ORDER))) {
                     builder.setContentText(getString(R.string.collecting_order));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTED_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTED_ORDER))) {
                     builder.setContentText(getString(R.string.order_collected));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERING_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERING_ORDER))) {
                     builder.setContentText(getString(R.string.delivering_order));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER))) {
                     builder.setContentText(getString(R.string.order_delivered_successfully));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_CANCEL_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_CANCEL_ORDER))) {
                     String order_id = map.get("order_id");
 
-                    builder.setContentText(getString(R.string.order_canceled)+order_id);
+                    builder.setContentText(getString(R.string.order_canceled) + order_id);
                 }
 
                 intent.putExtra("status", order_status);
@@ -360,23 +352,18 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                             public void run() {
 
                                 String from_image = map.get("from_image");
-                                if (from_image.equals("0"))
-                                {
+                                if (from_image.equals("0")) {
 
                                     Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
 
-                                }else
-                                {
-                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_image)).resize(250,250).into(target);
+                                } else {
+                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_image)).resize(250, 250).into(target);
 
                                 }
 
 
-
-
                             }
                         }, 1);
-
 
 
             } else if (notification_type.equals(Tags.FIREBASE_NOT_TYPING)) {
@@ -390,29 +377,25 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 TypingModel typingModel = new TypingModel(from_user_id, to_user_id, room_id, typing_value, from_name);
                 EventBus.getDefault().post(typingModel);
 
-            }
-            else if (notification_type.equals(Tags.FIREBASE_NOT_RATE)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_RATE)) {
 
                 NotificationTypeModel notificationTypeModel = new NotificationTypeModel(Tags.FIREBASE_NOT_RATE);
                 EventBus.getDefault().post(notificationTypeModel);
 
-            }
-            else if (notification_type.equals(Tags.FIREBASE_NOT_BEDRIVER)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_BEDRIVER)) {
                 builder.setContentTitle(getString(R.string.Admin));
                 String status = map.get("action_status");
                 final BeDriverModel beDriverModel = new BeDriverModel(status);
 
-                if (status!=null&&status.equals("2"))
-                {
+                if (status != null && status.equals("2")) {
                     Intent intent = new Intent(this, ClientHomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("data", "1");
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
                     builder.setContentText(getString(R.string.req_acc_as_cour)).setContentIntent(pendingIntent);
 
 
-                }else
-                {
+                } else {
                     builder.setContentText(getString(R.string.rej_as_cour));
 
                 }
@@ -453,11 +436,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                         }, 1);
 
 
-
-
-
-            }
-            else if (notification_type.equals(Tags.FIREBASE_NOT_DRIVER_UPDATE_LOCATION)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_DRIVER_UPDATE_LOCATION)) {
 
                 String client_lat = map.get("client_lat");
                 String client_long = map.get("client_long");
@@ -466,11 +445,10 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 String driver_lat = map.get("driver_lat");
                 String driver_long = map.get("driver_long");
 
-                FollowModel followModel = new FollowModel(client_lat,client_long,place_lat,place_long,driver_lat,driver_long);
+                FollowModel followModel = new FollowModel(client_lat, client_long, place_lat, place_long, driver_lat, driver_long);
                 EventBus.getDefault().post(followModel);
 
-            }
-            else if (notification_type.equals(Tags.FIREBASE_NOT_GENERAL_NOT)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_GENERAL_NOT)) {
 
                 NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
                 String content = map.get("notification_message");
@@ -488,6 +466,34 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
 
             }
+            else if (notification_type.equals(Tags.FIREBASE_delete)) {
+                String status = map.get("action_status");
+                String content = "";
+
+                if (status != null && status.equals("available")) {
+                    content = getString(R.string.user_dele);
+
+
+                } else if (status != null && status.equals("user_show")) {
+                    content = getString(R.string.user_bloked);
+                }
+
+                if (content != null && !content.isEmpty()) {
+
+                    Intent intent = new Intent(this, ClientHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("data", "1");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
+                    builder.setContentText(content).setContentIntent(pendingIntent);
+                }
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.createNotificationChannel(channel);
+                    manager.notify(new Random().nextInt(200), builder.build());
+                }
+            }
+
 
         }
 
@@ -499,7 +505,6 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         String sound_Path = "android.resource://" + getPackageName() + "/" + R.raw.not;
 
         String notification_type = map.get("notification_type");
-
 
         if (notification_type.equals(Tags.FIREBASE_NOT_SEND_MESSAGE)) {
 
@@ -524,11 +529,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String class_name = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-            Log.e("class_name",class_name);
+            Log.e("class_name", class_name);
             if (class_name.equals("com.creativeshare.mrsool.activities_fragments.activity_chat.ChatActivity")) {
                 if (room_id_fk.equals(getChatUserModel().getRoom_id())) {
 
-                    MessageModel messageModel = new MessageModel(message_id,room_id_fk,date,message,message_type,msg_image,from_user_id,from_name,from_user_image,from_user_phone_code,from_user_phone,to_user_id,to_user_full_name,to_user_image,to_user_phone_code,to_user_phone);
+                    MessageModel messageModel = new MessageModel(message_id, room_id_fk, date, message, message_type, msg_image, from_user_id, from_name, from_user_image, from_user_phone_code, from_user_phone, to_user_id, to_user_full_name, to_user_image, to_user_phone_code, to_user_phone);
                     EventBus.getDefault().post(messageModel);
                 } else {
 
@@ -539,7 +544,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                     builder.setContentTitle(map.get("from_name"));
 
                     Intent intent = new Intent(this, ChatActivity.class);
-                    ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code,order_id,driver_offer);
+                    ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code, order_id, driver_offer);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("data", chatUserModel);
 
@@ -575,19 +580,16 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                                 @Override
                                 public void run() {
 
-                                    if (from_user_image.equals("0"))
-                                    {
+                                    if (from_user_image.equals("0")) {
                                         Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
 
-                                    }else
-                                    {
-                                        Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250,250).into(target);
+                                    } else {
+                                        Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250, 250).into(target);
 
                                     }
 
                                 }
                             }, 1);
-
 
 
                 }
@@ -600,7 +602,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 builder.setContentTitle(map.get("from_name"));
 
                 Intent intent = new Intent(this, ChatActivity.class);
-                ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code,order_id,driver_offer);
+                ChatUserModel chatUserModel = new ChatUserModel(from_name, from_user_image, from_user_id, room_id_fk, from_user_phone_code, from_user_phone_code, order_id, driver_offer);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("data", chatUserModel);
 
@@ -633,13 +635,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                             @Override
                             public void run() {
 
-                                if (from_user_image.equals("0"))
-                                {
+                                if (from_user_image.equals("0")) {
                                     Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
 
-                                }else
-                                {
-                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250,250).into(target);
+                                } else {
+                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_user_image)).resize(250, 250).into(target);
 
                                 }
 
@@ -659,7 +659,6 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS)) {
                 builder.setContentTitle(map.get("from_name"));
-
 
 
                 Intent intent = new Intent(this, ClientHomeActivity.class);
@@ -684,22 +683,22 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 } else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_REFUSE_OFFER))) {
                     builder.setContentText(getString(R.string.offer_refused));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTING_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTING_ORDER))) {
                     builder.setContentText(getString(R.string.collecting_order));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTED_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTED_ORDER))) {
                     builder.setContentText(getString(R.string.order_collected));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERING_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERING_ORDER))) {
                     builder.setContentText(getString(R.string.delivering_order));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER))) {
                     builder.setContentText(getString(R.string.order_delivered_successfully));
 
-                }else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_CANCEL_ORDER))) {
+                } else if (order_status.equals(String.valueOf(Tags.STATE_CLIENT_CANCEL_ORDER))) {
                     String order_id = map.get("order_id");
 
-                    builder.setContentText(getString(R.string.order_canceled)+order_id);
+                    builder.setContentText(getString(R.string.order_canceled) + order_id);
 
                 }
 
@@ -738,26 +737,22 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                             public void run() {
 
                                 String from_image = map.get("from_image");
-                                if (from_image.equals("0"))
-                                {
+                                if (from_image.equals("0")) {
 
                                     Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
 
-                                }else
-                                {
-                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_image)).resize(250,250).into(target);
+                                } else {
+                                    Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_image)).resize(250, 250).into(target);
 
                                 }
-
-
 
 
                             }
                         }, 1);
 
 
-
-            } else if (notification_type.equals(Tags.FIREBASE_NOT_TYPING)) {
+            }
+            else if (notification_type.equals(Tags.FIREBASE_NOT_TYPING)) {
                 builder.setContentTitle(map.get("from_name"));
 
                 String from_user_id = map.get("from_user");
@@ -769,29 +764,24 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 TypingModel typingModel = new TypingModel(from_user_id, to_user_id, room_id, typing_value, from_name);
                 EventBus.getDefault().post(typingModel);
 
-            }
-            else if (notification_type.equals(Tags.FIREBASE_NOT_RATE)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_RATE)) {
 
                 NotificationTypeModel notificationTypeModel = new NotificationTypeModel(Tags.FIREBASE_NOT_RATE);
                 EventBus.getDefault().post(notificationTypeModel);
 
-            }
-
-            else if (notification_type.equals(Tags.FIREBASE_NOT_BEDRIVER)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_BEDRIVER)) {
                 builder.setContentTitle(getString(R.string.Admin));
                 String status = map.get("action_status");
                 final BeDriverModel beDriverModel = new BeDriverModel(status);
 
-                if (status!=null&&status.equals("2"))
-                {
+                if (status != null && status.equals("2")) {
                     Intent intent = new Intent(this, ClientHomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("data", "1");
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
                     builder.setContentText(getString(R.string.req_acc_as_cour)).setContentIntent(pendingIntent);
 
-                }else
-                {
+                } else {
                     builder.setContentText(getString(R.string.rej_as_cour));
 
                 }
@@ -833,11 +823,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                         }, 1);
 
 
-
-
-            }
-
-            else if (notification_type.equals(Tags.FIREBASE_NOT_DRIVER_UPDATE_LOCATION)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_DRIVER_UPDATE_LOCATION)) {
 
                 String client_lat = map.get("client_lat");
                 String client_long = map.get("client_long");
@@ -846,12 +832,10 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 String driver_lat = map.get("driver_lat");
                 String driver_long = map.get("driver_long");
 
-                FollowModel followModel = new FollowModel(client_lat,client_long,place_lat,place_long,driver_lat,driver_long);
+                FollowModel followModel = new FollowModel(client_lat, client_long, place_lat, place_long, driver_lat, driver_long);
                 EventBus.getDefault().post(followModel);
 
-            }
-
-            else if (notification_type.equals(Tags.FIREBASE_NOT_GENERAL_NOT)) {
+            } else if (notification_type.equals(Tags.FIREBASE_NOT_GENERAL_NOT)) {
 
                 String content = map.get("notification_message");
                 builder.setContentTitle(getString(R.string.admin));
@@ -863,6 +847,31 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 }
 
 
+            }
+            else if (notification_type.equals(Tags.FIREBASE_delete)) {
+                String status = map.get("action_status");
+                String content = "";
+
+                if (status != null && status.equals("available")) {
+                    content = getString(R.string.user_dele);
+
+
+                } else if (status != null && status.equals("user_show")) {
+                    content = getString(R.string.user_bloked);
+                }
+                if (content != null && !content.isEmpty()) {
+
+                    Intent intent = new Intent(this, ClientHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("data", "1");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
+                    builder.setContentText(content).setContentIntent(pendingIntent);
+                }
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.notify(new Random().nextInt(200), builder.build());
+                }
             }
 
         }

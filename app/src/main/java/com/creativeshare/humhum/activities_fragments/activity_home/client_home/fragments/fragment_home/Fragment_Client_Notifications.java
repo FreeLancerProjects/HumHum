@@ -170,6 +170,8 @@ public class Fragment_Client_Notifications extends Fragment {
 
 
                     }
+                    Log.e("Error_code", response.code() + "_");
+
                 } else {
 
                     Toast.makeText(activity, R.string.failed, Toast.LENGTH_SHORT).show();

@@ -52,6 +52,7 @@ public class Tags {
     public static final String FIREBASE_NOT_DRIVER_UPDATE_LOCATION = "driver_update_location";
     public static final String FIREBASE_NOT_GENERAL_NOT = "general_notifications";
 
+    public static final String FIREBASE_delete = "delete";
 
 
 

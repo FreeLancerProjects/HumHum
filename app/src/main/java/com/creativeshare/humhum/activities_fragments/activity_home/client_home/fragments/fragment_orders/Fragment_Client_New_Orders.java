@@ -147,6 +147,8 @@ public class Fragment_Client_New_Orders extends Fragment {
                         tv_no_orders.setVisibility(View.VISIBLE);
                         adapter.notifyDataSetChanged();
                     }
+
+
                 }else
                 {
 
