@@ -357,7 +357,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         }
         Paper.init(this);
         current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-
+userSingleTone=UserSingleTone.getInstance();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
 

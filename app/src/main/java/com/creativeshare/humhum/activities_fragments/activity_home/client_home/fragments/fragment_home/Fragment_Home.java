@@ -58,7 +58,7 @@ public class Fragment_Home extends Fragment {
             userSingleTone.setUserModel(preferences.getUserData(activity));
         }
         userModel = userSingleTone.getUserModel();
-        userModel=preferences.getUserData(activity);
+       // userModel=preferences.getUserData(activity);
         ah_bottom_nav = view.findViewById(R.id.ah_bottom_nav);
 
         ll_container = view.findViewById(R.id.ll_container);

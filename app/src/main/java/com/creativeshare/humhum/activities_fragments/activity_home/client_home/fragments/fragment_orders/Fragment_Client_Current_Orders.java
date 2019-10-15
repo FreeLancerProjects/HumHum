@@ -79,6 +79,7 @@ public class Fragment_Client_Current_Orders extends Fragment {
         activity = (ClientHomeActivity) getActivity();
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
+        userModel=preferences.getUserData(activity);
         tv_no_orders = view.findViewById(R.id.tv_no_orders);
 
         progBar = view.findViewById(R.id.progBar);
