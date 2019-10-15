@@ -1,5 +1,6 @@
 package com.creativeshare.humhum.activities_fragments.activity_home.client_home.fragments.fragment_orders;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,7 +120,11 @@ public class Fragment_Client_Current_Orders extends Fragment {
 
     public void getOrders()
     {
+
         userModel = preferences.getUserData(activity);
+        Log.e("ssss",userModel.getData().getUser_id()+"dddd");
+        Log.e("ssss",userModel.getData().getUser_type()+"dddd");
+
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
         {
             call  = Api.getService(Tags.base_url).getClientOrders(userModel.getData().getUser_id(),"current", 1);
@@ -248,5 +253,12 @@ public class Fragment_Client_Current_Orders extends Fragment {
             {
                 activity.DisplayFragmentDelegateCurrentOrderDetails(orderModel);
             }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (ClientHomeActivity) context;
+        Log.e("dddd","ddddddddddd");
     }
 }

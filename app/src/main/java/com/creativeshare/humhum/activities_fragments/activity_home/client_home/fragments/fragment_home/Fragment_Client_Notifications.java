@@ -266,7 +266,7 @@ preferences=Preferences.getInstance();
         } else if (notificationModel.getOrder_status().equals(String.valueOf(Tags.STATE_ORDER_NEW))) {
             if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE)) {
 
-                activity.DisplayFragmentMyOrders();
+                activity.DisplayFragmentMyOrders(-1);
             }
 
         }

@@ -1,5 +1,6 @@
 package com.creativeshare.humhum.activities_fragments.activity_home.client_home.fragments.fragment_orders;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -116,6 +117,7 @@ preferences=Preferences.getInstance();
 
     public void getOrders()
     {
+        userModel=preferences.getUserData(activity);
 
         Log.e("utype",userModel.getData().getUser_type()+"_");
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
@@ -247,5 +249,10 @@ preferences=Preferences.getInstance();
         {
             activity.DisplayFragmentDelegateAddOffer(orderModel);
         }
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (ClientHomeActivity) context;
     }
 }

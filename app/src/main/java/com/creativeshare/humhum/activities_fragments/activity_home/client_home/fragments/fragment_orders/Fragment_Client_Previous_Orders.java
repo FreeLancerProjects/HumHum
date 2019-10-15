@@ -1,5 +1,6 @@
 package com.creativeshare.humhum.activities_fragments.activity_home.client_home.fragments.fragment_orders;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,6 +120,7 @@ private Preferences preferences;
 
     public void getOrders()
     {
+        userModel=preferences.getUserData(activity);
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
         {
             call  = Api.getService(Tags.base_url).getClientOrders(userModel.getData().getUser_id(),"old", 1);
@@ -234,5 +236,11 @@ private Preferences preferences;
                 }catch (Exception e){}
             }
         });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (ClientHomeActivity) context;
     }
 }

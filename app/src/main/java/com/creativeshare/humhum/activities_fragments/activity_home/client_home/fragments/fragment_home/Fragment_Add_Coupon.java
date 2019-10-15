@@ -40,28 +40,26 @@ public class Fragment_Add_Coupon extends Fragment {
     private LinearLayout ll_back;
     private ImageView arrow;
     private EditText edt_coupon;
-    private Button btn_use_coupon,btn_check;
+    private Button btn_use_coupon, btn_check;
     private ClientHomeActivity activity;
     private String current_language;
     private UserSingleTone userSingleTone;
     private UserModel userModel;
 
 
-
-    public static Fragment_Add_Coupon newInstance()
-    {
+    public static Fragment_Add_Coupon newInstance() {
         return new Fragment_Add_Coupon();
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_coupon,container,false);
+        View view = inflater.inflate(R.layout.fragment_coupon, container, false);
         initView(view);
         return view;
     }
 
-    private void initView(View view)
-    {
+    private void initView(View view) {
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
 
@@ -71,14 +69,12 @@ public class Fragment_Add_Coupon extends Fragment {
 
         arrow = view.findViewById(R.id.arrow);
 
-        if (current_language.equals("ar"))
-        {
+        if (current_language.equals("ar")) {
             arrow.setImageResource(R.drawable.ic_right_arrow);
-        }else
-            {
-                arrow.setImageResource(R.drawable.ic_left_arrow);
+        } else {
+            arrow.setImageResource(R.drawable.ic_left_arrow);
 
-            }
+        }
 
 
         edt_coupon = view.findViewById(R.id.edt_coupon);
@@ -94,14 +90,12 @@ public class Fragment_Add_Coupon extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String coupon = edt_coupon.getText().toString().trim();
-                if (coupon.length()>0)
-                {
+                if (coupon.length() > 0) {
                     btn_check.setVisibility(View.VISIBLE);
-                }else
-                    {
-                        btn_check.setVisibility(View.GONE);
+                } else {
+                    btn_check.setVisibility(View.GONE);
 
-                    }
+                }
             }
 
             @Override
@@ -117,13 +111,11 @@ public class Fragment_Add_Coupon extends Fragment {
             public void onClick(View v) {
 
                 String coupon = edt_coupon.getText().toString().trim();
-                if (!TextUtils.isEmpty(coupon))
-                {
+                if (!TextUtils.isEmpty(coupon)) {
                     edt_coupon.setError(null);
-                    Common.CloseKeyBoard(activity,edt_coupon);
-                    SendCoupon(coupon,"use");
-                }else
-                {
+                    Common.CloseKeyBoard(activity, edt_coupon);
+                    SendCoupon(coupon, "use");
+                } else {
                     edt_coupon.setError(getString(R.string.field_req));
                 }
             }
@@ -134,8 +126,8 @@ public class Fragment_Add_Coupon extends Fragment {
             public void onClick(View v) {
                 String coupon = edt_coupon.getText().toString().trim();
                 edt_coupon.setError(null);
-                Common.CloseKeyBoard(activity,edt_coupon);
-                SendCoupon(coupon,"check");
+                Common.CloseKeyBoard(activity, edt_coupon);
+                SendCoupon(coupon, "check");
 
             }
         });
@@ -149,64 +141,57 @@ public class Fragment_Add_Coupon extends Fragment {
 
 
     }
-    private void checkData()
-    {
+
+    private void checkData() {
         String coupon = edt_coupon.getText().toString().trim();
-        if (!TextUtils.isEmpty(coupon))
-        {
+        if (!TextUtils.isEmpty(coupon)) {
             edt_coupon.setError(null);
-            Common.CloseKeyBoard(activity,edt_coupon);
-            SendCoupon(coupon,"check");
-        }else
-            {
-                edt_coupon.setError(getString(R.string.field_req));
-            }
+            Common.CloseKeyBoard(activity, edt_coupon);
+            SendCoupon(coupon, "check");
+        } else {
+            edt_coupon.setError(getString(R.string.field_req));
+        }
     }
-    private void SendCoupon(String coupon, final String type)
-    {
-        String user_type="";
-        if(userModel.getData().getUser_type().equals("1")){
-            user_type="client";
+
+    private void SendCoupon(String coupon, final String type) {
+        String user_type = "";
+        if (userModel.getData().getUser_type().equals("1")) {
+            user_type = "client";
+        } else if (userModel.getData().getUser_type().equals("2")) {
+            user_type = "driver";
         }
-        else if(userModel.getData().getUser_type().equals("2")){
-            user_type="driver";
-        }
-        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .getCouponValue(userModel.getData().getUser_id(),type,user_type,coupon)
+                .getCouponValue(userModel.getData().getUser_id(), type, user_type, coupon)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful())
-                        {
+                        if (response.isSuccessful()) {
 
-                            if (type.equals("check"))
-                            {
+                            if (type.equals("check")) {
                                 CreateAlertDialog(getString(R.string.coupon_found));
-                            }else if (type.equals("use")){
+                            } else if (type.equals("use")) {
                                 CreateAlertDialog(getString(R.string.coupon_used));
                                 edt_coupon.setText("");
                                 updateUserData(response.body());
                             }
 
 
-                        }else
-                            {
-                                try {
-                                    Log.e("error_code",response.code()+"_"+response.errorBody().string());
-                                }catch (Exception e){}
-
-                                if (response.code()==404)
-                                {
-                                    CreateAlertDialog(getString(R.string.coupon_not_found));
-                                }else
-                                    {
-                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                                    }
+                        } else {
+                            try {
+                                Log.e("error_code", response.code() + "_" + response.errorBody().string());
+                            } catch (Exception e) {
                             }
+
+                            if (response.code() == 404) {
+                                CreateAlertDialog(getString(R.string.coupon_not_found));
+                            } else {
+                                Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
 
                     @Override
@@ -215,30 +200,28 @@ public class Fragment_Add_Coupon extends Fragment {
                         try {
                             dialog.dismiss();
                             Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                            Log.e("Error",t.getMessage());
-                        }catch (Exception e){}
+                            Log.e("Error", t.getMessage());
+                        } catch (Exception e) {
+                        }
 
 
                     }
                 });
 
 
-
-
-
     }
-    private void updateUserData(UserModel userModel)
-    {
+
+    private void updateUserData(UserModel userModel) {
         this.userModel = userModel;
         activity.updateUserDataProfile(userModel);
     }
-    public  void CreateAlertDialog(String msg)
-    {
+
+    public void CreateAlertDialog(String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setCancelable(true)
                 .create();
 
-        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_sign,null);
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_sign, null);
         Button doneBtn = view.findViewById(R.id.doneBtn);
         TextView tv_msg = view.findViewById(R.id.tv_msg);
         TextView tv_title = view.findViewById(R.id.tv_title);
@@ -248,24 +231,25 @@ public class Fragment_Add_Coupon extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-
+                if (msg.equals(activity.getString(R.string.coupon_used))) {
+                    activity.Back();
+                }
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
         dialog.setView(view);
         dialog.show();
     }
 
-    public  void CreateAlertDialogprofile(String msg)
-    {
+    public void CreateAlertDialogprofile(String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setCancelable(true)
                 .create();
 
-        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_sign,null);
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_sign, null);
         Button doneBtn = view.findViewById(R.id.doneBtn);
         TextView tv_msg = view.findViewById(R.id.tv_msg);
         TextView tv_title = view.findViewById(R.id.tv_title);
@@ -280,7 +264,7 @@ public class Fragment_Add_Coupon extends Fragment {
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
         dialog.setView(view);

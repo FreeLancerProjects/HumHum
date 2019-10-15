@@ -81,7 +81,7 @@ public class Fragment_Home extends Fragment {
                             Common.CreateUserNotSignInAlertDialog(activity);
                         }else
                         {
-                            activity.DisplayFragmentMyOrders();
+                            activity.DisplayFragmentMyOrders(-1);
 
                         }
 

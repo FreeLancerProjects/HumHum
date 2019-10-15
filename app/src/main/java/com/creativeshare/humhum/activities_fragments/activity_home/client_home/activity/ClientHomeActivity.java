@@ -182,6 +182,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         }
         getDataFromIntent();
 
+
     }
 
     private void getDataFromIntent()
@@ -198,15 +199,9 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     if (status.equals(String.valueOf(Tags.STATE_ORDER_NEW)))
                     {
 
-                        DisplayFragmentMyOrders();
+                        DisplayFragmentMyOrders(0);
 
-                        new Handler()
-                                .postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        fragment_client_orders.NavigateToFragmentRefresh(0);
-                                    }
-                                },1000);
+
 
                         new Handler()
                                 .postDelayed(new Runnable() {
@@ -257,16 +252,9 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     }else if (status.equals(String.valueOf(Tags.STATE_CLIENT_ACCEPT_OFFER)))
                     {
 
-                        DisplayFragmentMyOrders();
+                        DisplayFragmentMyOrders(1);
 
-                        new Handler()
-                                .postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        fragment_client_orders.NavigateToFragmentRefresh(1);
 
-                                    }
-                                },1000);
 
                         new Handler()
                                 .postDelayed(new Runnable() {
@@ -300,16 +288,8 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     }
                     else if (status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTING_ORDER)) || status.equals(String.valueOf(Tags.STATE_DELEGATE_COLLECTED_ORDER)) || status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERING_ORDER)))
                     {
-                        DisplayFragmentMyOrders();
+                        DisplayFragmentMyOrders(1);
 
-                        new Handler()
-                                .postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        fragment_client_orders.NavigateToFragmentRefresh(1);
-
-                                    }
-                                },1000);
 
                         new Handler()
                                 .postDelayed(new Runnable() {
@@ -321,16 +301,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                                 },1);
                     }else if (status.equals(String.valueOf(Tags.STATE_DELEGATE_DELIVERED_ORDER)))
                     {
-                        DisplayFragmentMyOrders();
-
-                        new Handler()
-                                .postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        fragment_client_orders.NavigateToFragmentRefresh(2);
-
-                                    }
-                                },1000);
+                        DisplayFragmentMyOrders(2);
 
                         new Handler()
                                 .postDelayed(new Runnable() {
@@ -872,7 +843,7 @@ userSingleTone=UserSingleTone.getInstance();
         }
 
     }
-    public void DisplayFragmentMyOrders()
+    public void DisplayFragmentMyOrders(int refresh_pos)
     {
         if (fragment_home != null && fragment_home.isAdded()) {
             fragment_home.updateBottomNavigationPosition(1);
@@ -898,6 +869,22 @@ userSingleTone=UserSingleTone.getInstance();
 
         } else {
             fragmentManager.beginTransaction().add(R.id.fragment_home_container, fragment_client_orders, "fragment_client_orders").addToBackStack("fragment_client_orders").commit();
+        }
+
+        switch (refresh_pos)
+        {
+            case 0:
+                fragment_client_orders.NavigateToFragmentRefresh(0);
+
+                break;
+            case 1:
+                fragment_client_orders.NavigateToFragmentRefresh(1);
+
+                break;
+            case 2:
+                fragment_client_orders.NavigateToFragmentRefresh(2);
+
+                break;
         }
 
     }
@@ -1458,19 +1445,13 @@ userSingleTone=UserSingleTone.getInstance();
                                 ClientHomeActivity.super.onBackPressed();
                                 fragment_count-=1;
                                 Toast.makeText(ClientHomeActivity.this,getString(R.string.done), Toast.LENGTH_SHORT).show();
-                                DisplayFragmentMyOrders();
+                                DisplayFragmentMyOrders(2);
                                 RefreshFragment_Order();
 
                                 new Handler()
                                         .postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                if (fragment_client_orders!=null&&fragment_client_orders.isAdded())
-                                                {
-                                                    fragment_client_orders.NavigateToFragmentRefresh(2);
-
-                                                }
-
                                                 getUserDataById(userModel.getData().getUser_id());
 
                                             }
@@ -1757,49 +1738,16 @@ userSingleTone=UserSingleTone.getInstance();
 
         fragment_count-=2;
 
-        new Handler()
-                .postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            DisplayFragmentMyOrders();
+        DisplayFragmentMyOrders(0);
 
-                        }catch (Exception e){}
-                        new Handler()
-                                .postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            if (fragment_client_orders!=null&&fragment_client_orders.isAdded())
-                                            {
-                                                fragment_client_orders.NavigateToFragmentRefresh(0);
-
-                                            }
-                                        }catch (Exception e){}
-
-
-                                    }
-                                },1000);
-                    }
-                },1000);
 
     }
 
     public void FollowOrderFromShipment()
     {
 
-        DisplayFragmentMyOrders();
-        new Handler()
-                .postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (fragment_client_orders!=null&&fragment_client_orders.isAdded())
-                        {
-                            fragment_client_orders.NavigateToFragmentRefresh(0);
+        DisplayFragmentMyOrders(0);
 
-                        }
-                    }
-                },1000);
     }
 
     public void registerDelegate(String national_id, String address, Uri image_national_id,Uri image_license,Uri image_front_uri,Uri image_behind_uri)
