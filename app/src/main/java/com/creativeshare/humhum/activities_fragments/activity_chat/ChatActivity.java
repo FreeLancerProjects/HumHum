@@ -49,6 +49,7 @@ import com.creativeshare.humhum.models.UserModel;
 import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.share.Common;
+import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
 import com.squareup.picasso.Picasso;
 
@@ -86,7 +87,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter adapter;
     private int current_page = 1;
     private boolean isLoading = false;
-   // private UserSingleTone userSingleTone;
+    private UserSingleTone userSingleTone;
     private UserModel userModel;
     private ChatUserModel chatUserModel;
     private String current_language;
@@ -141,7 +142,8 @@ public class ChatActivity extends AppCompatActivity {
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.getInstance();
 
-      //  userSingleTone = UserSingleTone.getInstance();
+        userSingleTone = UserSingleTone.getInstance();
+        userModel=userSingleTone.getUserModel();
         userModel = preferences.getUserData(this);
 
         image_back = findViewById(R.id.image_back);
