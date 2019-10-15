@@ -164,11 +164,18 @@ public class Fragment_Add_Coupon extends Fragment {
     }
     private void SendCoupon(String coupon, final String type)
     {
+        String user_type="";
+        if(userModel.getData().getUser_type().equals("1")){
+            user_type="client";
+        }
+        else if(userModel.getData().getUser_type().equals("2")){
+            user_type="driver";
+        }
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .getCouponValue(userModel.getData().getUser_id(),type,coupon)
+                .getCouponValue(userModel.getData().getUser_id(),type,user_type,coupon)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -197,7 +204,7 @@ public class Fragment_Add_Coupon extends Fragment {
                                     CreateAlertDialog(getString(R.string.coupon_not_found));
                                 }else
                                     {
-                                        Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                     }
                             }
                     }
@@ -241,6 +248,7 @@ public class Fragment_Add_Coupon extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
             }
         });
 

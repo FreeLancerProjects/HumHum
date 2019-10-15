@@ -49,7 +49,6 @@ import com.creativeshare.humhum.models.UserModel;
 import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.share.Common;
-import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +73,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
-
     private TextView tv_name,tv_order_num;
     private CircleImageView image,image_chat_user;
     private ImageView image_send,image_back,image_upload_image;
@@ -88,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter adapter;
     private int current_page = 1;
     private boolean isLoading = false;
-    private UserSingleTone userSingleTone;
+   // private UserSingleTone userSingleTone;
     private UserModel userModel;
     private ChatUserModel chatUserModel;
     private String current_language;
@@ -136,14 +134,15 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initView()
     {
+        preferences=Preferences.getInstance();
         EventBus.getDefault().register(this);
         messageModelList = new ArrayList<>();
         Paper.init(this);
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.getInstance();
 
-        userSingleTone = UserSingleTone.getInstance();
-        userModel = userSingleTone.getUserModel();
+      //  userSingleTone = UserSingleTone.getInstance();
+        userModel = preferences.getUserData(this);
 
         image_back = findViewById(R.id.image_back);
         if (current_language.equals("ar")) {

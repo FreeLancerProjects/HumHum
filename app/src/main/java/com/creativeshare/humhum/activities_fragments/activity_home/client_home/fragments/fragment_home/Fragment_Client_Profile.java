@@ -43,15 +43,15 @@ import retrofit2.Response;
 public class Fragment_Client_Profile extends Fragment {
 
     private ImageView image_setting, image, arrow, arrow2, image_instagram, image_facebook, image_twitter, img_certified;
-    private TextView tv_name, tv_balance, tv_order_count, tv_feedback, tv_certified, tv_coupons;
+    private TextView tv_name, tv_balance, tv_order_count, tv_feedback, tv_certified, tv_coupons, tv_coupons_mony;
     private SimpleRatingBar rateBar;
-    private ConstraintLayout cons_logout, cons_register_delegate, cons_comment, cons_add_coupon;
-    private LinearLayout ll_telegram, ll_certification,ll_whats;
+    private ConstraintLayout cons_logout, cons_register_delegate, cons_comment, cons_coupon_money, cons_add_coupon;
+    private LinearLayout ll_telegram, ll_certification, ll_whats;
     private String current_language;
     private ClientHomeActivity activity;
     private UserModel userModel;
     private UserSingleTone userSingleTone;
-    private String facebook = "0", twitter = "0", instegram = "0", telegram = "0",whatsapp="0";
+    private String facebook = "0", twitter = "0", instegram = "0", telegram = "0", whatsapp = "0";
 
     @Nullable
     @Override
@@ -101,11 +101,15 @@ public class Fragment_Client_Profile extends Fragment {
         tv_order_count = view.findViewById(R.id.tv_order_count);
         tv_feedback = view.findViewById(R.id.tv_feedback);
         tv_coupons = view.findViewById(R.id.tv_coupons);
+        tv_coupons_mony = view.findViewById(R.id.tv_coupons_mony);
         rateBar = view.findViewById(R.id.rateBar);
-        cons_add_coupon = view.findViewById(R.id.cons_add_coupon);
 
         cons_register_delegate = view.findViewById(R.id.cons_register_delegate);
         cons_comment = view.findViewById(R.id.cons_comment);
+        cons_add_coupon = view.findViewById(R.id.cons_add_coupon);
+
+        cons_coupon_money = view.findViewById(R.id.cons_coupon_money);
+
         cons_logout = view.findViewById(R.id.cons_logout);
 
         ll_certification = view.findViewById(R.id.ll_certification);
@@ -145,12 +149,7 @@ public class Fragment_Client_Profile extends Fragment {
             }
         });
 
-        cons_add_coupon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.DisplayFragmentAddCoupon();
-            }
-        });
+
         ll_telegram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,20 +166,17 @@ public class Fragment_Client_Profile extends Fragment {
         ll_whats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!whatsapp.equals("0"))
-                {
-                    if (!whatsapp.startsWith("+966")||!whatsapp.startsWith("00966")||!whatsapp.startsWith("966"))
-                    {
-                        whatsapp = "+966"+whatsapp;
+                if (!whatsapp.equals("0")) {
+                    if (!whatsapp.startsWith("+966") || !whatsapp.startsWith("00966") || !whatsapp.startsWith("966")) {
+                        whatsapp = "+966" + whatsapp;
 
                     }
 
-                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("whatsapp://send?phone="+whatsapp));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("whatsapp://send?phone=" + whatsapp));
                     startActivity(intent);
-                }else
-                    {
-                        CreateAlertDialog();
-                    }
+                } else {
+                    CreateAlertDialog();
+                }
             }
         });
 
@@ -234,7 +230,12 @@ public class Fragment_Client_Profile extends Fragment {
                 }
             }
         });
-
+        cons_add_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.DisplayFragmentAddCoupon();
+            }
+        });
         updateUI(userModel);
 
         getSocialMedia();
@@ -294,16 +295,20 @@ public class Fragment_Client_Profile extends Fragment {
                 ll_certification.setVisibility(View.GONE);
                 ll_telegram.setVisibility(View.GONE);
                 ll_whats.setVisibility(View.VISIBLE);
+                cons_coupon_money.setVisibility(View.GONE);
+                cons_register_delegate.setVisibility(View.VISIBLE);
+                cons_add_coupon.setVisibility(View.GONE);
             } else {
-
-
+                cons_coupon_money.setVisibility(View.VISIBLE);
+                cons_add_coupon.setVisibility(View.VISIBLE);
+                cons_register_delegate.setVisibility(View.GONE);
                 if (userModel.getData().getNum_orders() > 0) {
                     tv_certified.setText(getString(R.string.certified_account));
-                    tv_certified.setTextColor(ContextCompat.getColor(activity,R.color.active));
+                    tv_certified.setTextColor(ContextCompat.getColor(activity, R.color.active));
                     img_certified.setImageResource(R.drawable.green_checked);
                 } else {
                     tv_certified.setText(R.string.not_certified);
-                    tv_certified.setTextColor(ContextCompat.getColor(activity,R.color.delete));
+                    tv_certified.setTextColor(ContextCompat.getColor(activity, R.color.delete));
 
                     img_certified.setImageResource(R.drawable.red_info);
 
@@ -319,14 +324,17 @@ public class Fragment_Client_Profile extends Fragment {
             tv_coupons.setText(String.valueOf(userModel.getData().getNum_coupon()));
             Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + userModel.getData().getUser_image())).placeholder(R.drawable.logo).into(image);
             Currency currency = Currency.getInstance(new Locale(current_language, userModel.getData().getUser_country()));
-            Log.e("country",userModel.getData().getUser_country()+"_");
+            Log.e("country", userModel.getData().getUser_country() + "_");
             if (userModel.getData().getAccount_balance() > 0) {
                 tv_balance.setTextColor(ContextCompat.getColor(activity, R.color.active));
             } else {
                 tv_balance.setTextColor(ContextCompat.getColor(activity, R.color.delete_color));
 
             }
-            tv_balance.setText(String.format("%s %s",userModel.getData().getAccount_balance(),currency.getSymbol()));
+            tv_balance.setText(String.format("%s %s", userModel.getData().getAccount_balance(), currency.getSymbol()));
+            if (userModel.getData().getHave_money() != null) {
+                tv_coupons_mony.setText(String.format("%s %s", userModel.getData().getHave_money(), currency.getSymbol()));
+            }
 
             if (userModel.getData().getUser_type().equals(Tags.TYPE_DELEGATE)) {
                 tv_feedback.setText(String.valueOf(userModel.getData().getNum_comments()));

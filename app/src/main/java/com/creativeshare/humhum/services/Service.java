@@ -182,6 +182,7 @@ public interface Service {
     @FormUrlEncoded
     @POST("/Api/addOrder")
     Call<OrderIdDataModel> sendOrder(@Field("client_id") String client_id,
+                                     @Field("coupon_id_fk")String coupon_id_fk,
                                      @Field("client_address") String client_address,
                                      @Field("client_lat") double client_lat,
                                      @Field("client_long") double client_long,
@@ -198,6 +199,7 @@ public interface Service {
     @Multipart
     @POST("/Api/addOrder")
     Call<OrderIdDataModel> sendOrderWithImage(@Part("client_id") RequestBody client_id,
+                                              @Part("coupon_id_fk")RequestBody coupon_id_fk,
                                               @Part("client_address") RequestBody client_address,
                                               @Part("client_lat") RequestBody client_lat,
                                               @Part("client_long") RequestBody client_long,
@@ -393,6 +395,7 @@ public interface Service {
     @POST("/Api/coupon")
     Call<UserModel> getCouponValue(@Field("user_id") String user_id,
                                    @Field("type") String type,
+                                   @Field("user_type") String user_type,
                                    @Field("coupon_code") String coupon_code
 
     );

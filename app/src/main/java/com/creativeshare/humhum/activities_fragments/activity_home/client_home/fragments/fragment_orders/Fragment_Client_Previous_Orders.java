@@ -22,6 +22,7 @@ import com.creativeshare.humhum.activities_fragments.activity_home.client_home.a
 import com.creativeshare.humhum.adapters.OrdersAdapter;
 import com.creativeshare.humhum.models.OrderDataModel;
 import com.creativeshare.humhum.models.UserModel;
+import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
@@ -49,7 +50,7 @@ public class Fragment_Client_Previous_Orders extends Fragment {
     private int current_page = 1;
     private Call<OrderDataModel> call;
     private boolean isFirstTime = true;
-
+private Preferences preferences;
     @Override
     public void onStart() {
         super.onStart();
@@ -71,10 +72,12 @@ public class Fragment_Client_Previous_Orders extends Fragment {
         return new Fragment_Client_Previous_Orders();
     }
     private void initView(View view) {
+        preferences=Preferences.getInstance();
         orderModelList = new ArrayList<>();
         activity = (ClientHomeActivity) getActivity();
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
+        userModel=preferences.getUserData(activity);
         tv_no_orders = view.findViewById(R.id.tv_no_orders);
 
         progBar = view.findViewById(R.id.progBar);
@@ -116,7 +119,6 @@ public class Fragment_Client_Previous_Orders extends Fragment {
 
     public void getOrders()
     {
-
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
         {
             call  = Api.getService(Tags.base_url).getClientOrders(userModel.getData().getUser_id(),"old", 1);

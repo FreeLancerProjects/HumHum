@@ -29,6 +29,7 @@ import com.creativeshare.humhum.adapters.NotificationsAdapter;
 import com.creativeshare.humhum.models.NotificationDataModel;
 import com.creativeshare.humhum.models.NotificationModel;
 import com.creativeshare.humhum.models.UserModel;
+import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
@@ -55,6 +56,7 @@ public class Fragment_Client_Notifications extends Fragment {
     private ClientHomeActivity activity;
     private LinearLayout ll_not;
     private UserModel userModel;
+    private Preferences preferences;
     private List<NotificationModel> notificationModelList;
     private NotificationsAdapter adapter;
     private UserSingleTone userSingleTone;
@@ -89,12 +91,13 @@ public class Fragment_Client_Notifications extends Fragment {
 
     private void initView(View view) {
         notificationModelList = new ArrayList<>();
-
+preferences=Preferences.getInstance();
         activity = (ClientHomeActivity) getActivity();
         Paper.init(activity);
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
+        userModel=preferences.getUserData(activity);
         ll_not = view.findViewById(R.id.ll_not);
 
         progBar = view.findViewById(R.id.progBar);

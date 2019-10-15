@@ -22,6 +22,7 @@ import com.creativeshare.humhum.activities_fragments.activity_home.client_home.a
 import com.creativeshare.humhum.adapters.OrdersAdapter;
 import com.creativeshare.humhum.models.OrderDataModel;
 import com.creativeshare.humhum.models.UserModel;
+import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
@@ -50,6 +51,7 @@ public class Fragment_Client_New_Orders extends Fragment {
     private Call<OrderDataModel> call;
 
     private boolean isFirstTime = true;
+    private Preferences preferences;
 
     @Override
     public void onStart() {
@@ -74,10 +76,11 @@ public class Fragment_Client_New_Orders extends Fragment {
     }
     private void initView(View view) {
         orderModelList = new ArrayList<>();
-
+preferences=Preferences.getInstance();
         activity = (ClientHomeActivity) getActivity();
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
+        userModel=preferences.getUserData(activity);
         tv_no_orders = view.findViewById(R.id.tv_no_orders);
         progBar = view.findViewById(R.id.progBar);
         progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorAccent), PorterDuff.Mode.SRC_IN);

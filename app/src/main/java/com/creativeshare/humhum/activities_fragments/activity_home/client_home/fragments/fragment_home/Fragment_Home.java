@@ -51,13 +51,14 @@ public class Fragment_Home extends Fragment {
     {
         activity = (ClientHomeActivity) getActivity();
         preferences = Preferences.getInstance();
-        userSingleTone = UserSingleTone.getInstance();
+       userSingleTone = UserSingleTone.getInstance();
         String session = preferences.getSession(activity);
         if (session.equals(Tags.session_login))
         {
             userSingleTone.setUserModel(preferences.getUserData(activity));
         }
         userModel = userSingleTone.getUserModel();
+        userModel=preferences.getUserData(activity);
         ah_bottom_nav = view.findViewById(R.id.ah_bottom_nav);
 
         ll_container = view.findViewById(R.id.ll_container);

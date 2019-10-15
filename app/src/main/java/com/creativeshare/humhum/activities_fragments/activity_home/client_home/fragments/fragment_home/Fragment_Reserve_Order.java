@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -67,6 +68,7 @@ public class Fragment_Reserve_Order extends Fragment {
     private ImageView image, arrow, image_reserve,image_details;
     private TextView tv_place_name, tv_place_address, tv_address;
     private LinearLayout ll_back, ll_delivery_location, ll_fav_address, ll_fav_map_loc, ll_choose_delivery_time;
+    private ConstraintLayout cons_add_coupon;
     private CheckBox checkbox;
     private ExpandableLayout expandLayout;
     private TextView tv_fav_address_title, tv_fav_address, tv_delivery_time;
@@ -118,6 +120,8 @@ public class Fragment_Reserve_Order extends Fragment {
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
         timesList = new String[]{getString(R.string.hour1)};
+        cons_add_coupon = view.findViewById(R.id.cons_add_coupon);
+
        /* getString(R.string.hour2),
                 getString(R.string.hour3),
                 getString(R.string.day1),
@@ -155,7 +159,12 @@ public class Fragment_Reserve_Order extends Fragment {
         tv_delivery_time = view.findViewById(R.id.tv_delivery_time);
         edt_order_details = view.findViewById(R.id.edt_order_details);
 
-
+        cons_add_coupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.DisplayFragmentAddCoupon();
+            }
+        });
 
 
 
@@ -430,8 +439,15 @@ public class Fragment_Reserve_Order extends Fragment {
     public void sendOrderWithImage()
     {
         //this.delegate_id = delegate_id;
-
+        int coupon_id=0;
+        if(userModel.getCoupon_data()!=null){
+            coupon_id=userModel.getCoupon_data().getId();
+        }
+        else {
+            coupon_id=-1;
+        }
         RequestBody user_id_part = Common.getRequestBodyText(userModel.getData().getUser_id());
+        RequestBody coupon_id_part=Common.getRequestBodyText(coupon_id+"");
         RequestBody client_address_part = Common.getRequestBodyText(selected_location.getStreet()+" "+selected_location.getAddress());
         RequestBody client_lat_part = Common.getRequestBodyText(String.valueOf(selected_location.getLat()));
         RequestBody client_lng_part = Common.getRequestBodyText(String.valueOf(selected_location.getLng()));
@@ -448,7 +464,7 @@ public class Fragment_Reserve_Order extends Fragment {
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.search_for_courier));
         dialog.show();
         Api.getService(Tags.base_url)
-                .sendOrderWithImage(user_id_part,client_address_part,client_lat_part,client_lng_part,order_details_part,place_id_part,place_name,place_address_part,order_type_part,place_lat_part,place_lng_part,selected_time_part,image_part)
+                .sendOrderWithImage(user_id_part,coupon_id_part,client_address_part,client_lat_part,client_lng_part,order_details_part,place_id_part,place_name,place_address_part,order_type_part,place_lat_part,place_lng_part,selected_time_part,image_part)
                 .enqueue(new Callback<OrderIdDataModel>() {
                     @Override
                     public void onResponse(Call<OrderIdDataModel> call, Response<OrderIdDataModel> response) {
@@ -483,12 +499,19 @@ public class Fragment_Reserve_Order extends Fragment {
     public void sendOrder()
     {
         //this.delegate_id = delegate_id;
+        int coupon_id=0;
+        if(userModel.getCoupon_data()!=null){
+            coupon_id=userModel.getCoupon_data().getId();
+        }
+        else {
+            coupon_id=-1;
+        }
 
 
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.search_for_courier));
         dialog.show();
         Api.getService(Tags.base_url)
-                .sendOrder(userModel.getData().getUser_id(),selected_location.getStreet()+" "+selected_location.getAddress(),selected_location.getLat(),selected_location.getLng(),order_details,placeModel.getPlace_id(),placeModel.getName(),placeModel.getAddress(),"1",placeModel.getLat(),placeModel.getLng(),selected_time)
+                .sendOrder(userModel.getData().getUser_id(),coupon_id+"",selected_location.getStreet()+" "+selected_location.getAddress(),selected_location.getLat(),selected_location.getLng(),order_details,placeModel.getPlace_id(),placeModel.getName(),placeModel.getAddress(),"1",placeModel.getLat(),placeModel.getLng(),selected_time)
                 .enqueue(new Callback<OrderIdDataModel>() {
                     @Override
                     public void onResponse(Call<OrderIdDataModel> call, Response<OrderIdDataModel> response) {
@@ -833,4 +856,9 @@ public class Fragment_Reserve_Order extends Fragment {
 
     }
 
+    public void updateUserData(UserModel userModel) {
+        this.userModel=userModel;
+        userSingleTone.setUserModel(userModel);
+
+    }
 }

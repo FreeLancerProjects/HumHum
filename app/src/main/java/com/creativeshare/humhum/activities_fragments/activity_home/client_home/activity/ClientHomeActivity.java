@@ -359,8 +359,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
         current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
         preferences = Preferences.getInstance();
-        userSingleTone = UserSingleTone.getInstance();
-        userModel = userSingleTone.getUserModel();
+        userModel = preferences.getUserData(this);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -370,6 +369,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
             getNotificationCount();
             EventBus.getDefault().register(this);
         }
+
 
         String visitTime = preferences.getVisitTime(this);
         Calendar calendar = Calendar.getInstance();
@@ -1375,6 +1375,10 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
     // from fragment coupon
     public void updateUserDataProfile(UserModel userModel)
     {
+        if (fragment_reserve_order!=null&&fragment_reserve_order.isAdded())
+        {
+            fragment_reserve_order.updateUserData(userModel);
+        }
         if (fragment_client_profile!=null&&fragment_client_profile.isAdded())
         {
             fragment_client_profile.updateUserData(userModel);

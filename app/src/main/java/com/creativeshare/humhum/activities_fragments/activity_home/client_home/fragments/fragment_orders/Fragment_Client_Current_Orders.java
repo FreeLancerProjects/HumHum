@@ -22,6 +22,7 @@ import com.creativeshare.humhum.activities_fragments.activity_home.client_home.a
 import com.creativeshare.humhum.adapters.OrdersAdapter;
 import com.creativeshare.humhum.models.OrderDataModel;
 import com.creativeshare.humhum.models.UserModel;
+import com.creativeshare.humhum.preferences.Preferences;
 import com.creativeshare.humhum.remote.Api;
 import com.creativeshare.humhum.singletone.UserSingleTone;
 import com.creativeshare.humhum.tags.Tags;
@@ -45,6 +46,7 @@ public class Fragment_Client_Current_Orders extends Fragment {
     private OrdersAdapter adapter;
     private UserModel userModel;
     private UserSingleTone userSingleTone;
+    private Preferences preferences;
     private boolean isLoading = false;
     private int current_page = 1;
     private Call<OrderDataModel> call;
@@ -72,6 +74,7 @@ public class Fragment_Client_Current_Orders extends Fragment {
         return new Fragment_Client_Current_Orders();
     }
     private void initView(View view) {
+        preferences = Preferences.getInstance();
         orderModelList = new ArrayList<>();
         activity = (ClientHomeActivity) getActivity();
         userSingleTone = UserSingleTone.getInstance();
@@ -115,6 +118,7 @@ public class Fragment_Client_Current_Orders extends Fragment {
 
     public void getOrders()
     {
+        userModel = preferences.getUserData(activity);
         if (userModel.getData().getUser_type().equals(Tags.TYPE_CLIENT))
         {
             call  = Api.getService(Tags.base_url).getClientOrders(userModel.getData().getUser_id(),"current", 1);

@@ -5,10 +5,16 @@ import java.io.Serializable;
 public class UserModel implements Serializable {
 
     private Data data;
+    private Coupon_data coupon_data;
 
     public Data getData() {
         return data;
     }
+
+    public Coupon_data getCoupon_data() {
+        return coupon_data;
+    }
+
 
     public class Data implements Serializable {
         private String user_id;
@@ -34,7 +40,7 @@ public class UserModel implements Serializable {
         private int num_comments;
         private double account_balance;
         private int  num_coupon;
-
+        private String have_money;
         public String getUser_id() {
             return user_id;
         }
@@ -121,6 +127,18 @@ public class UserModel implements Serializable {
 
         public String getUser_show() {
             return user_show;
+        }
+
+        public String getHave_money() {
+            return have_money;
+        }
+    }
+
+    public class Coupon_data implements Serializable {
+        private int id;
+
+        public int getId() {
+            return id;
         }
     }
 }
