@@ -270,7 +270,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
             builder.setSmallIcon(R.drawable.ic_notification);
 
-            if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS)) {
+            if (notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUS)||notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUSs)) {
 
 
                 builder.setContentTitle(map.get("from_name"));
@@ -278,10 +278,12 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 Intent intent = new Intent(this, ClientHomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 String order_status = map.get("order_status");
-                Log.e("order_status", order_status + "_");
+//                Log.e("order_status", order_status + "_");
                 final NotStateModel notStateModel = new NotStateModel(order_status);
 
                 if (order_status.equals(String.valueOf(Tags.STATE_ORDER_NEW))) {
+                    Log.e("order_statussss", order_status + "_");
+
                     builder.setContentText(getString(R.string.new_order_sent));
 
 
@@ -289,6 +291,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                     builder.setContentText(getString(R.string.delegate_accept_order));
 
                 } else if (order_status.equals(String.valueOf(Tags.STATE_DELEGATE_REFUSE_ORDER))) {
+
                     builder.setContentText(getString(R.string.order_refused));
 
 
