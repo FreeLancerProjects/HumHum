@@ -315,6 +315,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     else if(status.equals("-1")){
                         DisplayFragmentMyOrders(-1);
                     }
+
                 }
             }catch (Exception e)
             {

@@ -476,7 +476,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                     Intent intent = new Intent(this, ClientHomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("data", "-1");
+                    intent.putExtra("status", "-1");
                     PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
                     builder.setContentText(content).setContentIntent(pendingIntent);
                 }
@@ -875,7 +875,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                     Intent intent = new Intent(this, ClientHomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("data", "1");
+                    intent.putExtra("status", "-1");
                     PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
                     builder.setContentText(content).setContentIntent(pendingIntent);
                 }
