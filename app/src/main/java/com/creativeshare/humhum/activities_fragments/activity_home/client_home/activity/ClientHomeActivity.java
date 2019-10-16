@@ -312,6 +312,9 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                                     }
                                 },1);
                     }
+                    else if(status.equals("-1")){
+                        DisplayFragmentMyOrders(-1);
+                    }
                 }
             }catch (Exception e)
             {
@@ -2489,5 +2492,7 @@ userSingleTone=UserSingleTone.getInstance();
     }
 
 
-
+    public void refresh() {
+        getUserDataById(userModel.getData().getUser_id());
+    }
 }

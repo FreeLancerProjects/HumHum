@@ -267,7 +267,7 @@ public class Fragment_Delegate_Current_Order_Details extends Fragment {
                 tv_order_state.setText(getString(R.string.delivering_order));
                 tv_order_next_state.setText(getString(R.string.delivered_order));
                 image_bill.setVisibility(View.GONE);
-
+                activity.refresh();
                 break;
 
 

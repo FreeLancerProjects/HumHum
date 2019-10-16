@@ -380,7 +380,8 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 TypingModel typingModel = new TypingModel(from_user_id, to_user_id, room_id, typing_value, from_name);
                 EventBus.getDefault().post(typingModel);
 
-            } else if (notification_type.equals(Tags.FIREBASE_NOT_RATE)) {
+            }
+            else if (notification_type.equals(Tags.FIREBASE_NOT_RATE)) {
 
                 NotificationTypeModel notificationTypeModel = new NotificationTypeModel(Tags.FIREBASE_NOT_RATE);
                 EventBus.getDefault().post(notificationTypeModel);
@@ -468,6 +469,23 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 }
 
 
+            }
+            else if(notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUSc)){
+                String content=getString(R.string.order_canceled);
+                if (content != null && !content.isEmpty()) {
+
+                    Intent intent = new Intent(this, ClientHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("data", "-1");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
+                    builder.setContentText(content).setContentIntent(pendingIntent);
+                }
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.createNotificationChannel(channel);
+                    manager.notify(new Random().nextInt(200), builder.build());
+                }
             }
             else if (notification_type.equals(Tags.FIREBASE_delete)) {
                 String status = map.get("action_status");
@@ -851,6 +869,23 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
 
             }
+            else if(notification_type.equals(Tags.FIREBASE_NOT_ORDER_STATUSc)){
+                String content=getString(R.string.order_canceled);
+                if (content != null && !content.isEmpty()) {
+
+                    Intent intent = new Intent(this, ClientHomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("data", "1");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 150, intent, PendingIntent.FLAG_ONE_SHOT);
+                    builder.setContentText(content).setContentIntent(pendingIntent);
+                }
+
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.notify(new Random().nextInt(200), builder.build());
+                }
+            }
+
             else if (notification_type.equals(Tags.FIREBASE_delete)) {
                 String status = map.get("action_status");
                 String content = "";
