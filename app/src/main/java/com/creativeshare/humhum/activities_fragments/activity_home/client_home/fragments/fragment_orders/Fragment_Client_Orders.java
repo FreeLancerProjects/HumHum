@@ -2,6 +2,7 @@ package com.creativeshare.humhum.activities_fragments.activity_home.client_home.
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,23 +65,43 @@ public class Fragment_Client_Orders extends Fragment {
     }
     public void NavigateToFragmentRefresh(int pos)
     {
-        pager.setCurrentItem(pos,true);
-        if (pos==0)
-        {
-            Fragment_Client_New_Orders fragment_client_new_orders = (Fragment_Client_New_Orders) fragmentList.get(0);
-            fragment_client_new_orders.getOrders();
 
-        }else if (pos==1)
+        if (fragmentList==null)
         {
-            Fragment_Client_Current_Orders  fragment_client_current_orders = (Fragment_Client_Current_Orders) fragmentList.get(1);
-            fragment_client_current_orders.getOrders();
+            fragmentList = new ArrayList<>();
+            fragmentList.add(Fragment_Client_New_Orders.newInstance());
+            fragmentList.add(Fragment_Client_Current_Orders.newInstance());
+            fragmentList.add(Fragment_Client_Previous_Orders.newInstance());
 
-        }else if (pos ==2)
-        {
-            Fragment_Client_Previous_Orders fragment_client_previous_orders = (Fragment_Client_Previous_Orders) fragmentList.get(2);
-            fragment_client_previous_orders.getOrders();
 
         }
+
+        try {
+            if (pos==0)
+            {
+                Fragment_Client_New_Orders fragment_client_new_orders = (Fragment_Client_New_Orders) fragmentList.get(0);
+                fragment_client_new_orders.getOrders();
+
+            }else if (pos==1)
+            {
+                Fragment_Client_Current_Orders  fragment_client_current_orders = (Fragment_Client_Current_Orders) fragmentList.get(1);
+                fragment_client_current_orders.getOrders();
+
+            }else if (pos ==2)
+            {
+                Fragment_Client_Previous_Orders fragment_client_previous_orders = (Fragment_Client_Previous_Orders) fragmentList.get(2);
+                fragment_client_previous_orders.getOrders();
+
+            }
+
+            if (pager!=null)
+                pager.setCurrentItem(pos,true);
+        }catch (Exception e){
+            if (pager!=null)
+                pager.setCurrentItem(pos,true);
+        }
+
+
     }
 
     public void RefreshOrderFragments()

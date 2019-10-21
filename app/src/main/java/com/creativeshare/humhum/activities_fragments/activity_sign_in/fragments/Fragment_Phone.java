@@ -276,25 +276,36 @@ public class Fragment_Phone extends Fragment implements OnCountryPickerListener 
 
         TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
 
+        try {
+            if (picker.getCountryFromSIM() != null) {
+                updateUi(picker.getCountryFromSIM());
 
-        if (picker.getCountryFromSIM() != null) {
-            updateUi(picker.getCountryFromSIM());
-
-        } else if (telephonyManager != null && picker.getCountryByISO(telephonyManager.getNetworkCountryIso()) != null)
-        {
-            updateUi(picker.getCountryByISO(telephonyManager.getNetworkCountryIso()));
+            } else if (telephonyManager != null && picker.getCountryByISO(telephonyManager.getNetworkCountryIso()) != null)
+            {
+                updateUi(picker.getCountryByISO(telephonyManager.getNetworkCountryIso()));
 
 
-        } else if (picker.getCountryByLocale(Locale.getDefault()) != null) {
-            updateUi(picker.getCountryByLocale(Locale.getDefault()));
+            }
 
-        }else
+            else if (Locale.getDefault()!=null&&picker.getCountryByLocale(Locale.getDefault()) != null) {
+                updateUi(picker.getCountryByLocale(Locale.getDefault()));
+
+            }else
+            {
+                tv_code.setText("+966");
+                tv_country.setText("Saudi Arabia");
+                this.country_code = "sa";
+
+            }
+        }catch (Exception e)
         {
             tv_code.setText("+966");
             tv_country.setText("Saudi Arabia");
             this.country_code = "sa";
-
         }
+
+
+
 
 
     }

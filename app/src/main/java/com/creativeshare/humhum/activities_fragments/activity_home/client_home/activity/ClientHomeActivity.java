@@ -196,6 +196,16 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
                     String status = intent.getStringExtra("status");
 
                     Log.e("status",status+"");
+
+                    new Handler()
+                            .postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                    manager.cancelAll();
+                                }
+                            },1);
+
                     if (status.equals(String.valueOf(Tags.STATE_ORDER_NEW)))
                     {
 
@@ -203,14 +213,7 @@ public class ClientHomeActivity extends AppCompatActivity implements GoogleApiCl
 
 
 
-                        new Handler()
-                                .postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                        manager.cancelAll();
-                                    }
-                                },1);
+
                     }else if (status.equals(String.valueOf(Tags.STATE_DELEGATE_SEND_OFFER)))
                     {
                         new Handler()
