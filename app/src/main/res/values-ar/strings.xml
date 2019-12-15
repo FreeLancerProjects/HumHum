@@ -299,5 +299,8 @@
     <string name="user_bloked">تم حظر المستخدم من الادارة</string>
     <string name="pharmacies">صيدليات</string>
     <string name="customer_coupons">كوبونات العملاء</string>
+    <string name="cust_rate">تقييم العملاء</string>
+    <string name="reviews">تعليقات</string>
+    <string name="no_rev">لا توجد تعليقات</string>
 
 </resources>

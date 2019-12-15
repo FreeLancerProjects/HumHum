@@ -35,6 +35,7 @@ import com.creativeshare.humhum.adapters.NearbySearchAdapter;
 import com.creativeshare.humhum.adapters.SearchRecentAdapter;
 import com.creativeshare.humhum.models.NearbyModel;
 import com.creativeshare.humhum.models.NearbyStoreDataModel;
+import com.creativeshare.humhum.models.PhotosModel;
 import com.creativeshare.humhum.models.PlaceModel;
 import com.creativeshare.humhum.models.QueryModel;
 import com.creativeshare.humhum.models.SearchModel;
@@ -348,8 +349,16 @@ public class Fragment_Search extends Fragment {
 
         for (SearchModel searchModel : searchModelList)
         {
-            PlaceModel placeModel = new PlaceModel(searchModel.getId(),searchModel.getPlace_id(),searchModel.getName(),searchModel.getIcon(),searchModel.getRating(),searchModel.getGeometry().getLocation().getLat(),searchModel.getGeometry().getLocation().getLng(),searchModel.getFormatted_address());
+            PlaceModel placeModel ;
+            if (searchModel.getPhotos()!=null)
+            {
+                placeModel = new PlaceModel(searchModel.getId(),searchModel.getPlace_id(),searchModel.getName(),searchModel.getIcon(),searchModel.getPhotos(),searchModel.getRating(),searchModel.getGeometry().getLocation().getLat(),searchModel.getGeometry().getLocation().getLng(),searchModel.getFormatted_address());
 
+            }else
+            {
+                placeModel = new PlaceModel(searchModel.getId(),searchModel.getPlace_id(),searchModel.getName(),searchModel.getIcon(),new ArrayList<PhotosModel>(),searchModel.getRating(),searchModel.getGeometry().getLocation().getLat(),searchModel.getGeometry().getLocation().getLng(),searchModel.getFormatted_address());
+
+            }
             if (searchModel.getOpening_hours()!=null)
             {
                 placeModel.setOpenNow(searchModel.getOpening_hours().isOpen_now());
@@ -388,7 +397,16 @@ public class Fragment_Search extends Fragment {
 
     public void setItemData(NearbyModel nearbyModel) {
 
-        PlaceModel placeModel = new PlaceModel(nearbyModel.getId(),nearbyModel.getPlace_id(),nearbyModel.getName(),nearbyModel.getIcon(),nearbyModel.getRating(),nearbyModel.getGeometry().getLocation().getLat(),nearbyModel.getGeometry().getLocation().getLng(),nearbyModel.getVicinity());
+        PlaceModel placeModel ;
+        if (nearbyModel.getPhotos()!=null)
+        {
+            placeModel = new PlaceModel(nearbyModel.getId(),nearbyModel.getPlace_id(),nearbyModel.getName(),nearbyModel.getIcon(),nearbyModel.getPhotos(),nearbyModel.getRating(),nearbyModel.getGeometry().getLocation().getLat(),nearbyModel.getGeometry().getLocation().getLng(),nearbyModel.getVicinity());
+
+        }else
+        {
+            placeModel = new PlaceModel(nearbyModel.getId(),nearbyModel.getPlace_id(),nearbyModel.getName(),nearbyModel.getIcon(),new ArrayList<PhotosModel>(),nearbyModel.getRating(),nearbyModel.getGeometry().getLocation().getLat(),nearbyModel.getGeometry().getLocation().getLng(),nearbyModel.getVicinity());
+
+        }
         if (nearbyModel.getOpening_hours()!=null)
         {
             placeModel.setOpenNow(nearbyModel.getOpening_hours().isOpen_now());

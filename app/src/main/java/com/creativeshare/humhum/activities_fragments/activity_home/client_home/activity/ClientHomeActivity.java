@@ -69,6 +69,7 @@ import com.creativeshare.humhum.models.NotificationCountModel;
 import com.creativeshare.humhum.models.NotificationModel;
 import com.creativeshare.humhum.models.NotificationTypeModel;
 import com.creativeshare.humhum.models.OrderDataModel;
+import com.creativeshare.humhum.models.PlaceDetailsModel;
 import com.creativeshare.humhum.models.PlaceModel;
 import com.creativeshare.humhum.models.UserModel;
 import com.creativeshare.humhum.preferences.Preferences;
@@ -822,8 +823,6 @@ userSingleTone=UserSingleTone.getInstance();
     }
     public void DisplayFragmentStore()
     {
-
-
         if (fragment_home != null && fragment_home.isAdded()) {
             fragment_home.updateBottomNavigationPosition(0);
         }
@@ -1023,7 +1022,7 @@ userSingleTone=UserSingleTone.getInstance();
 
 
     }
-    public void DisplayFragmentReserveOrder(PlaceModel placeModel)
+    public void DisplayFragmentReserveOrder(PlaceModel placeModel, PlaceDetailsModel.PlaceDetails placeDetails)
     {
 
 
@@ -1039,7 +1038,7 @@ userSingleTone=UserSingleTone.getInstance();
                     {
                         fragment_count+=1;
 
-                        fragment_reserve_order = Fragment_Reserve_Order.newInstance(placeModel);
+                        fragment_reserve_order = Fragment_Reserve_Order.newInstance(placeModel,placeDetails);
 
                         if (fragment_reserve_order.isAdded()) {
                             fragmentManager.beginTransaction().show(fragment_reserve_order).commit();

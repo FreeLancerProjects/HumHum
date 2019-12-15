@@ -29,6 +29,7 @@ import com.creativeshare.humhum.adapters.QueryAdapter;
 import com.creativeshare.humhum.adapters.SliderAdapter;
 import com.creativeshare.humhum.models.NearbyModel;
 import com.creativeshare.humhum.models.NearbyStoreDataModel;
+import com.creativeshare.humhum.models.PhotosModel;
 import com.creativeshare.humhum.models.PlaceModel;
 import com.creativeshare.humhum.models.QuerySearchModel;
 import com.creativeshare.humhum.models.SliderModel;
@@ -330,8 +331,17 @@ public class Fragment_Client_Store extends Fragment {
         {
 
 
-            PlaceModel placeModel = new PlaceModel(nearbyModel.getId(),nearbyModel.getPlace_id(),nearbyModel.getName(),nearbyModel.getIcon(),nearbyModel.getRating(),nearbyModel.getGeometry().getLocation().getLat(),nearbyModel.getGeometry().getLocation().getLng(),nearbyModel.getVicinity());
+            PlaceModel placeModel;
 
+            if (nearbyModel.getPhotos()!=null)
+            {
+                placeModel = new PlaceModel(nearbyModel.getId(),nearbyModel.getPlace_id(),nearbyModel.getName(),nearbyModel.getIcon(),nearbyModel.getPhotos(),nearbyModel.getRating(),nearbyModel.getGeometry().getLocation().getLat(),nearbyModel.getGeometry().getLocation().getLng(),nearbyModel.getVicinity());
+
+            }else
+            {
+                placeModel = new PlaceModel(nearbyModel.getId(),nearbyModel.getPlace_id(),nearbyModel.getName(),nearbyModel.getIcon(),new ArrayList<PhotosModel>(),nearbyModel.getRating(),nearbyModel.getGeometry().getLocation().getLat(),nearbyModel.getGeometry().getLocation().getLng(),nearbyModel.getVicinity());
+
+            }
 
             if (nearbyModel.getOpening_hours()!=null)
             {

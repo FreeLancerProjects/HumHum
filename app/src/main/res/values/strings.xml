@@ -301,5 +301,8 @@
     <string name="user_bloked">User blocked from admin</string>
     <string name="pharmacies">Pharmacies</string>
     <string name="customer_coupons">Customer Coupons</string>
+    <string name="cust_rate">Customers Rating</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_rev">No reviews</string>
 
 </resources>

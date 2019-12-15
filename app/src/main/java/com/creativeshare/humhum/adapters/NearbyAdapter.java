@@ -89,7 +89,16 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.MyHolder> 
         }
 
         public void BindData(PlaceModel placeModel) {
-            Picasso.with(context).load(Uri.parse(placeModel.getIcon())).fit().into(image);
+            if (placeModel.getPhotosList().size()>0)
+            {
+                String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+placeModel.getPhotosList().get(0).getPhoto_reference()+"&key=AIzaSyCbc2Y5AIwZ8uUeHRUXiozGN3CnpjKT0oI";
+                Picasso.with(context).load(Uri.parse(url)).fit().into(image);
+
+            }else
+                {
+                    Picasso.with(context).load(Uri.parse(placeModel.getIcon())).fit().into(image);
+
+                }
             tv_name.setText(placeModel.getName());
             tv_address.setText(placeModel.getAddress());
             tv_rate.setText(String.valueOf(placeModel.getRating()));
@@ -99,7 +108,7 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.MyHolder> 
             if (placeModel.isOpenNow()) {
 
                 tv_state.setText(R.string.active);
-                tv_state.setTextColor(ContextCompat.getColor(context, R.color.black));
+                tv_state.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
             }else
             {
                 tv_state.setText(R.string.inactive);
